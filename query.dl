@@ -1,0 +1,7 @@
+.decl edge(subj:symbol, pred:symbol, obj:symbol, neg:symbol)
+.input edge(IO=file, filename="rtx-kg2_edges_2.8.1.tsv", columns="16:0:17:3")
+
+.decl result(drug:symbol)
+.output result
+
+result(drug) :- edge(drug, "biolink:treats", "DOID:14330", "False").
