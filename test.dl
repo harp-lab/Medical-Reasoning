@@ -1,0 +1,34 @@
+.decl edge(subj:symbol, pred:symbol, obj:symbol, neg:symbol)
+.input edge(IO=file, filename="rtx-kg2_edges_2.8.1.tsv", columns="16:0:17:3")
+
+.decl parkinson_disease_set(x:symbol)
+parkinson_disease_set("UMLS:C0030567").
+parkinson_disease_set("MESH:D010300").
+parkinson_disease_set("OMIM:MTHU074205").
+parkinson_disease_set("MONDO:0005180").
+parkinson_disease_set("KEGG:05012").
+parkinson_disease_set("UMLS:C2931436").
+parkinson_disease_set("MESH:C537176").
+parkinson_disease_set("UMLS:C3501657").
+parkinson_disease_set("MESH:C566017").
+parkinson_disease_set("UMLS:C3501658").
+parkinson_disease_set("MESH:C564631").
+parkinson_disease_set("UMLS:C3496588").
+parkinson_disease_set("MESH:C565204").
+parkinson_disease_set("UMLS:C1847360").
+parkinson_disease_set("MESH:C564653").
+parkinson_disease_set("MESH:C564345").
+parkinson_disease_set("UMLS:C1845165").
+parkinson_disease_set("MESH:C564486").
+parkinson_disease_set("MESH:C567726").
+parkinson_disease_set("UMLS:C3280133").
+parkinson_disease_set("UMLS:C3280271").
+parkinson_disease_set("UMLS:C4016848").
+parkinson_disease_set("UMLS:C4225353").
+parkinson_disease_set("MONDO:0014604").
+parkinson_disease_set("MONDO:0010360").
+
+.decl result(drug:symbol)
+result(drug) :- edge(drug, "biolink:treats", disease, "False"), parkinson_disease_set(disease).
+
+.output result

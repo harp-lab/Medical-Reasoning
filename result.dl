@@ -1,0 +1,10 @@
+.decl edge(subj:symbol, pred:symbol, obj:symbol, neg:symbol)
+.input edge(IO=file, filename="rtx-kg2_edges_2.8.1.tsv", columns="16:0:17:3")
+
+.decl parkinson_disease_set(x:symbol)
+parkinson_disease_set("UMLS:C0030567").
+
+.decl result(drug:symbol)
+result(drug) :- edge(drug, "biolink:treats", disease, "False"), parkinson_disease_set(disease).
+
+.output result

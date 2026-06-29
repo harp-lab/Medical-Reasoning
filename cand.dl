@@ -1,0 +1,6 @@
+.decl node(id:symbol, name:symbol, category:symbol, syn:symbol)
+.input node(IO=file, filename="rtx-kg2_nodes_2.8.1.tsv", columns="7:10:15:13")
+.decl cand(id:symbol, name:symbol, category:symbol, src:symbol)
+cand(i, n, c, "name") :- node(i, n, c, _), match(".*[pP][aA][rR][kK][iI][nN][sS][oO][nN][ ][dD][iI][sS][eE][aA][sS][eE].*", n).
+cand(i, n, c, "syn") :- node(i, n, c, s), match(".*[pP][aA][rR][kK][iI][nN][sS][oO][nN][ ][dD][iI][sS][eE][aA][sS][eE].*", s).
+.output cand
