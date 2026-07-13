@@ -1,15 +1,29 @@
 .decl edge(subj:symbol, pred:symbol, obj:symbol, neg:symbol)
 .input edge(IO=file, filename="rtx-kg2_edges_2.8.1.tsv", columns="16:0:17:3")
 
-.decl parkinson_disease_set(x:symbol)
-parkinson_disease_set("MONDO:0005180").
-parkinson_disease_set("DOID:14330").
-parkinson_disease_set("UMLS:C0030567").
-parkinson_disease_set("MESH:D010300").
-parkinson_disease_set("NCIT:C26845").
-parkinson_disease_set("ICD9:332").
+.decl parkinsons_set(x:symbol)
+parkinsons_set("MONDO:0005180").
+parkinsons_set("DOID:14330").
+parkinsons_set("UMLS:C0030567").
+parkinsons_set("MESH:D010300").
+parkinsons_set("NCIT:C26845").
+parkinsons_set("ICD9:332").
+
+.decl tremor_set(x:symbol)
+tremor_set("HP:0001337").
+tremor_set("NCIT:C38038").
+tremor_set("UMLS:C0040822").
+tremor_set("UMLS:C0234369").
+tremor_set("UMLS:C1527384").
+tremor_set("MESH:D014202").
+
+.decl treats_parkinsons(drug:symbol)
+treats_parkinsons(drug) :- edge(drug, "biolink:treats", pd, "False"), parkinsons_set(pd).
+
+.decl treats_tremor(drug:symbol)
+treats_tremor(drug) :- edge(drug, "biolink:treats", t, "False"), tremor_set(t).
 
 .decl result(drug:symbol)
-result(drug) :- edge(drug, "biolink:treats", disease, "False"), parkinson_disease_set(disease).
+result(drug) :- treats_parkinsons(drug), treats_tremor(drug).
 
 .output result
