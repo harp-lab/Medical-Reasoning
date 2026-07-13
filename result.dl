@@ -2,7 +2,12 @@
 .input edge(IO=file, filename="rtx-kg2_edges_2.8.1.tsv", columns="16:0:17:3")
 
 .decl parkinson_disease_set(x:symbol)
+parkinson_disease_set("MONDO:0005180").
+parkinson_disease_set("DOID:14330").
 parkinson_disease_set("UMLS:C0030567").
+parkinson_disease_set("MESH:D010300").
+parkinson_disease_set("NCIT:C26845").
+parkinson_disease_set("ICD9:332").
 
 .decl result(drug:symbol)
 result(drug) :- edge(drug, "biolink:treats", disease, "False"), parkinson_disease_set(disease).

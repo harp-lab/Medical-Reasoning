@@ -1605,6 +1605,29 @@ want("UMLS:C1537060").
 want("UMLS:C1562104").
 want("UMLS:C2917359").
 want("UMLS:C5203672").
+want("DrugCentral:971").
+want("DrugCentral:496").
+want("DrugCentral:2402").
+want("DrugCentral:4921").
+want("DrugCentral:403").
+want("DrugCentral:228").
+want("DrugCentral:2407").
+want("DrugCentral:2558").
+want("DrugCentral:5142").
+want("DrugCentral:2745").
+want("DrugCentral:2276").
+want("DrugCentral:144").
+want("DrugCentral:2429").
+want("DrugCentral:333").
+want("DrugCentral:1018").
+want("DrugCentral:1567").
+want("DrugCentral:2233").
+want("DrugCentral:374").
+want("DrugCentral:3521").
+want("DrugCentral:2697").
+want("DrugCentral:5143").
+want("DrugCentral:4882").
+want("DrugCentral:763").
 .decl named(id:symbol, name:symbol, category:symbol)
 named(i, n, c) :- node(i, n, c), want(i).
 .output named

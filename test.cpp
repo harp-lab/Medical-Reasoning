@@ -1,4 +1,6 @@
 #define SOUFFLE_GENERATOR_VERSION "2.4.1"
+#include <chrono>
+#include <iostream>
 #include "souffle/CompiledSouffle.h"
 #include "souffle/SignalHandler.h"
 #include "souffle/SouffleInterface.h"
@@ -726,16 +728,28 @@ void Sf_test::runFunction(std::string inputDirectoryArg,std::string outputDirect
     signalHandler->set();
 // -- query evaluation --
 {
+ auto t0 = std::chrono::steady_clock::now();
  std::vector<RamDomain> args, ret;
 stratum_edge_31e40d0d94fe9f7c.run(args, ret);
+ auto t1 = std::chrono::steady_clock::now();
+ std::cerr << "[stratum:edge] wall=" << std::chrono::duration<double>(t1 - t0).count()
+           << "s size=" << rel_edge_04d25f5060e9043b->size() << std::endl;
 }
 {
+ auto t0 = std::chrono::steady_clock::now();
  std::vector<RamDomain> args, ret;
 stratum_parkinson_disease_set_341c57c7d15771c2.run(args, ret);
+ auto t1 = std::chrono::steady_clock::now();
+ std::cerr << "[stratum:parkinson_disease_set] wall=" << std::chrono::duration<double>(t1 - t0).count()
+           << "s size=" << rel_parkinson_disease_set_de5887c01e2b44b1->size() << std::endl;
 }
 {
+ auto t0 = std::chrono::steady_clock::now();
  std::vector<RamDomain> args, ret;
 stratum_result_a2a91f171fb8739c.run(args, ret);
+ auto t1 = std::chrono::steady_clock::now();
+ std::cerr << "[stratum:result] wall=" << std::chrono::duration<double>(t1 - t0).count()
+           << "s size=" << rel_result_8d266e5660001a15->size() << std::endl;
 }
 
 // -- relation hint statistics --
