@@ -1,0 +1,23 @@
+;; q04 step 3
+;; n_rows=163 cached=False relation=q_4b272d62a5700088
+
+table (edge str str str)
+table (node str str str)
+table (ca2 str)
+table (gabrb2 str)
+table (result str str str)
+
+rule (ca2 "NCBIGene:760")
+rule (ca2 "ENSEMBL:ENSG00000104267")
+rule (ca2 "HGNC:1373")
+rule (ca2 "UniProtKB:P00918")
+rule (ca2 "PR:P00918")
+
+rule (gabrb2 "NCBIGene:2561")
+rule (gabrb2 "ENSEMBL:ENSG00000145864")
+rule (gabrb2 "HGNC:4082")
+rule (gabrb2 "UniProtKB:P47870")
+rule (gabrb2 "PR:P47870")
+
+rule (result "CA2" pred cat) <-- (ca2 g) (edge s pred g) (node s _ cat)
+rule (result "GABRB2" pred cat) <-- (gabrb2 g) (edge s pred g) (node s _ cat)

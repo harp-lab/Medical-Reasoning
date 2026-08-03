@@ -1,0 +1,36 @@
+;; q02 step 2
+;; n_rows=0 cached=False relation=q_2acf29d39e6c3d3a
+
+table (edge str str str)
+table (pd_ad str)
+table (tremor str)
+table (dgene str)
+table (result str str str)
+
+rule (pd_ad "MONDO:0005180")
+rule (pd_ad "DOID:14330")
+rule (pd_ad "UMLS:C0030567")
+rule (pd_ad "MESH:D010300")
+rule (pd_ad "NCIT:C26845")
+rule (pd_ad "ICD9:332")
+rule (pd_ad "MONDO:0004975")
+rule (pd_ad "DOID:10652")
+rule (pd_ad "UMLS:C0002395")
+rule (pd_ad "MESH:D000544")
+rule (pd_ad "NCIT:C2866")
+rule (pd_ad "ICD9:331.0")
+rule (pd_ad "HP:0002511")
+
+rule (tremor "HP:0001337")
+rule (tremor "NCIT:C38038")
+rule (tremor "UMLS:C0040822")
+rule (tremor "UMLS:C0234369")
+rule (tremor "UMLS:C1527384")
+rule (tremor "MESH:D014202")
+
+rule (dgene g) <-- (pd_ad d) (edge g "biolink:gene_associated_with_condition" d)
+
+rule (result g p t) <--
+  (dgene g)
+  (tremor t)
+  (edge g p t)

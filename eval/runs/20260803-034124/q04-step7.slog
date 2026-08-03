@@ -1,0 +1,8 @@
+;; q04 step 7
+;; n_rows=56965146 cached=False relation=q_0d1870ee6238a054
+
+table (kg2_edges str str str str str str str str str str str str str str str)
+table (result str str str str str str str str str str str str str str str)
+
+rule (result a b c d e f g h i j k l m n o) <--
+  (kg2_edges a b c d e f g h i j k l m n o)

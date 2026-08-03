@@ -1,0 +1,2 @@
+n	secs	turns	cost_usd	tool_calls	slog_runs	rejected	cached	max_rows	denied	question
+q01	10	3	0.2022595	2	0	0	0	0	0	Using the MR tools, list exactly 3 valid KG2 biolink predicates. Do not run any queries.

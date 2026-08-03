@@ -1,0 +1,19 @@
+;; q01 step 4
+;; n_rows=None cached=None relation=None
+
+table (edge str str str)
+table (tremor_dis str)
+table (result str str)
+
+rule (tremor_dis "HP:0001337")
+rule (tremor_dis "NCIT:C38038")
+rule (tremor_dis "UMLS:C0040822")
+rule (tremor_dis "UMLS:C0234369")
+rule (tremor_dis "UMLS:C1527384")
+rule (tremor_dis "MESH:D014202")
+
+;; predicates on edges pointing INTO tremor, and their subject category
+rule (result p subjcat) <--
+  (tremor_dis t)
+  (edge s p t)
+  (node s _ subjcat)

@@ -1,0 +1,31 @@
+;; q01 step 6
+;; REJECTED before compiling: ["'biolink:Gene' is not a valid KG2 predicate (see list_predicates)", "'biolink:Gene' is not a valid KG2 predicate (see list_predicates)"]
+
+table (edge str str str)
+table (equiv str str)
+table (node str str str)
+table (pd_gene str)
+table (ad_gene str)
+table (both str)
+table (tremor_id str)
+table (tremor_cause str)
+table (result str)
+
+rule (tremor_id "HP:0001337")
+rule (tremor_id "NCIT:C38038")
+rule (tremor_id "UMLS:C0040822")
+rule (tremor_id "UMLS:C0234369")
+rule (tremor_id "UMLS:C1527384")
+rule (tremor_id "MESH:D014202")
+
+;; PD and AD gene overlap (join across vocabularies)
+rule (both g) <-- (pd_gene g) (ad_gene g)
+rule (both g) <-- (pd_gene g) (equiv g e) (ad_gene e)
+
+;; things that induce (cause / predispose to) tremor, restricted to genes
+rule (tremor_cause g) <-- (tremor_id t) (edge g "biolink:causes" t) (node g _ "biolink:Gene")
+rule (tremor_cause g) <-- (tremor_id t) (edge g "biolink:predisposes" t) (node g _ "biolink:Gene")
+
+;; PD+AD genes that induce tremor
+rule (result g) <-- (both g) (tremor_cause g)
+rule (result g) <-- (both g) (equiv g e) (tremor_cause e)

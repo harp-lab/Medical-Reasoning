@@ -1,0 +1,47 @@
+;; q01 step 1
+;; n_rows=5310 cached=False relation=q_79678959062e7c90
+
+table (edge str str str)
+table (equiv str str)
+table (pd_dis str)
+table (ad_dis str)
+table (tremor_dis str)
+table (pd_gene str)
+table (ad_gene str)
+table (tremor_gene str)
+table (result str str)
+
+rule (pd_dis "MONDO:0005180")
+rule (pd_dis "DOID:14330")
+rule (pd_dis "UMLS:C0030567")
+rule (pd_dis "MESH:D010300")
+rule (pd_dis "NCIT:C26845")
+rule (pd_dis "ICD9:332")
+
+rule (ad_dis "MONDO:0004975")
+rule (ad_dis "DOID:10652")
+rule (ad_dis "UMLS:C0002395")
+rule (ad_dis "MESH:D000544")
+rule (ad_dis "NCIT:C2866")
+rule (ad_dis "ICD9:331.0")
+rule (ad_dis "HP:0002511")
+
+rule (tremor_dis "HP:0001337")
+rule (tremor_dis "NCIT:C38038")
+rule (tremor_dis "UMLS:C0040822")
+rule (tremor_dis "UMLS:C0234369")
+rule (tremor_dis "UMLS:C1527384")
+rule (tremor_dis "MESH:D014202")
+
+rule (pd_gene g) <-- (pd_dis d) (edge g "biolink:gene_associated_with_condition" d)
+rule (ad_gene g) <-- (ad_dis d) (edge g "biolink:gene_associated_with_condition" d)
+rule (tremor_gene g) <-- (tremor_dis t) (edge g "biolink:gene_associated_with_condition" t)
+
+rule (result "PD" g) <-- (pd_gene g)
+rule (result "AD" g) <-- (ad_gene g)
+rule (result "PD_AND_AD" g) <-- (pd_gene g) (ad_gene g)
+rule (result "PD_AND_AD" g) <-- (pd_gene g) (equiv g e) (ad_gene e)
+rule (result "PD_TREMOR" g) <-- (pd_gene g) (tremor_gene g)
+rule (result "PD_TREMOR" g) <-- (pd_gene g) (equiv g e) (tremor_gene e)
+rule (result "AD_TREMOR" g) <-- (ad_gene g) (tremor_gene g)
+rule (result "AD_TREMOR" g) <-- (ad_gene g) (equiv g e) (tremor_gene e)

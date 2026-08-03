@@ -1,0 +1,27 @@
+;; q01 step 8
+;; n_rows=4259 cached=False relation=q_36e4d91eccf07f03
+
+table (edge str str str)
+table (pd_dis str)
+table (ad_dis str)
+table (result str str)
+
+rule (pd_dis "MONDO:0005180")
+rule (pd_dis "DOID:14330")
+rule (pd_dis "UMLS:C0030567")
+rule (pd_dis "MESH:D010300")
+rule (pd_dis "NCIT:C26845")
+rule (pd_dis "ICD9:332")
+
+rule (ad_dis "MONDO:0004975")
+rule (ad_dis "DOID:10652")
+rule (ad_dis "UMLS:C0002395")
+rule (ad_dis "MESH:D000544")
+rule (ad_dis "NCIT:C2866")
+rule (ad_dis "ICD9:331.0")
+rule (ad_dis "HP:0002511")
+
+rule (result "PD_CAUSE" g) <-- (pd_dis d) (edge g "biolink:causes" d)
+rule (result "PD_CAUSE" g) <-- (pd_dis d) (edge g "biolink:predisposes" d)
+rule (result "AD_CAUSE" g) <-- (ad_dis d) (edge g "biolink:causes" d)
+rule (result "AD_CAUSE" g) <-- (ad_dis d) (edge g "biolink:predisposes" d)

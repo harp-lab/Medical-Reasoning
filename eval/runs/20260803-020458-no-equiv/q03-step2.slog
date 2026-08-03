@@ -1,0 +1,10 @@
+;; q03 step 2
+;; n_rows=1 cached=False relation=q_7fd594e3e3b4507d
+
+table (edge_dir str str str str str)
+table (result str str str str str)
+
+rule (result d p a asp dir) <--
+  (edge_dir d p a asp dir)
+  (= d "CHEMBL.COMPOUND:CHEMBL1642")
+  (= a "MESH:D001249")

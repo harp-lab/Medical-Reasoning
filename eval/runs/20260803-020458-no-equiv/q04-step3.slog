@@ -1,0 +1,41 @@
+;; q04 step 3
+;; n_rows=1 cached=False relation=q_bff3cf42446e1a3d
+
+table (edge_dir str str str str str)
+table (ca2 str)
+table (gabrb2 str)
+table (down_dir str)
+table (up_dir str)
+table (down_ca2 str)
+table (up_gabrb2 str)
+table (result str)
+
+rule (ca2 "NCBIGene:760")
+rule (ca2 "ENSEMBL:ENSG00000104267")
+rule (ca2 "HGNC:1373")
+rule (ca2 "OMIM:611492")
+rule (ca2 "UMLS:C1413043")
+rule (ca2 "UniProtKB:P00918")
+rule (ca2 "PR:P00918")
+rule (ca2 "UMLS:C5196589")
+rule (ca2 "MESH:C000629674")
+
+rule (gabrb2 "NCBIGene:2561")
+rule (gabrb2 "ENSEMBL:ENSG00000145864")
+rule (gabrb2 "HGNC:4082")
+rule (gabrb2 "OMIM:600232")
+rule (gabrb2 "UMLS:C1414915")
+rule (gabrb2 "UniProtKB:P47870")
+rule (gabrb2 "PR:P47870")
+rule (gabrb2 "UMLS:C1565134")
+rule (gabrb2 "MESH:C495710")
+
+rule (down_dir "decreased")
+rule (down_dir "downregulated")
+rule (up_dir "increased")
+rule (up_dir "upregulated")
+
+rule (down_ca2 d) <-- (edge_dir d _ o _ dir) (ca2 o) (down_dir dir)
+rule (up_gabrb2 d) <-- (edge_dir d _ o _ dir) (gabrb2 o) (up_dir dir)
+
+rule (result d) <-- (down_ca2 d) (up_gabrb2 d)

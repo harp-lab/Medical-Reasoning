@@ -1,0 +1,20 @@
+;; q05 step 3
+;; n_rows=5 cached=False relation=q_72025414182f72d4
+
+table (edge_dir str str str str str)
+table (gabrb2 str)
+table (result str)
+
+rule (gabrb2 "NCBIGene:2561")
+rule (gabrb2 "ENSEMBL:ENSG00000145864")
+rule (gabrb2 "HGNC:4082")
+rule (gabrb2 "OMIM:600232")
+rule (gabrb2 "UMLS:C1414915")
+rule (gabrb2 "UniProtKB:P47870")
+rule (gabrb2 "PR:P47870")
+rule (gabrb2 "UMLS:C1565134")
+rule (gabrb2 "MESH:C495710")
+
+rule (result d) <--
+  (gabrb2 g)
+  (edge_dir d "biolink:regulates" g _ "increased")

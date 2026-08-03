@@ -1,0 +1,36 @@
+;; q04 step 11
+;; n_rows=None cached=None relation=None
+
+table (edge str str str)
+table (node str str str)
+table (equiv str str)
+table (ca2 str)
+table (gabrb2 str)
+table (act_ca2 str)
+table (act_gabrb2 str)
+table (both str)
+table (treats_something str)
+table (result str str)
+
+rule (ca2 "NCBIGene:760")
+rule (ca2 "ENSEMBL:ENSG00000104267")
+rule (ca2 "HGNC:1373")
+rule (ca2 "UniProtKB:P00918")
+rule (ca2 "PR:P00918")
+
+rule (gabrb2 "NCBIGene:2561")
+rule (gabrb2 "ENSEMBL:ENSG00000145864")
+rule (gabrb2 "HGNC:4082")
+rule (gabrb2 "UniProtKB:P47870")
+rule (gabrb2 "PR:P47870")
+
+rule (act_ca2 d) <-- (ca2 g) (edge d "biolink:affects" g)
+rule (act_ca2 d) <-- (ca2 g) (edge d "biolink:regulates" g)
+rule (act_gabrb2 d) <-- (gabrb2 g) (edge d "biolink:affects" g)
+rule (act_gabrb2 d) <-- (gabrb2 g) (edge d "biolink:regulates" g)
+
+rule (both d) <-- (act_ca2 d) (act_gabrb2 d)
+rule (both d) <-- (act_ca2 d) (equiv d e) (act_gabrb2 e)
+
+rule (treats_something d) <-- (both d) (edge d "biolink:treats" _)
+rule (result d nm) <-- (treats_something d) (node d nm _)

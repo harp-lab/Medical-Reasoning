@@ -1,0 +1,20 @@
+;; q05 step 2
+;; n_rows=20 cached=False relation=q_286ff535eeaa3f74
+
+table (edge_dir str str str str str)
+table (gabrb2 str)
+table (result str str str)
+
+rule (gabrb2 "NCBIGene:2561")
+rule (gabrb2 "ENSEMBL:ENSG00000145864")
+rule (gabrb2 "HGNC:4082")
+rule (gabrb2 "OMIM:600232")
+rule (gabrb2 "UMLS:C1414915")
+rule (gabrb2 "UniProtKB:P47870")
+rule (gabrb2 "PR:P47870")
+rule (gabrb2 "UMLS:C1565134")
+rule (gabrb2 "MESH:C495710")
+
+rule (result p a dir) <--
+  (gabrb2 g)
+  (edge_dir _ p g a dir)

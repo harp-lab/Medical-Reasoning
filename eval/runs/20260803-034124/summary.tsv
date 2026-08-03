@@ -1,0 +1,7 @@
+n	secs	turns	cost_usd	tool_calls	slog_runs	rejected	cached	max_rows	denied	status	question
+q01	509	19	1.529204	18	8	1	0	5310	0	ok	What genes are related to Parkinson's disease, and Alzheimer's disease? Which of these induce tremor?
+q02	296	14	0.956879	13	3	0	0	3874	0	ok	What genes are related to Parkinson's disease, or Alzheimer's disease? Which of these induce tremor?
+q03	102	10	0.4171825	9	1	0	0	1	0	ok	Does Imatinib treat asthama ?
+q04	1200	None	None	23	11	0	0	56965146	0	TIMEOUT	A patient overexpresses CA2 and underexpresses GABRB2. Which drugs downregulate CA2 and upregulate GABRB2, and what diseases are those drugs known to treat?
+q05	324	16	0.6658615000000001	15	5	0	0	20	0	ok	Which drugs upregulate GABRB2 and also downregulate a sodium channel gene? What do they treat?
+q06	384	21	0.8042140000000001	20	4	0	0	47	0	ok	Topiramate downregulates CA2, SCN5A and SCN1A. Are there other drugs that downregulate all three, and do they treat the same diseases?

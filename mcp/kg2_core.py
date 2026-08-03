@@ -1,17 +1,20 @@
-"""RTX-KG2 query core: Soufflé execution, NCATS entity grounding, and result naming.
+"""RTX-KG2 query core: NCATS entity grounding, predicate lists, and result naming.
 
 Pure, non-interactive helpers backing the kg2 MCP server (ported from all_souffle.ipynb).
 Diagnostics go to stderr only — stdout carries the MCP JSON-RPC stream.
 
-Paths come from the environment (KG2_DATA_DIR, SOUFFLE_BIN, KG2_OUT_DIR,
-KG2_PREDICATES_TSV), defaulting to this repo.
+Query execution lives elsewhere: slog_client talks to the resident Slog session
+(slog/slog_server.rkt). This module is engine-agnostic.
+
+Paths come from the environment (KG2_DATA_DIR, KG2_PREDICATES_TSV), defaulting to
+this repo.
 """
-import csv
 import json
 import os
-import shlex
+import sqlite3
 import subprocess
 import sys
+import tempfile
 import time
 import urllib.error
 import urllib.parse
@@ -22,22 +25,11 @@ import pandas as pd
 # Project root is the parent of this mcp/ package.
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.environ.get("KG2_DATA_DIR", os.path.join(PROJECT_DIR, "data"))
-SOUFFLE_BIN = os.environ.get("SOUFFLE_BIN", "souffle")
-OUT_DIR = os.environ.get("KG2_OUT_DIR", os.path.join(PROJECT_DIR, "scratch", "souffle_out"))
 PREDICATES_TSV = os.environ.get(
     "KG2_PREDICATES_TSV", os.path.join(DATA_DIR, "reference", "distinct_core_predicate.tsv"))
 
-# Relative to DATA_DIR; souffle resolves them against `-F DATA_DIR`.
+# The original 16-column node export; column 8 (1-based) is id:ID.
 NODES_TSV = os.path.join("source", "rtx-kg2_nodes_2.8.1.tsv")
-# kg2_edges.18.tsv is the original 18-column 2.8.1 export under its working name;
-# its 0-based columns 16/0/17/3 are subject/core_predicate/object/negated, which is
-# what the EDGE_HEADER column spec below selects.
-EDGES_TSV = os.path.join("interim", "kg2_import", "kg2_edges.18.tsv")
-
-EDGE_HEADER = (
-    ".decl edge(subj:symbol, pred:symbol, obj:symbol, neg:symbol)\n"
-    f'.input edge(IO=file, filename="{EDGES_TSV}", columns="16:0:17:3")'
-)
 
 
 def _log(msg):
@@ -55,56 +47,6 @@ def load_predicates():
         df = pd.read_csv(PREDICATES_TSV, sep="\t").sort_values("n", ascending=False)
         _predicates = df["predicate"].astype(str).tolist()
     return _predicates
-
-
-# --- Soufflé execution --------------------------------------------------------
-def _profile(prof_path, wall):
-    """Runtime breakdown from a souffle `-p` profile.json."""
-    if not os.path.exists(prof_path):
-        return {"relations": [], "compute_s": None, "load_overhead_s": None}
-    relations = json.load(open(prof_path))["root"]["program"]["relation"]
-    rows, compute = [], 0.0
-    for name, info in sorted(relations.items()):
-        rt = info.get("runtime", {})
-        secs = (rt.get("end", 0) - rt.get("start", 0)) / 1e6
-        compute += secs
-        rows.append({"relation": name, "seconds": round(secs, 3), "tuples": info.get("num-tuples")})
-    return {"relations": rows, "compute_s": round(compute, 3),
-            "load_overhead_s": round(max(0.0, wall - compute), 3)}
-
-
-def run_souffle(program, out_name="result", timeout=None):
-    """Run a Soufflé program; return {rows, n_cols, n_rows, wall_s, profile}.
-
-    Invoked by absolute binary path with `-F DATA_DIR` so the relative filenames inside
-    programs resolve regardless of cwd.
-    """
-    os.makedirs(OUT_DIR, exist_ok=True)
-    dl_path = os.path.join(OUT_DIR, f"{out_name}.dl")
-    prof_path = os.path.join(OUT_DIR, f"{out_name}_profile.json")
-    with open(dl_path, "w") as f:
-        f.write(program + "\n")
-
-    cmd = (f"ulimit -s unlimited 2>/dev/null || ulimit -s 1048576; exec "
-           f"{shlex.quote(SOUFFLE_BIN)} {shlex.quote(dl_path)} "
-           f"-F {shlex.quote(DATA_DIR)} -D {shlex.quote(OUT_DIR)} -p {shlex.quote(prof_path)}")
-    t0 = time.perf_counter()
-    subprocess.run(["bash", "-c", cmd], check=True, timeout=timeout,
-                   env={**os.environ, "OMP_STACKSIZE": "1G"})
-    wall = time.perf_counter() - t0
-    _log(f"[souffle:{out_name}] wall {wall:.1f}s")
-
-    # Soufflé emits a TSV (<name>.csv); convert to JSON and drop the CSV so souffle_out stays JSON-only.
-    csv_path = os.path.join(OUT_DIR, f"{out_name}.csv")
-    rows = []
-    if os.path.exists(csv_path) and os.path.getsize(csv_path) > 0:
-        with open(csv_path, newline="") as f:
-            rows = list(csv.reader(f, delimiter="\t"))
-        os.remove(csv_path)
-    with open(os.path.join(OUT_DIR, f"{out_name}.json"), "w") as f:
-        json.dump({"out": out_name, "n_rows": len(rows), "rows": rows}, f, indent=2)
-    return {"rows": rows, "n_cols": len(rows[0]) if rows else 0, "n_rows": len(rows),
-            "wall_s": round(wall, 2), "profile": _profile(prof_path, wall)}
 
 
 # --- NCATS grounding: NameRes (text->concepts) + NodeNorm (curie->clique) ------
@@ -166,45 +108,90 @@ def nodenorm_clique(curie):
     return res
 
 
-# --- local KG2 node-id set (lazy singleton) -----------------------------------
-_node_ids = None
-
-
-def node_ids():
-    """~11.3M KG2 node ids; loaded once on first use (~7s), then reused for the process life."""
-    global _node_ids
-    if _node_ids is None:
-        t0 = time.perf_counter()
-        proc = subprocess.Popen(["cut", "-f8", os.path.join(DATA_DIR, NODES_TSV)],
-                                stdout=subprocess.PIPE, text=True, bufsize=1 << 20)
-        _node_ids = {line.rstrip("\n") for line in proc.stdout}
-        proc.wait()
-        _log(f"[node ids] loaded {len(_node_ids):,} ids in {time.perf_counter() - t0:.1f}s")
-    return _node_ids
+def kg2_has_ids(ids):
+    """Subset of `ids` present in KG2, via the indexed node table."""
+    ids = [str(i) for i in ids if str(i)]
+    if not ids:
+        return set()
+    conn = _node_db()
+    found = set()
+    for i in range(0, len(ids), 500):
+        chunk = ids[i:i + 500]
+        q = f"SELECT id FROM nodes WHERE id IN ({','.join('?' * len(chunk))})"
+        found.update(r[0] for r in conn.execute(q, chunk))
+    return found
 
 
 def expand_to_kg2(curie):
-    """NodeNorm clique intersected with local KG2 node ids -> (kept, full_clique)."""
+    """NodeNorm clique intersected with KG2 node ids -> (kept, full_clique)."""
     clique = nodenorm_clique(curie)["equivalent_ids"]
-    ids = node_ids()
-    kept = [c for c in clique if c in ids]
-    if curie in ids and curie not in kept:
+    present = kg2_has_ids(list(clique) + [curie])
+    kept = [c for c in clique if c in present]
+    if curie in present and curie not in kept:
         kept.append(curie)
     return kept, clique
 
 
-# --- entity search / resolution -----------------------------------------------
-def _ci_regex(term):
-    """Case-insensitive `.*substring.*` regex for Soufflé match()."""
-    parts = []
-    for ch in term.strip():
-        if ch.isalpha():
-            parts.append(f"[{ch.lower()}{ch.upper()}]")
-        elif ch in '"]^\\':
-            parts.append(".")
-        else:
-            parts.append(f"[{ch}]")
-    return ".*" + "".join(parts) + ".*"
+# --- node lookup index --------------------------------------------------------
+# Naming and substring search do not go through the query engine.  Slog has no
+# regex primitive, so substring search cannot be a Slog rule, and baking a
+# per-call id list into a program means a fresh clang build every time.
+#
+# Scanning the 4.9 GB node export per call costs ~105s (it is on NFS), so instead
+# we build a small SQLite index once and query that: naming becomes an indexed
+# lookup, substring search a ~2s local scan.  It lives on local NVMe because
+# SQLite over NFS is a locking hazard; losing it just means one rebuild.
+#
+# Column numbers are 1-based into the ORIGINAL 16-column node export:
+#   8 = id:ID, 11 = name, 14 = synonym, 16 = category
+_NODE_ID_COL, _NODE_NAME_COL, _NODE_SYN_COL, _NODE_CAT_COL = 8, 11, 14, 16
+
+NODE_DB = os.environ.get(
+    "KG2_NODE_DB",
+    os.path.join(tempfile.gettempdir(), f"kg2_nodes_{os.environ.get('USER','u')}.sqlite"))
+
+_node_conn = None
+
+
+def _build_node_db(path):
+    """One pass over the node export -> indexed (id, name, category, syn) table."""
+    t0 = time.perf_counter()
+    tmp = path + ".building"
+    if os.path.exists(tmp):
+        os.remove(tmp)
+    conn = sqlite3.connect(tmp)
+    conn.executescript("PRAGMA journal_mode=OFF; PRAGMA synchronous=OFF;")
+    conn.execute("CREATE TABLE nodes (id TEXT, name TEXT, category TEXT, syn TEXT)")
+    cut = subprocess.Popen(
+        ["cut", "-f", f"{_NODE_ID_COL},{_NODE_NAME_COL},{_NODE_SYN_COL},{_NODE_CAT_COL}",
+         os.path.join(DATA_DIR, NODES_TSV)],
+        stdout=subprocess.PIPE, text=True, bufsize=1 << 20)
+
+    def rows():
+        # cut emits fields in ascending column order: id, name, syn, category
+        for line in cut.stdout:
+            f = line.rstrip("\n").split("\t")
+            if len(f) >= 4:
+                yield (f[0], f[1], f[3], f[2])
+
+    conn.executemany("INSERT INTO nodes VALUES (?,?,?,?)", rows())
+    cut.wait()
+    # non-unique: a duplicate id in the export must not fail the whole build
+    conn.execute("CREATE INDEX IF NOT EXISTS nodes_id ON nodes(id)")
+    conn.commit()
+    conn.close()
+    os.replace(tmp, path)
+    _log(f"[node db] built {path} in {time.perf_counter()-t0:.0f}s")
+
+
+def _node_db():
+    global _node_conn
+    if _node_conn is None:
+        if not os.path.exists(NODE_DB):
+            _log(f"[node db] {NODE_DB} missing; building once (~2 min)")
+            _build_node_db(NODE_DB)
+        _node_conn = sqlite3.connect(NODE_DB, check_same_thread=False)
+    return _node_conn
 
 
 def _match_rank(name, term_lc):
@@ -213,21 +200,26 @@ def _match_rank(name, term_lc):
 
 
 def search_nodes(term, limit=25):
-    """Soufflé match() regex over node names/synonyms -> [{id, name, category}]."""
-    pat = _ci_regex(term)
-    program = "\n".join([
-        ".decl node(id:symbol, name:symbol, category:symbol, syn:symbol)",
-        f'.input node(IO=file, filename="{NODES_TSV}", columns="7:10:15:13")',
-        ".decl cand(id:symbol, name:symbol, category:symbol, src:symbol)",
-        f'cand(i, n, c, "name") :- node(i, n, c, _), match("{pat}", n).',
-        f'cand(i, n, c, "syn") :- node(i, n, c, s), match("{pat}", s).',
-        ".output cand",
-    ])
-    res = run_souffle(program, "cand")
-    if not res["n_rows"]:
-        return []
-    df = pd.DataFrame(res["rows"], columns=["id", "name", "category", "src"]).fillna("")
+    """Case-insensitive substring search over node names and synonyms.
+
+    Fallback for terms NameRes misses.  LIKE '%term%' cannot use an index, so this
+    is a scan -- but a local one, a couple of seconds rather than a couple of minutes.
+    """
     term_lc = term.strip().lower()
+    if not term_lc:
+        return []
+    t0 = time.perf_counter()
+    # escape LIKE wildcards so a term containing % or _ is matched literally
+    esc = term_lc.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+    pat = f"%{esc}%"
+    rows = _node_db().execute(
+        "SELECT id, name, category FROM nodes "
+        "WHERE lower(name) LIKE ? ESCAPE '\\' OR lower(syn) LIKE ? ESCAPE '\\' "
+        "LIMIT 5000", (pat, pat)).fetchall()
+    _log(f"[search_nodes] {len(rows)} hits for {term!r} in {time.perf_counter()-t0:.1f}s")
+    if not rows:
+        return []
+    df = pd.DataFrame(rows, columns=["id", "name", "category"]).fillna("")
     df["rank"] = df["name"].map(lambda n: _match_rank(n, term_lc))
     df["nlen"] = df["name"].str.len()
     df = df.sort_values(["rank", "nlen"]).drop_duplicates("id").head(limit)
@@ -235,7 +227,7 @@ def search_nodes(term, limit=25):
 
 
 def resolve_term(term, limit=10, biolink_type=None):
-    """NameRes concept lookup, falling back to Soufflé match() when NameRes is empty.
+    """NameRes concept lookup, falling back to substring search when NameRes is empty.
 
     Uniform candidates: {id, name, category, types, score, clique_n, source}.
     """
@@ -250,19 +242,17 @@ def resolve_term(term, limit=10, biolink_type=None):
 
 # --- result naming ------------------------------------------------------------
 def name_curies(curies):
-    """Map result CURIEs -> [{id, name, category}] via a Soufflé join on the node table."""
+    """Map result CURIEs -> [{id, name, category}] by indexed lookup."""
     ids = [str(c) for c in curies if str(c)]
     if not ids:
         return []
-    program = "\n".join([
-        ".decl node(id:symbol, name:symbol, category:symbol)",
-        f'.input node(IO=file, filename="{NODES_TSV}", columns="7:10:15")',
-        ".decl want(id:symbol)",
-        *(f'want("{i}").' for i in ids),
-        ".decl named(id:symbol, name:symbol, category:symbol)",
-        "named(i, n, c) :- node(i, n, c), want(i).",
-        ".output named",
-    ])
-    rows = run_souffle(program, "named")["rows"]
-    return [{"id": r[0], "name": r[1] if len(r) > 1 else "", "category": r[2] if len(r) > 2 else ""}
-            for r in rows]
+    t0 = time.perf_counter()
+    conn = _node_db()
+    out = []
+    # chunked so a large result set stays inside SQLite's parameter limit
+    for i in range(0, len(ids), 500):
+        chunk = ids[i:i + 500]
+        q = f"SELECT id, name, category FROM nodes WHERE id IN ({','.join('?' * len(chunk))})"
+        out.extend(conn.execute(q, chunk).fetchall())
+    _log(f"[name_curies] named {len(out)}/{len(ids)} in {time.perf_counter()-t0:.2f}s")
+    return [{"id": r[0], "name": r[1] or "", "category": r[2] or ""} for r in out]

@@ -1,0 +1,17 @@
+;; q02 step 6
+;; n_rows=1482 cached=False relation=q_7bddabe6fd7cbc27
+
+table (edge str str str)
+table (gset str)
+table (result str str)
+
+rule (gset "HGNC:620")
+rule (gset "HGNC:5286")
+rule (gset "HGNC:10808")
+rule (gset "HGNC:11427")
+rule (gset "HGNC:12692")
+rule (gset "HGNC:3192")
+
+rule (result g d) <--
+  (gset g)
+  (edge g "biolink:gene_associated_with_condition" d)

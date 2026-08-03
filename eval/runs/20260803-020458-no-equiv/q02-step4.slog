@@ -1,0 +1,16 @@
+;; q02 step 4
+;; n_rows=2973 cached=False relation=q_d3c14331c9f82887
+
+table (edge str str str)
+table (tremor str)
+table (result str str str)
+
+rule (tremor "HP:0001337")
+rule (tremor "NCIT:C38038")
+rule (tremor "UMLS:C0040822")
+rule (tremor "UMLS:C0234369")
+rule (tremor "UMLS:C1527384")
+rule (tremor "MESH:D014202")
+
+rule (result n p "in->tremor") <-- (tremor t) (edge n p t)
+rule (result n p "tremor->out") <-- (tremor t) (edge t p n)

@@ -1,0 +1,28 @@
+;; q01 step 6
+;; n_rows=1436 cached=False relation=q_e60035c70f054955
+
+table (edge str str str)
+table (pd_set str)
+table (ad_set str)
+table (gene_pd str)
+table (gene_ad str)
+table (result str str)
+
+rule (pd_set "MONDO:0005180")
+rule (pd_set "DOID:14330")
+rule (pd_set "UMLS:C0030567")
+rule (pd_set "MESH:D010300")
+rule (pd_set "NCIT:C26845")
+rule (pd_set "ICD9:332")
+rule (ad_set "MONDO:0004975")
+rule (ad_set "DOID:10652")
+rule (ad_set "UMLS:C0002395")
+rule (ad_set "MESH:D000544")
+rule (ad_set "NCIT:C2866")
+rule (ad_set "ICD9:331.0")
+rule (ad_set "HP:0002511")
+
+rule (gene_pd g) <-- (pd_set d) (edge g "biolink:gene_associated_with_condition" d)
+rule (gene_ad g) <-- (ad_set d) (edge g "biolink:gene_associated_with_condition" d)
+
+rule (result g "BOTH") <-- (gene_pd g) (gene_ad g)

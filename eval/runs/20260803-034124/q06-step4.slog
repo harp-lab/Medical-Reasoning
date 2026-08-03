@@ -1,0 +1,36 @@
+;; q06 step 4
+;; n_rows=19 cached=False relation=q_6d08144dabf85b44
+
+table (edge str str str)
+table (equiv str str)
+table (topira str)
+table (zonis str)
+table (treats_t str)
+table (treats_z str)
+table (result str str)
+
+rule (topira "CHEBI:63631")
+rule (topira "CHEBI:9633")
+rule (topira "CHEMBL.COMPOUND:CHEMBL220492")
+rule (topira "DRUGBANK:DB00273")
+rule (topira "MESH:D000077236")
+rule (topira "DrugCentral:2706")
+rule (topira "HMDB:HMDB0005034")
+rule (topira "KEGG.COMPOUND:C07502")
+
+rule (zonis "CHEBI:10127")
+rule (zonis "CHEBI:139857")
+rule (zonis "CHEMBL.COMPOUND:CHEMBL750")
+rule (zonis "DRUGBANK:DB00909")
+rule (zonis "MESH:D000078305")
+rule (zonis "DrugCentral:2872")
+rule (zonis "HMDB:HMDB0015045")
+rule (zonis "KEGG.COMPOUND:C07504")
+
+rule (treats_t dis) <-- (topira d) (edge d "biolink:treats" dis)
+rule (treats_z dis) <-- (zonis d) (edge d "biolink:treats" dis)
+
+rule (result "topiramate" dis) <-- (treats_t dis)
+rule (result "zonisamide" dis) <-- (treats_z dis)
+rule (result "SHARED" dis) <-- (treats_t dis) (equiv dis e) (treats_z e)
+rule (result "SHARED" dis) <-- (treats_t dis) (treats_z dis)

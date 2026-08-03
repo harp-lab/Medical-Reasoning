@@ -1,0 +1,32 @@
+;; q04 step 1
+;; n_rows=0 cached=False relation=q_985215894a136180
+
+table (edge_dir str str str str str)
+table (equiv str str)
+table (ca2 str)
+table (gabrb2 str)
+table (down_ca2 str)
+table (up_gabrb2 str)
+table (result str)
+
+rule (ca2 "NCBIGene:760")
+rule (ca2 "ENSEMBL:ENSG00000104267")
+rule (ca2 "HGNC:1373")
+rule (ca2 "UniProtKB:P00918")
+rule (ca2 "PR:P00918")
+rule (ca2 "UMLS:C1413043")
+rule (ca2 "OMIM:611492")
+
+rule (gabrb2 "NCBIGene:2561")
+rule (gabrb2 "ENSEMBL:ENSG00000145864")
+rule (gabrb2 "HGNC:4082")
+rule (gabrb2 "UniProtKB:P47870")
+rule (gabrb2 "PR:P47870")
+rule (gabrb2 "UMLS:C1414915")
+rule (gabrb2 "OMIM:600232")
+
+rule (down_ca2 d) <-- (ca2 g) (edge_dir d "biolink:affects" g _ "downregulated")
+rule (up_gabrb2 d) <-- (gabrb2 g) (edge_dir d "biolink:affects" g _ "upregulated")
+
+rule (result d) <-- (down_ca2 d) (up_gabrb2 d)
+rule (result d) <-- (down_ca2 d) (equiv d e) (up_gabrb2 e)

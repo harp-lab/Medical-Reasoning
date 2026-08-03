@@ -1,0 +1,5 @@
+n	secs	turns	cost_usd	tool_calls	slog_runs	rejected	cached	max_rows	denied	question
+q01	559	20	1.52202	19	6	0	0	3874	0	What genes are related to Parkinson's disease, and Alzheimer's disease? Which of these induce tremor?
+q02	498	21	1.365747	20	7	0	0	3874	0	What genes are related to Parkinson's disease, or Alzheimer's disease? Which of these induce tremor?
+q03	114	11	0.40830550000000004	10	2	0	0	1	0	Does Imatinib treat asthama ?
+q04	340	18	0.7691140000000001	17	5	1	0	53	0	A patient overexpresses CA2 and underexpresses GABRB2. Which drugs downregulate CA2 and upregulate GABRB2, and what diseases are those drugs known to treat?

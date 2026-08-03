@@ -1,0 +1,16 @@
+;; q01 step 2
+;; n_rows=1436 cached=False relation=q_59e87771e688f1be
+
+table (pd_gene str)
+table (ad_gene str)
+table (tremor_gene str)
+table (equiv str str)
+table (both str)
+table (result str str)
+
+rule (both g) <-- (pd_gene g) (ad_gene g)
+rule (both g) <-- (pd_gene g) (equiv g e) (ad_gene e)
+
+rule (result "BOTH" g) <-- (both g)
+rule (result "BOTH_TREMOR" g) <-- (both g) (tremor_gene g)
+rule (result "BOTH_TREMOR" g) <-- (both g) (equiv g e) (tremor_gene e)

@@ -1,0 +1,22 @@
+;; q04 step 2
+;; n_rows=4 cached=False relation=q_65ef6b28281a765e
+
+table (edge_dir str str str str str)
+table (ca2 str)
+table (gabrb2 str)
+table (result str str str)
+
+rule (ca2 "NCBIGene:760")
+rule (ca2 "ENSEMBL:ENSG00000104267")
+rule (ca2 "HGNC:1373")
+rule (ca2 "UniProtKB:P00918")
+rule (ca2 "PR:P00918")
+
+rule (gabrb2 "NCBIGene:2561")
+rule (gabrb2 "ENSEMBL:ENSG00000145864")
+rule (gabrb2 "HGNC:4082")
+rule (gabrb2 "UniProtKB:P47870")
+rule (gabrb2 "PR:P47870")
+
+rule (result "CA2" aspect dir) <-- (ca2 g) (edge_dir _ "biolink:affects" g aspect dir)
+rule (result "GABRB2" aspect dir) <-- (gabrb2 g) (edge_dir _ "biolink:affects" g aspect dir)

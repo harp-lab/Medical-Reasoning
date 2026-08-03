@@ -1,0 +1,40 @@
+;; q03 step 1
+;; n_rows=1 cached=False relation=q_9db8c53cd335cb46
+
+table (edge str str str)
+table (imatinib str)
+table (asthma str)
+table (result str str str)
+
+rule (imatinib "CHEBI:45783")
+rule (imatinib "CHEBI:38918")
+rule (imatinib "CHEBI:305376")
+rule (imatinib "CHEBI:45781")
+rule (imatinib "CHEMBL.COMPOUND:CHEMBL941")
+rule (imatinib "DRUGBANK:DB00619")
+rule (imatinib "DrugCentral:1423")
+rule (imatinib "HMDB:HMDB0014757")
+rule (imatinib "UMLS:C0935989")
+rule (imatinib "CHEBI:31690")
+rule (imatinib "CHEMBL.COMPOUND:CHEMBL1642")
+rule (imatinib "MESH:D000068877")
+rule (imatinib "UMLS:C0939537")
+rule (imatinib "UMLS:C0935987")
+rule (imatinib "UMLS:C0938676")
+
+rule (asthma "MONDO:0004979")
+rule (asthma "DOID:2841")
+rule (asthma "UMLS:C0004096")
+rule (asthma "UMLS:C0085129")
+rule (asthma "UMLS:C0340062")
+rule (asthma "UMLS:C3714497")
+rule (asthma "MESH:D001249")
+rule (asthma "MESH:D016535")
+rule (asthma "NCIT:C28397")
+rule (asthma "ICD9:493")
+rule (asthma "HP:0002099")
+
+rule (result d p a) <--
+  (imatinib d)
+  (edge d p a)
+  (asthma a)

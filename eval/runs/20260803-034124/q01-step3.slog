@@ -1,0 +1,18 @@
+;; q01 step 3
+;; n_rows=0 cached=False relation=q_92877c8a510195ae
+
+table (pd_gene str)
+table (ad_gene str)
+table (tremor_gene str)
+table (equiv str str)
+table (both str)
+table (norm str str)
+table (result str)
+
+;; genes associated with both PD and AD (join across vocabularies)
+rule (both g) <-- (pd_gene g) (ad_gene g)
+rule (both g) <-- (pd_gene g) (equiv g e) (ad_gene e)
+
+;; of those, which are also tremor-associated
+rule (result g) <-- (both g) (tremor_gene g)
+rule (result g) <-- (both g) (equiv g e) (tremor_gene e)

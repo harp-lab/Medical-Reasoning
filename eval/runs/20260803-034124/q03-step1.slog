@@ -1,0 +1,30 @@
+;; q03 step 1
+;; n_rows=1 cached=False relation=q_172986d25a3c5292
+
+table (edge str str str)
+table (drug_set str)
+table (dis_set str)
+table (result str str str)
+
+rule (drug_set "CHEBI:45783")
+rule (drug_set "CHEBI:38918")
+rule (drug_set "CHEBI:305376")
+rule (drug_set "CHEBI:45781")
+rule (drug_set "CHEMBL.COMPOUND:CHEMBL941")
+rule (drug_set "DRUGBANK:DB00619")
+rule (drug_set "DrugCentral:1423")
+rule (drug_set "HMDB:HMDB0014757")
+rule (drug_set "CHEBI:31690")
+rule (drug_set "CHEMBL.COMPOUND:CHEMBL1642")
+rule (drug_set "MESH:D000068877")
+
+rule (dis_set "MONDO:0004979")
+rule (dis_set "DOID:2841")
+rule (dis_set "MESH:D001249")
+rule (dis_set "MESH:D016535")
+rule (dis_set "NCIT:C28397")
+rule (dis_set "ICD9:493")
+rule (dis_set "HP:0002099")
+
+rule (result d p dis) <-- (drug_set d) (edge d p dis) (dis_set dis)
+rule (result dis p d) <-- (dis_set dis) (edge dis p d) (drug_set d)

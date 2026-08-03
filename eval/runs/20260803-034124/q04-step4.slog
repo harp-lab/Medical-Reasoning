@@ -1,0 +1,7 @@
+;; q04 step 4
+;; n_rows=8 cached=False relation=q_7c0b5463e804c9c3
+
+table (edge_dir str str str str str)
+table (result str str)
+
+rule (result aspect dir) <-- (edge_dir _ "biolink:affects" _ aspect dir)

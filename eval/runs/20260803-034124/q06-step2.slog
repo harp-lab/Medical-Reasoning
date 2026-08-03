@@ -1,0 +1,18 @@
+;; q06 step 2
+;; n_rows=47 cached=False relation=q_d05b064beaf7e3eb
+
+table (edge_dir str str str str str)
+table (scn1a str)
+table (result str str str str)
+
+rule (scn1a "NCBIGene:6323")
+rule (scn1a "ENSEMBL:ENSG00000144285")
+rule (scn1a "HGNC:10585")
+rule (scn1a "OMIM:182389")
+rule (scn1a "UMLS:C1419856")
+rule (scn1a "UniProtKB:P35498")
+rule (scn1a "PR:P35498")
+rule (scn1a "UMLS:C1741237")
+rule (scn1a "MESH:C568242")
+
+rule (result p aspect direction g) <-- (scn1a g) (edge_dir d p g aspect direction)

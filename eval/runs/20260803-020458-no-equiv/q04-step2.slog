@@ -1,0 +1,20 @@
+;; q04 step 2
+;; n_rows=20 cached=False relation=q_e7096fb29e533ebe
+
+table (edge_dir str str str str str)
+table (ca2 str)
+table (result str str str)
+
+rule (ca2 "NCBIGene:760")
+rule (ca2 "ENSEMBL:ENSG00000104267")
+rule (ca2 "HGNC:1373")
+rule (ca2 "OMIM:611492")
+rule (ca2 "UMLS:C1413043")
+rule (ca2 "UniProtKB:P00918")
+rule (ca2 "PR:P00918")
+rule (ca2 "UMLS:C5196589")
+rule (ca2 "MESH:C000629674")
+
+rule (result p asp dir) <--
+  (edge_dir _ p o asp dir)
+  (ca2 o)

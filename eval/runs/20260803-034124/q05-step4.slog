@@ -1,0 +1,16 @@
+;; q05 step 4
+;; n_rows=4 cached=False relation=q_ab78497ff59f5b46
+
+table (edge_dir str str str str str)
+table (upreg_drug str)
+table (result str str)
+
+rule (upreg_drug "DrugCentral:2706")
+rule (upreg_drug "DrugCentral:2735")
+rule (upreg_drug "DrugCentral:1109")
+rule (upreg_drug "DrugCentral:2873")
+rule (upreg_drug "DrugCentral:1754")
+
+rule (result d g) <--
+  (upreg_drug d)
+  (edge_dir d "biolink:regulates" g _ "decreased")

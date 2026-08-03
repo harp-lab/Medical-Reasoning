@@ -1,0 +1,33 @@
+;; q02 step 1
+;; n_rows=3874 cached=False relation=q_9762ba06be6265fa
+
+table (edge str str str)
+table (node str str str)
+table (pd_set str)
+table (ad_set str)
+table (result str str str)
+
+rule (pd_set "MONDO:0005180")
+rule (pd_set "DOID:14330")
+rule (pd_set "UMLS:C0030567")
+rule (pd_set "MESH:D010300")
+rule (pd_set "NCIT:C26845")
+rule (pd_set "ICD9:332")
+
+rule (ad_set "MONDO:0004975")
+rule (ad_set "DOID:10652")
+rule (ad_set "UMLS:C0002395")
+rule (ad_set "MESH:D000544")
+rule (ad_set "NCIT:C2866")
+rule (ad_set "ICD9:331.0")
+rule (ad_set "HP:0002511")
+
+rule (result g name "PD") <--
+  (pd_set d)
+  (edge g "biolink:gene_associated_with_condition" d)
+  (node g name _)
+
+rule (result g name "AD") <--
+  (ad_set d)
+  (edge g "biolink:gene_associated_with_condition" d)
+  (node g name _)

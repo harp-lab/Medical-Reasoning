@@ -1,0 +1,8 @@
+;; q05 step 5
+;; n_rows=5 cached=False relation=q_3184324acdf5ad9b
+
+table (edge str str str)
+table (result str)
+
+rule (result dis) <--
+  (edge "DrugCentral:2706" "biolink:treats" dis)

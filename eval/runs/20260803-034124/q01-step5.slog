@@ -1,0 +1,19 @@
+;; q01 step 5
+;; n_rows=97 cached=False relation=q_34a2969a071d7b9d
+
+table (edge str str str)
+table (node str str str)
+table (tremor_dis str)
+table (result str str)
+
+rule (tremor_dis "HP:0001337")
+rule (tremor_dis "NCIT:C38038")
+rule (tremor_dis "UMLS:C0040822")
+rule (tremor_dis "UMLS:C0234369")
+rule (tremor_dis "UMLS:C1527384")
+rule (tremor_dis "MESH:D014202")
+
+rule (result p subjcat) <--
+  (tremor_dis t)
+  (edge s p t)
+  (node s _ subjcat)

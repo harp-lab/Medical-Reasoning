@@ -1,0 +1,35 @@
+;; q01 step 3
+;; n_rows=0 cached=False relation=q_2a027cac046479bc
+
+table (edge str str str)
+table (pd_set str)
+table (ad_set str)
+table (tremor_set str)
+table (dgene str)
+table (result str str)
+
+rule (pd_set "MONDO:0005180")
+rule (pd_set "DOID:14330")
+rule (pd_set "UMLS:C0030567")
+rule (pd_set "MESH:D010300")
+rule (pd_set "NCIT:C26845")
+rule (pd_set "ICD9:332")
+rule (ad_set "MONDO:0004975")
+rule (ad_set "DOID:10652")
+rule (ad_set "UMLS:C0002395")
+rule (ad_set "MESH:D000544")
+rule (ad_set "NCIT:C2866")
+rule (ad_set "ICD9:331.0")
+rule (ad_set "HP:0002511")
+rule (tremor_set "HP:0001337")
+rule (tremor_set "NCIT:C38038")
+rule (tremor_set "UMLS:C0040822")
+rule (tremor_set "UMLS:C0234369")
+rule (tremor_set "UMLS:C1527384")
+rule (tremor_set "MESH:D014202")
+
+rule (dgene g) <-- (pd_set d) (edge g "biolink:gene_associated_with_condition" d)
+rule (dgene g) <-- (ad_set d) (edge g "biolink:gene_associated_with_condition" d)
+
+rule (result g p) <-- (dgene g) (tremor_set t) (edge g p t)
+rule (result g p) <-- (dgene g) (tremor_set t) (edge t p g)

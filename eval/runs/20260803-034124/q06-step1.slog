@@ -1,0 +1,47 @@
+;; q06 step 1
+;; n_rows=0 cached=False relation=q_64c29baca7a6f8c7
+
+table (edge_dir str str str str str)
+table (ca2 str)
+table (scn5a str)
+table (scn1a str)
+table (down_ca2 str)
+table (down_scn5a str)
+table (down_scn1a str)
+table (result str)
+
+rule (ca2 "NCBIGene:760")
+rule (ca2 "ENSEMBL:ENSG00000104267")
+rule (ca2 "HGNC:1373")
+rule (ca2 "OMIM:611492")
+rule (ca2 "UMLS:C1413043")
+rule (ca2 "UniProtKB:P00918")
+rule (ca2 "PR:P00918")
+rule (ca2 "UMLS:C5196589")
+rule (ca2 "MESH:C000629674")
+
+rule (scn5a "NCBIGene:6331")
+rule (scn5a "ENSEMBL:ENSG00000183873")
+rule (scn5a "HGNC:10593")
+rule (scn5a "OMIM:600163")
+rule (scn5a "UMLS:C1419864")
+rule (scn5a "UniProtKB:Q14524")
+rule (scn5a "PR:Q14524")
+rule (scn5a "UMLS:C1143897")
+rule (scn5a "MESH:C568320")
+
+rule (scn1a "NCBIGene:6323")
+rule (scn1a "ENSEMBL:ENSG00000144285")
+rule (scn1a "HGNC:10585")
+rule (scn1a "OMIM:182389")
+rule (scn1a "UMLS:C1419856")
+rule (scn1a "UniProtKB:P35498")
+rule (scn1a "PR:P35498")
+rule (scn1a "UMLS:C1741237")
+rule (scn1a "MESH:C568242")
+
+rule (down_ca2 d) <-- (ca2 g) (edge_dir d "biolink:affects" g _ "downregulated")
+rule (down_scn5a d) <-- (scn5a g) (edge_dir d "biolink:affects" g _ "downregulated")
+rule (down_scn1a d) <-- (scn1a g) (edge_dir d "biolink:affects" g _ "downregulated")
+
+rule (result d) <-- (down_ca2 d) (down_scn5a d) (down_scn1a d)

@@ -1,0 +1,16 @@
+;; q04 step 1
+;; REJECTED before compiling: ["no `table (result ...)` -- the answer relation must be declared and named 'result'"]
+
+table ca2(id).
+ca2("NCBIGene:760").
+ca2("ENSEMBL:ENSG00000104267").
+ca2("HGNC:1373").
+ca2("OMIM:611492").
+ca2("UMLS:C1413043").
+ca2("UniProtKB:P00918").
+ca2("PR:P00918").
+ca2("UMLS:C5196589").
+ca2("MESH:C000629674").
+
+table result(pred, aspect, direction).
+result(P, A, D) <-- edge_dir(_, P, O, A, D) ca2(O).

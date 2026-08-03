@@ -1,0 +1,74 @@
+;; Views over the raw KG2 relations, run once when the session loads.
+;;
+;; Two reasons these exist:
+;;   1. Ergonomics.  kg2_edges has 15 positional columns; a generated query that
+;;      has to write twelve underscores gets one wrong eventually.  These views
+;;      give the 3- and 5-column shapes queries actually want.
+;;   2. Index cost.  A freshly opened relation only carries an identity-order
+;;      index (daemon/database.h ensureDefaultIndex), which on 15 columns puts
+;;      subject at position 14 -- useless for subject/object lookups.  The first
+;;      query binding those forces a new index over 57M rows.  Building indexes
+;;      over 3-column views is far cheaper.
+;;
+;; kg2_edges columns, in order:
+;;    1 core_predicate  2 knowledge_source  3 negated  4 :END_ID
+;;    5 predicate_label 6 qualified_object_aspect 7 qualified_object_direction
+;;    8 qualified_predicate 9 relation_label 10 source_predicate
+;;   11 :START_ID 12 update_date 13 predicate:TYPE 14 subject 15 object
+;;
+;; kg2_nodes columns, in order:
+;;    1 :LABEL 2 category_label 3 creation_date 4 deprecated 5 full_name
+;;    6 has_biological_sequence 7 id:ID 8 iri 9 knowledge_source 10 name
+;;   11 replaced_by 12 update_date 13 category
+
+table (kg2_edges str str str str str str str str str str str str str str str)
+table (kg2_nodes str str str str str str str str str str str str str)
+table (kg2_node_synonym str str)
+table (kg2_node_publication str str)
+
+table (edge str str str)
+table (edge_dir str str str str str)
+table (node str str str)
+table (edge_rel str str str)
+table (equiv str str)
+
+;; Asserted, non-negated edges only.
+;;
+;; p is core_predicate (col 1) -- the biolink vocabulary that list_predicates()
+;; returns, e.g. "biolink:treats".  NOT predicate:TYPE (col 13), which carries
+;; source-specific names like "GO:positively_regulates"; that one is exposed
+;; separately as edge_rel below.
+rule (edge s p o) <--
+  (kg2_edges p _ "False" _ _ _ _ _ _ _ _ _ _ s o)
+
+;; Same, carrying the qualifier columns that express direction.  Only
+;; "biolink:regulates" populates dir, with values upregulated / downregulated /
+;; increased / decreased.
+rule (edge_dir s p o asp dir) <--
+  (kg2_edges p _ "False" _ _ asp dir _ _ _ _ _ _ s o)
+
+;; The source-specific predicate, for when the biolink one is too coarse.
+rule (edge_rel s ptype o) <--
+  (kg2_edges _ _ "False" _ _ _ _ _ _ _ _ _ ptype s o)
+
+;; Identifier bridge.  KG2 does NOT merge equivalent entities: the same gene is a
+;; separate node per source vocabulary (NCBIGene:6622 / UniProtKB:P37840 /
+;; HGNC:11138 are all SNCA), linked by same_as / close_match.  So joining two
+;; independently-derived entity sets on the raw id silently returns nothing --
+;; which reads as "no such entities" rather than "your keys don't match".
+;;
+;; Join through equiv instead:
+;;   rule (result g) <-- (gene_a g) (equiv g e) (gene_b e)
+;;
+;; Reflexive and symmetric, but deliberately NOT transitively closed: a closure
+;; over 3.8M close_match edges risks collapsing large unrelated groups into one
+;; blob.  One hop covers the cross-vocabulary case that actually bites.
+rule (equiv a a) <-- (node a _ _)
+rule (equiv a b) <-- (edge a "biolink:same_as" b)
+rule (equiv b a) <-- (edge a "biolink:same_as" b)
+rule (equiv a b) <-- (edge a "biolink:close_match" b)
+rule (equiv b a) <-- (edge a "biolink:close_match" b)
+
+;; id:ID (col 7), name (col 10), category (col 13).
+rule (node id nm cat) <--
+  (kg2_nodes _ _ _ _ _ _ id _ _ nm _ _ cat)

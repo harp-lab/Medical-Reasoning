@@ -1,0 +1,51 @@
+;; q02 step 5
+;; n_rows=7 cached=False relation=q_0d4f1e104c04e229
+
+table (edge str str str)
+table (pd_ad str)
+table (tremor str)
+table (cpred str)
+table (dgene str)
+table (alias str str)
+table (result str str str)
+
+rule (pd_ad "MONDO:0005180")
+rule (pd_ad "DOID:14330")
+rule (pd_ad "UMLS:C0030567")
+rule (pd_ad "MESH:D010300")
+rule (pd_ad "NCIT:C26845")
+rule (pd_ad "ICD9:332")
+rule (pd_ad "MONDO:0004975")
+rule (pd_ad "DOID:10652")
+rule (pd_ad "UMLS:C0002395")
+rule (pd_ad "MESH:D000544")
+rule (pd_ad "NCIT:C2866")
+rule (pd_ad "ICD9:331.0")
+rule (pd_ad "HP:0002511")
+
+rule (tremor "HP:0001337")
+rule (tremor "NCIT:C38038")
+rule (tremor "UMLS:C0040822")
+rule (tremor "UMLS:C0234369")
+rule (tremor "UMLS:C1527384")
+rule (tremor "MESH:D014202")
+
+rule (cpred "biolink:causes")
+rule (cpred "biolink:predisposes")
+rule (cpred "biolink:contributes_to")
+rule (cpred "biolink:affects")
+rule (cpred "biolink:gene_associated_with_condition")
+
+rule (dgene h) <-- (pd_ad d) (edge h "biolink:gene_associated_with_condition" d)
+
+rule (alias h h) <-- (dgene h)
+rule (alias h x) <-- (dgene h) (edge h "biolink:same_as" x)
+rule (alias h x) <-- (dgene h) (edge x "biolink:same_as" h)
+rule (alias h x) <-- (dgene h) (edge h "biolink:close_match" x)
+rule (alias h x) <-- (dgene h) (edge x "biolink:close_match" h)
+
+rule (result h x p) <--
+  (alias h x)
+  (cpred p)
+  (tremor t)
+  (edge x p t)

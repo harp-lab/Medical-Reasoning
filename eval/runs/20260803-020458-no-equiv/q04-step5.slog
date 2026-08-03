@@ -1,0 +1,6 @@
+;; q04 step 5
+;; n_rows=53 cached=False relation=q_6fe5f8507a44dd53
+
+table (edge_dir str str str str str)
+table (result str str str str)
+rule (result p o asp dir) <-- (edge_dir "DrugCentral:2706" p o asp dir)

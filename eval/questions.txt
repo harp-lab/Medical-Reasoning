@@ -1,0 +1,14 @@
+# One question per line. Blank lines and lines starting with # are ignored.
+# Replace these with your own.
+
+What genes are related to Parkinson's disease, and Alzheimer's disease? Which of these induce tremor?
+
+What genes are related to Parkinson's disease, or Alzheimer's disease? Which of these induce tremor?
+
+Does Imatinib treat asthama ?
+
+A patient overexpresses CA2 and underexpresses GABRB2. Which drugs downregulate CA2 and upregulate GABRB2, and what diseases are those drugs known to treat?
+
+Which drugs upregulate GABRB2 and also downregulate a sodium channel gene? What do they treat?
+
+Topiramate downregulates CA2, SCN5A and SCN1A. Are there other drugs that downregulate all three, and do they treat the same diseases?
