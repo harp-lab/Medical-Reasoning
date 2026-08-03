@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "MR": {
+      "command": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/miniconda3/envs/MR/bin/python",
+      "args": ["mcp/mcp_server.py"],
+      "env": {
+        "SOUFFLE_BIN": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/miniconda3/envs/MR/bin/souffle",
+        "KG2_DATA_DIR": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/Projects/MedicalReasoning/data"
+      }
+    }
+  }
+}

@@ -1,30 +1,9 @@
-# Python-generated files
 __pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
-
-# Virtual environments
-.venv
-
-.claude
-
-rtx-kg2_edges_2.8.1.tsv
-
-rtx-kg2_nodes_2.8.1.tsv
-
-souffle_out/
-
-zip/
-
-.env
+*.pyc
 
 .DS_Store
-
-_build_main_nb.py
-
-nodes_index.parquet
-
-unorg.ipynb
+.claude/
+.env
+archive/
+data/
+docs/
