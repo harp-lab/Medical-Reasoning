@@ -15,16 +15,17 @@
 set -euo pipefail
 
 TC=/home.na1/ad.wsu.edu/aayush.shrestha/pvt/miniconda3/envs/slogtc
-MR=/home.na1/ad.wsu.edu/aayush.shrestha/pvt/Projects/MedicalReasoning
+MR=/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning
+RACKET=/home.na1/ad.wsu.edu/aayush.shrestha/pvt/racket/bin
 
-export PATH="$TC/bin:$HOME/racket/bin:$PATH"
+export PATH="$TC/bin:$RACKET:$PATH"
 export CPATH="$TC/include"
 export LIBRARY_PATH="$TC/lib"
 export LD_LIBRARY_PATH="$TC/lib:${LD_LIBRARY_PATH:-}"
 export SLOG_NO_MEM_CAP=1
 export SLOG_MEM_MAX="${SLOG_MEM_MAX:-150G}"
 export SLOG_SERVER_PORT="${SLOG_SERVER_PORT:-8642}"
-export KG2_SLOG_DB="${KG2_SLOG_DB:-dataTest3}"
+export KG2_SLOG_DB="${KG2_SLOG_DB:-dataTest4}"
 
 # Refuse rather than start a load that will thrash.  No reservation is possible
 # here (cgroups are root-only, memlock is 8 MB, no systemd user session), so a

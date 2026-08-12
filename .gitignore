@@ -7,3 +7,6 @@ __pycache__/
 archive/
 data/
 docs/
+tmp/
+eval/runs/
+preprocess/

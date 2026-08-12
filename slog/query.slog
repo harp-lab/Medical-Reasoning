@@ -1,0 +1,3 @@
+table (kg2_norm str str)
+table (result str str)
+rule (result a b) <-- (kg2_norm "HGNC:11138" b) (kg2_norm a b)

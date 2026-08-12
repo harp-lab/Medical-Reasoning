@@ -25,30 +25,33 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 PROJECT = HERE.parent
-TOOLS = ["list_predicates", "resolve_entity", "search_nodes", "expand_entity",
-         "session_status", "kg_schema", "run_slog", "name_curies"]
-ALLOWED = [f"mcp__MR__{t}" for t in TOOLS]
+TOOLS = ["list_predicates", "resolve_entity", "expand_entity", "run_slog", "name_curies"]
+# Write/Edit/Read are required: the Slog program is written to slog/query.slog by Claude
+# itself, and run_slog executes whatever is in that file.
+ALLOWED = [f"mcp__MR__{t}" for t in TOOLS] + ["Write", "Edit", "Read"]
 TIMEOUT_S = int(os.environ.get("EVAL_TIMEOUT", "1800"))
 
 
-def preflight():
-    """Warn loudly about the two things that silently ruin a run."""
-    sys.path.insert(0, str(PROJECT / "mcp"))
+def available_ram_gb():
     try:
-        import slog_client as slog
-        st = slog.status()
-        rss = slog.slogd_rss_gb()
-        if not st.get("loaded"):
-            print("note: session is cold -- the first question pays ~6 min to load", flush=True)
-        else:
-            print(f"session warm: slogd at {rss} GB, {slog.available_ram_gb()} GB free", flush=True)
-        # RSS grows monotonically per query; SLOG_MEM_MAX does not reliably stop it
-        if rss and rss > 200:
-            print(f"WARNING: slogd is at {rss} GB and RSS is never returned to the OS. "
-                  f"Restart the session server for a clean slate before a long run.",
-                  flush=True)
-    except Exception as e:
-        print(f"WARNING: cannot reach the Slog session server ({e}).", flush=True)
+        with open("/proc/meminfo") as f:
+            for line in f:
+                if line.startswith("MemAvailable:"):
+                    return int(int(line.split()[1]) / 1048576)
+    except OSError:
+        return None
+    return None
+
+
+def preflight():
+    """Check the session server is listening; every question fails without it."""
+    import socket
+    port = int(os.environ.get("SLOG_SERVER_PORT", "8642"))
+    try:
+        socket.create_connection(("127.0.0.1", port), timeout=5).close()
+        print(f"session server up on :{port}, {available_ram_gb()} GB free", flush=True)
+    except OSError as e:
+        print(f"WARNING: nothing listening on 127.0.0.1:{port} ({e})", flush=True)
         print("  Start it with slog/kg2-server.sh, or every question will fail.", flush=True)
         if input("  continue anyway? [y/N] ").strip().lower() != "y":
             sys.exit(1)
@@ -109,6 +112,23 @@ def result_field(res, key):
         return None
 
 
+def query_file_content(call):
+    """The new query.slog contents if this call wrote it, else None.
+
+    Claude writes the program to the file itself, so the program text lives in a Write
+    (or Edit) call rather than in run_slog's arguments.
+    """
+    tool = call.get("tool") or ""
+    inp = call.get("input") or {}
+    if "query.slog" not in str(inp.get("file_path", "")):
+        return None
+    if tool == "Write":
+        return inp.get("content")
+    if tool == "Edit":
+        return f";; (Edit) replaced:\n;;   {inp.get('old_string', '')[:120]}\n\n{inp.get('new_string', '')}"
+    return None
+
+
 def write_programs(outdir, tag, parsed):
     """Save each generated program as its own .slog file, so it can be rerun as-is.
 
@@ -117,22 +137,27 @@ def write_programs(outdir, tag, parsed):
     """
     written = []
     n = 0
+    pending = None
     for c in parsed["calls"]:
-        prog = (c.get("input") or {}).get("program")
-        if not prog:
+        tool = c.get("tool") or ""
+        prog = query_file_content(c)
+        if prog is not None:
+            # remember the newest version of query.slog; the next run_slog ran this
+            pending = prog
+            continue
+        if not tool.endswith("run_slog"):
             continue
         n += 1
         rows = result_field(c.get("result"), "n_rows")
-        cached = result_field(c.get("result"), "cached")
-        problems = result_field(c.get("result"), "problems")
-        rel = result_field(c.get("result"), "relation")
+        err = result_field(c.get("result"), "error")
         head = [f";; {tag} step {n}"]
-        if problems:
-            head.append(f";; REJECTED before compiling: {problems}")
+        if err:
+            head.append(f";; ERROR: {err}")
         else:
-            head.append(f";; n_rows={rows} cached={cached} relation={rel}")
+            head.append(f";; n_rows={rows}")
         path = outdir / f"{tag}-step{n}.slog"
-        path.write_text("\n".join(head) + "\n\n" + prog.strip() + "\n")
+        path.write_text("\n".join(head) + "\n\n"
+                        + (pending or ";; (program not captured)").strip() + "\n")
         written.append(path.name)
     return written
 
@@ -147,18 +172,17 @@ def write_report(path, question, parsed):
     for c in parsed["calls"]:
         tool = (c.get("tool") or "?").replace("mcp__MR__", "")
         lines.append(f"### {tool}")
-        prog = (c.get("input") or {}).get("program")
+        prog = query_file_content(c)
         if prog:
             lines += ["", "```slog", prog.strip(), "```", ""]
         else:
             lines += ["", "```json", json.dumps(c.get("input"), indent=2)[:800], "```", ""]
         n = result_field(c.get("result"), "n_rows")
-        cached = result_field(c.get("result"), "cached")
-        problems = result_field(c.get("result"), "problems")
-        if problems:
-            lines += [f"REJECTED: {problems}", ""]
+        err = result_field(c.get("result"), "error")
+        if err:
+            lines += [f"ERROR: {err}", ""]
         elif n is not None:
-            lines += [f"n_rows={n} cached={cached}", ""]
+            lines += [f"n_rows={n}", ""]
     lines += ["## Answer", "", parsed["answer"] or "(none)", ""]
     Path(path).write_text("\n".join(lines))
 
@@ -176,17 +200,16 @@ def main():
     outdir.mkdir(parents=True, exist_ok=True)
     summary = outdir / "summary.tsv"
     with summary.open("w") as f:
-        f.write("n\tsecs\tturns\tcost_usd\ttool_calls\tslog_runs\trejected\tcached\t"
+        f.write("n\tsecs\tturns\tcost_usd\ttool_calls\tslog_runs\terrors\t"
                 "max_rows\tdenied\tstatus\tquestion\n")
 
-    import slog_client as slog          # preflight() already put mcp/ on the path
     min_free = int(os.environ.get("EVAL_MIN_FREE_GB", "60"))
 
     for i, q in enumerate(questions, 1):
         # slogd RSS grows per query and dropping relations does not return it, so
         # check before each question rather than trusting SLOG_MEM_MAX -- the soft
         # cap has been observed growing straight through into swap.
-        free = slog.available_ram_gb()
+        free = available_ram_gb()
         if free is not None and free < min_free:
             print(f"\nSTOPPING: only {free} GB free (need {min_free}). "
                   f"Restart the session server to reclaim it; "
@@ -226,16 +249,15 @@ def main():
         progs = write_programs(outdir, tag, p)
 
         slog_calls = [c for c in p["calls"] if (c.get("tool") or "").endswith("run_slog")]
-        rejected = sum(1 for c in slog_calls if result_field(c.get("result"), "problems"))
-        cached = sum(1 for c in slog_calls if result_field(c.get("result"), "cached") is True)
+        errors = sum(1 for c in slog_calls if result_field(c.get("result"), "error"))
         rows = [result_field(c.get("result"), "n_rows") for c in slog_calls]
         rows = [r for r in rows if isinstance(r, int)]
         with summary.open("a") as f:
             f.write(f"{tag}\t{secs:.0f}\t{p['turns']}\t{p['cost']}\t{len(p['calls'])}\t"
-                    f"{len(slog_calls)}\t{rejected}\t{cached}\t{max(rows) if rows else 0}\t"
+                    f"{len(slog_calls)}\t{errors}\t{max(rows) if rows else 0}\t"
                     f"{len(p['denials'])}\t{'TIMEOUT' if timed_out else 'ok'}\t{q}\n")
         print(f"  {secs:.0f}s  {len(p['calls'])} tool calls, {len(slog_calls)} slog runs, "
-              f"{rejected} rejected, max_rows={max(rows) if rows else 0}"
+              f"{errors} errors, max_rows={max(rows) if rows else 0}"
               + (f", programs: {', '.join(progs)}" if progs else ""), flush=True)
         if p["denials"]:
             print(f"  DENIED: {json.dumps(p['denials'])[:200]}", flush=True)

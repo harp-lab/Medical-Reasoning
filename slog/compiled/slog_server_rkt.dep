@@ -1,1 +1,0 @@
-("9.2" ta6le ("a5cdc5abf703322dd1d15816ae188a46ee00dc10" . "73e250ee8f15a77330a6dc2ceb4400af65af26c9") #"/home.na1/ad.wsu.edu/aayush.shrestha/pvt/Projects/slog/compiler/session.rkt" (collects #"json" #"main.rkt") (collects #"racket" #"main.rkt") (collects #"racket" #"runtime-config.rkt") (collects #"racket" #"tcp.rkt"))

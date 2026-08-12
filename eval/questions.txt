@@ -12,3 +12,5 @@ A patient overexpresses CA2 and underexpresses GABRB2. Which drugs downregulate 
 Which drugs upregulate GABRB2 and also downregulate a sodium channel gene? What do they treat?
 
 Topiramate downregulates CA2, SCN5A and SCN1A. Are there other drugs that downregulate all three, and do they treat the same diseases?
+
+Which genes does Topiramate affect that are also associated with epilepsy?

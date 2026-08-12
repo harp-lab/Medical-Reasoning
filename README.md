@@ -1,48 +1,77 @@
 # MedicalReasoning
 
-Querying the RTX-KG2 biomedical knowledge graph with Datalog, exposed to Claude Code
-through a local MCP server.
+Querying the RTX-KG2 biomedical knowledge graph with Datalog (Slog), exposed to Claude
+Code through a local MCP server.
 
 ## Layout
 
 ```
 mcp/          the MCP server
-  mcp_server.py       tool definitions (FastMCP)
-  kg2_core.py         query execution + NCATS entity grounding
+  mcp_server.py       5 tool definitions (FastMCP)
+  kg2_core.py         NCATS grounding, predicate list, result naming
   instructions/       kg2.md -- query conventions, surfaced to the client
-slog/         Slog engine integration
-  slog_hold.rkt       resident session: loads the KG once and holds it
-  kg2-hold.sh         launcher (sets the clang/gmp/boost toolchain env)
-pipeline/     data preparation
-  run_import4.sh      builds the Slog database from the source TSVs
-  count_predicates.py
-notebooks/    exploratory work
-docs/         STATUS.md -- current state, data layout, how Slog works
-archive/      superseded scripts, .dl scratch files, old Souffle output
+  slog_client.py      TCP client for the resident Slog session
+slog/
+  slog_server.rkt     resident session: loads the KG once and holds it
+  kg2-server.sh       launcher (clang/gmp/boost toolchain env + memory cap)
+  kg2-stop.sh         stops the server AND its orphan-prone slogd
+  setup.slog          views over the raw relations, run at session load
+preprocess/
+  build_kg2_norm.py   NodeNorm mapping for all 11.3M nodes -> quoted TSV
+  build_norm_db.sh    that TSV -> the kg2norm database
+pipeline/
+  import_kg.sh        data/import_ready -> a new KG database
+eval/
+  run_questions.py    run a question list through claude -p, record everything
 data/
-  db/         Slog binary databases.  dataTest3 is the live one.
-  source/     original 2.8.1 exports and column headers
-  interim/    intermediate TSVs from the import pipeline
-  reference/  predicate lists, node index
+  db/                 the Slog databases (dataTest3, kg2norm)
+  import_ready/       quoted, import-ready TSVs -- the durable rebuild set
+  norm_ready/         kg2_norm.2.tsv only (csv2db imports whole folders)
+  source/             original 2.8.1 node export and column headers
+  reference/          predicate lists
 ```
 
-## The database
+## The databases
 
-`data/db/dataTest3` is the imported KG: 56,965,146 edges, 11,342,763 nodes, plus synonym
-and publication tables. Slog requires databases at `data/<name>` relative to *its own*
-repo, so `slog/data/dataTest3` is a symlink pointing here. Moving `data/db/dataTest3`
-means retargeting that symlink.
+Both live in `data/db/` and are symlinked into the slog repo's `data/`, because Slog
+resolves database names as `data/<name>` relative to its own repo.
 
-Column mappings for both tables are in `docs/STATUS.md` §3. Read them before writing
-queries — the edge relation has 15 positional columns.
+| db | contents |
+|---|---|
+| `dataTest3` | 56,965,146 edges, 11,342,763 nodes, synonyms, publications |
+| `kg2norm` | `kg2_norm(kg2_id, preferred_id)`, 11,342,763 rows |
+
+`slog_server.rkt` opens `dataTest3` and links `kg2norm` into the same session, so both
+are queryable together. `dataTest3` is never modified.
+
+## Relations you query
+
+```
+edge(subj, pred, obj)                        asserted, non-negated edges
+edge_dir(subj, pred, obj, aspect, direction) plus qualifier columns
+edge_rel(subj, ptype, obj)                   source-specific predicate
+node(id, name, category)
+kg2_norm(kg2_id, preferred_id)               canonical CURIE, for cross-vocab joins
+```
+
+KG2 does not merge equivalent entities, so joining two derived sets on the raw id
+returns zero rows. Join on the canonical key from `kg2_norm`. Column mappings for the
+raw 15- and 13-column relations are at the top of `slog/setup.slog`.
 
 ## Running
 
-The MCP server is configured in `.mcp.json` and starts with Claude Code.
+1. Start the session server: `slog/kg2-server.sh`. First query loads the KG — about six
+   minutes and ~97 GB. Stop it with `slog/kg2-stop.sh`, never a bare `kill`.
+2. The MCP server starts with Claude Code, per `.mcp.json`.
 
-Slog queries need the toolchain env that `slog/kg2-hold.sh` sets: clang from the
-`slogtc` conda env, plus `SLOG_NO_MEM_CAP=1` (no user D-Bus for `systemd-run`) and
-`SLOG_MEM_MAX`. Loading the KG takes about 5 minutes and ~81 GB of RAM.
+## Rebuilding
 
-Rebuilding the database from scratch: `pipeline/run_import4.sh`, roughly 40 minutes. It
-writes intermediates to `/tmp` to stay off the 100 GB home quota.
+```bash
+python preprocess/build_kg2_norm.py    # ~2 h, resumable
+./preprocess/build_norm_db.sh          # ~3 min
+./pipeline/import_kg.sh dataTest4      # ~40 min, from data/import_ready
+```
+
+The raw unquoted 18-column edge export lives on `/tmp/$USER/kg2_raw` — it is 40 GB and
+only needed to regenerate `data/import_ready`, which is already quoted. Everything under
+`/tmp` is expendable; re-download RTX-KG2 2.8.1 if it is wiped.

@@ -9,8 +9,9 @@ not a reload.
 ```
 edge(subj, pred, obj)                        asserted, non-negated edges
 edge_dir(subj, pred, obj, aspect, direction) same, plus the qualifier columns
+edge_rel(subj, ptype, obj)                   source-specific predicate, e.g. GO:...
 node(id, name, category)                     id -> readable name
-equiv(id_a, id_b)                            same entity under a different CURIE
+kg2_norm(kg2_id, preferred_id)               kg2 id -> its canonical CURIE
 ```
 
 - `subj`, `obj` — CURIEs, e.g. `MONDO:0005180`
@@ -19,18 +20,19 @@ equiv(id_a, id_b)                            same entity under a different CURIE
 - Negated edges are already excluded; there is no `neg` column to filter.
 
 `kg2_edges` (15 columns) and `kg2_nodes` (13 columns) are also live if you need a column
-the views omit. Call `kg_schema()` for the full list with arities.
+the views omit.
 
 ## Workflow
 
 1. **`list_predicates()`** — the valid predicates; pick the relevant one(s).
 2. **`resolve_entity(term)`** for each named entity (drug, disease, gene, …).
-   If several plausible senses come back (different biolink types, or unrelated concepts),
-   **stop and ask the user which they mean** — only auto-proceed on a single clear match.
-   Use `search_nodes(term)` if `resolve_entity` comes back empty.
+   If several plausible senses come back, **stop and ask the user which they mean** —
+   only auto-proceed on a single clear match.
 3. **`expand_entity([chosen CURIEs])`** → the exact KG2 CURIE set to match in the query.
-4. **Write a Slog program** (conventions below).
-5. **`run_slog(program)`** to execute it.
+4. **Write your Slog program to `slog/query.slog`** using Write or Edit (conventions
+   below). This file is the program that runs — there is no other place to put it.
+5. **`run_slog()`** to execute it. It takes no program argument; it runs whatever is
+   currently in `slog/query.slog`. To change the query, edit the file and call it again.
 6. **`name_curies([result CURIEs])`** → human-readable labels.
 
 ## Writing the Slog
@@ -38,13 +40,11 @@ the views omit. Call `kg_schema()` for the full list with arities.
 Syntax is `rule (head) <-- (body goals)`. Body goals are listed with no commas. `_` is a
 wildcard.
 
-**Every relation must be declared with `table`, including ones you derive.** This is the
-most common mistake. Declaring a relation the session already has is fine as long as the
-arity matches.
+**Every relation must be declared with `table`, including ones you derive and ones the
+session already has.** This is the most common mistake.
 
-**The answer relation must be declared and named `result`.** The server renames it
-internally to a content-addressed name, so asking the same question twice reuses the
-first answer instead of recomputing it.
+**The answer relation must be declared and named `result`.** It is dropped before each
+run, so it always starts empty.
 
 Bind each entity as a membership relation over the exact CURIEs from `expand_entity`:
 
@@ -86,48 +86,46 @@ rule (result x) <-- (reach x)
 ## Joining derived entity sets -- read this
 
 KG2 does not merge equivalent entities. The same gene is a separate node per source
-vocabulary (`NCBIGene:6622`, `UniProtKB:P37840` and `HGNC:11138` are all SNCA), linked
-by `same_as` / `close_match` edges.
+vocabulary: `NCBIGene:6622`, `UniProtKB:P37840` and `HGNC:11138` are all SNCA.
 
 So joining two independently-derived sets on the raw id **silently returns zero rows**,
 which looks like "no such entities" but actually means "your keys are from different
-vocabularies". Join through `equiv`:
+vocabularies". Join on the canonical key from `kg2_norm` instead:
 
 ```slog
 ;; WRONG -- returns 0 even when the biology overlaps
 rule (result g) <-- (gene_pd g) (tremor_gene g)
 
-;; RIGHT
-rule (result g) <-- (gene_pd g) (equiv g e) (tremor_gene e)
+;; RIGHT -- both sides mapped to their canonical CURIE, then joined on it
+table (kg2_norm str str)
+rule (result k) <-- (gene_pd g) (kg2_norm g k) (tremor_gene t) (kg2_norm t k)
+```
+
+`kg2_norm` is a precomputed NodeNormalizer mapping over all 11.3M nodes. About a third
+of them map to a different CURIE than their own. An id NodeNorm could not resolve maps
+to itself, so joining through it never silently drops rows.
+
+**Counting.** Count distinct canonical keys, not raw ids — the same entity appears once
+per vocabulary, so counting ids over-counts.
+
+**Naming results.** `name_curies` resolves KG2 node ids, and a canonical key is not
+guaranteed to be one. Return a real KG2 id alongside the key:
+
+```slog
+rule (result g k) <-- (gene_pd g) (kg2_norm g k) (tremor_gene t) (kg2_norm t k)
 ```
 
 Single-hop queries against `edge` are unaffected; this only matters when you join two
-sets you derived separately. `expand_entity` already does this for the CURIEs you put
-*into* a query -- `equiv` is for the ones the query produces.
-
-## Reusing earlier work
-
-Relations persist for the life of the session. `kg_schema()` shows what is already
-materialised, including results of earlier questions. If a follow-up question builds on
-one, reference that relation by name and only the new part is computed.
-
-Prefer decomposing a question into named steps at the level of meaningful concepts
-("drugs treating X", "genes upregulated by Y") rather than one monolithic rule. Steps are
-individually reusable; a single large rule is not.
+sets you derived separately. `expand_entity` already handles the CURIEs you put *into* a
+query -- `kg2_norm` is for the ones the query produces.
 
 ## Practical notes
 
-- Programs are validated against the live schema before compiling, so arity and
-  undeclared-relation mistakes come back immediately. Read the `problems` list and resubmit.
 - Results are capped at 500 rows; `n_rows` tells you the true count.
 - Do not query `kg2_edges` when `edge` will do — the views are much cheaper.
-- **Always bind at least one constant** (a predicate or a CURIE) in a rule over the base
-  relations. A rule with only variables scans tens of millions of rows; it is rejected
-  before compiling.
-- A relation being live in the session does not exempt you from declaring it: every
-  program needs its own `table` line for every relation it mentions.
-- `session_status()` tells you whether the session is warm. A cold one takes about six
-  minutes and ~97 GB to load.
+- **Always bind at least one constant** (a predicate or a CURIE) in a rule over `edge`,
+  `node` or `kg2_norm`. A rule with only variables scans tens of millions of rows.
+- The first `run_slog` of a session takes several minutes to load the KG.
 - A warning about an "unkeyed co-recursive scan" means a rule rereads a whole relation
   each iteration because nothing was bound at that join point. Bind a key earlier or
   split the rule.
