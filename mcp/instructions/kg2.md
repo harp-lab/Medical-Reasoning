@@ -1,8 +1,10 @@
 # RTX-KG2 query guide
 
 RTX-KG2 is a biomedical knowledge graph queried with **Slog**, a Datalog dialect. The
-graph is already loaded in a resident session, so queries cost a compile (a few seconds),
-not a reload.
+graph is already loaded in a resident session, so a query costs a compile plus evaluation,
+not a reload. Read "What a query costs" below before writing rules -- the cost is driven
+almost entirely by how you structure the program, and not at all by how much data it
+touches.
 
 ## The relations you query
 
@@ -35,10 +37,89 @@ the views omit.
    currently in `slog/query.slog`. To change the query, edit the file and call it again.
 6. **`name_curies([result CURIEs])`** → human-readable labels.
 
+## What a query costs
+
+Measured on this deployment:
+
+```
+total  ~=  11s compile      (paid whenever the program text changes at all)
+       +  ~13s per derived relation
+```
+
+A "derived relation" is any relation you declare and fill with a rule -- every `table` you
+introduce beyond `result`. The engine must finish and store each one before anything can
+read it, and each of those stopping points costs ~13 seconds of fixed bookkeeping.
+
+**What is free.** How much data you touch. A rule over `biolink:affects` (4.7M edges,
+166k results) costs the same as one over `biolink:directly_physically_interacts_with`
+(12k edges, 5k results) -- both ~13s. Do not narrow a predicate, add a filter, or restrict
+a scan for speed. It buys nothing. Ask the question you actually mean.
+
+**What is expensive.** Extra stages. Two hops written as one rule ran in 10.7s warm /
+23.7s cold. The same two hops split through one intermediate relation cost 27s. A query
+with four intermediates cost 78s.
+
+So **inline aggressively**. Prefer one rule with a longer body over several rules chained
+through named relations:
+
+```slog
+;; SLOW -- two derived relations, ~13s each
+table (hop1 str)
+rule (hop1 g)   <-- (met m) (edge m "biolink:interacts_with" g)
+rule (result d) <-- (hop1 g) (edge g "biolink:gene_associated_with_condition" d)
+
+;; FAST -- one derived relation, same joins, same answer
+rule (result d) <--
+  (met m)
+  (edge m "biolink:interacts_with" g)
+  (edge g "biolink:gene_associated_with_condition" d)
+```
+
+Keep an intermediate relation only when it is genuinely reused by several rules, or when
+recursion requires it. A relation used exactly once should be inlined.
+
+**A CURIE set is a stage too.** Collecting anchor CURIEs into a membership relation costs
+a full ~13s even though it does no real work. For a handful of CURIEs, write one rule per
+CURIE with the CURIE as a literal, all with the same head -- many rules writing one
+relation are still a single stage:
+
+```slog
+;; SLOW -- pd_set is a second stage (measured 36.4s)
+table (pd_set str)
+rule (pd_set "MONDO:0005180")
+rule (pd_set "DOID:14330")
+rule (result name) <-- (pd_set d) (edge drug "biolink:treats" d) (node drug name _)
+
+;; FAST -- one stage, same 1569 answers (measured 25.1s)
+rule (result name) <-- (edge drug "biolink:treats" "MONDO:0005180") (node drug name _)
+rule (result name) <-- (edge drug "biolink:treats" "DOID:14330")    (node drug name _)
+```
+
+Above roughly ten CURIEs the repetition stops paying -- keep the membership relation and
+accept the one stage rather than emitting a hundred rules.
+
+**Decide on names before you run, not after.** Running a query that returns bare CURIEs
+and then editing it to add `node` costs a second full compile and execution -- ~30s for
+nothing. Choose up front:
+
+- want readable output? declare `table (node str str str)` in the first version and join
+  `(node x name _)` in the rule. `node` is a base view, so this adds no stage.
+- happy with ids? return them and call `name_curies` on the results, which takes
+  milliseconds.
+
+Either is fine. Re-running the query purely to add naming is the mistake.
+
+Because every edit recompiles, getting the program right on the first attempt is worth
+more than iterating quickly. Re-read the rules below before running.
+
 ## Writing the Slog
 
 Syntax is `rule (head) <-- (body goals)`. Body goals are listed with no commas. `_` is a
 wildcard.
+
+**Comments start with `;;`, not `;`.** A single semicolon is a syntax error — it fails
+with the unhelpful message `End of file expected.`, and the echoed lines point at the top
+of the file rather than the offending comment.
 
 **Every relation must be declared with `table`, including ones you derive and ones the
 session already has.** This is the most common mistake.
@@ -46,7 +127,9 @@ session already has.** This is the most common mistake.
 **The answer relation must be declared and named `result`.** It is dropped before each
 run, so it always starts empty.
 
-Bind each entity as a membership relation over the exact CURIEs from `expand_entity`:
+Bind each entity as a membership relation over the exact CURIEs from `expand_entity` —
+but only once the set is too large to inline (see "A CURIE set is a stage too" above).
+Never derive a set of *predicates* this way; write those as literals in the rule body:
 
 ```slog
 table (edge str str str)
@@ -119,13 +202,49 @@ Single-hop queries against `edge` are unaffected; this only matters when you joi
 sets you derived separately. `expand_entity` already handles the CURIEs you put *into* a
 query -- `kg2_norm` is for the ones the query produces.
 
+## Reporting the answer -- read this
+
+Report the query output and nothing else. A table of two columns, the CURIE and its
+resolved name, in the order Slog returned the rows:
+
+```
+| CURIE          | name              |
+|----------------|-------------------|
+| CHEBI:6801     | metformin         |
+| CHEBI:4911     | etoposide         |
+```
+
+To have both columns, return the id from the query and resolve the names -- either carry
+the name out of the query with `(node x name _)` and return `(result x name)`, or return
+ids and call `name_curies`. Never return names alone; the CURIE is the identifier and must
+be shown.
+
+Do **not** write:
+
+- any explanation of what the query did, or which relations or predicates were used
+- any commentary on the entities -- what a drug is for, why a result is plausible or
+  surprising, which ones look like noise
+- any summary sentence before or after the table
+- caveats about knowledge-graph coverage, or suggested follow-up questions
+- the Slog program itself (it is already saved in the log)
+
+Two terse exceptions, because omitting them would misrepresent the result. Give them as a
+single line above the table, not as prose:
+
+- truncated: `1627 rows, showing 500`
+- empty: `0 rows`
+
+If the user asks for an explanation, give one then. Unasked, the table is the whole answer.
+
 ## Practical notes
 
 - Results are capped at 500 rows; `n_rows` tells you the true count.
-- Do not query `kg2_edges` when `edge` will do — the views are much cheaper.
-- **Always bind at least one constant** (a predicate or a CURIE) in a rule over `edge`,
-  `node` or `kg2_norm`. A rule with only variables scans tens of millions of rows.
-- The first `run_slog` of a session takes several minutes to load the KG.
-- A warning about an "unkeyed co-recursive scan" means a rule rereads a whole relation
-  each iteration because nothing was bound at that join point. Bind a key earlier or
-  split the rule.
+- Prefer `edge` over `kg2_edges` for readability, not for speed — scan size does not
+  affect runtime here.
+- The first `run_slog` of a session takes several minutes to load the KG (~9 min). A
+  syntax error on that first call wastes the whole load, so check the program carefully
+  before the first run of a session.
+- **Never split a rule to make it faster.** Splitting adds a derived relation, which adds
+  ~13s. If a rule feels expensive, the fix is fewer stages, not more.
+- A returned row count of 0 usually means a join across vocabularies (see above), not an
+  expensive query — check `kg2_norm` before rewriting for performance.

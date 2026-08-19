@@ -21,7 +21,7 @@
 
 (define (ensure-session!)
   (unless sess
-    (note "opening ~a (expect several minutes and tens of GB)" DB)
+    (note "opening ~a" DB)
     (define t0 (current-inexact-monotonic-milliseconds))
     (define s (make-session #:echo void))
     (session-open! s DB)
@@ -99,7 +99,14 @@
       (flush-output out)
       (loop))))
 
-(note "listening on 127.0.0.1:~a (db ~a, cold until first request)" PORT DB)
+;; Load before opening the port, so anything that connects successfully knows
+;; the KG is resident.  The alternative -- listen first, load on the first
+;; request -- charges the whole load to whichever query happens to arrive
+;; first, which makes that query look pathologically slow in the logs.
+(note "loading ~a before accepting connections" DB)
+(void (ensure-session!))  ; void: a module-level expression would print the session struct
+
+(note "listening on 127.0.0.1:~a (db ~a, ready)" PORT DB)
 (define listener (tcp-listen PORT 8 #t "127.0.0.1"))
 (let accept-loop ()
   (define-values (in out) (tcp-accept listener))
