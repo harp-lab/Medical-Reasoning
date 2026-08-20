@@ -1,0 +1,642 @@
+2026-08-18 11:08:09.465 | INFO    | mr            | ==============================================================================
+2026-08-18 11:08:09.465 | INFO    | mr            | KG2 MCP session 20260818-110809 starting
+2026-08-18 11:08:09.465 | INFO    | mr            | pid=315478  python=3.11.15
+2026-08-18 11:08:09.466 | INFO    | mr            | session dir : /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/data/logs/20260818-110809
+2026-08-18 11:08:09.466 | INFO    | mr            |   mcp.log     -- this narrative log
+2026-08-18 11:08:09.466 | INFO    | mr            |   summary.csv -- one row per tool call
+2026-08-18 11:08:09.466 | INFO    | mr            |   queries/    -- the exact program each run_slog executed
+2026-08-18 11:08:09.467 | INFO    | mr            | ==============================================================================
+2026-08-18 11:08:09.470 | INFO    | server        | query file: /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog
+2026-08-18 11:08:09.470 | INFO    | server        | slog server: 127.0.0.1:8642 (client timeout 3600s)
+2026-08-18 11:08:09.470 | INFO    | server        | node DB: /tmp/kg2_nodes_aayush.shrestha@ad.wsu.edu.sqlite
+2026-08-18 11:08:09.471 | INFO    | server        | ==============================================================================
+2026-08-18 11:08:09.478 | INFO    | server        | starting FastMCP stdio server -- logging to /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/data/logs/20260818-110809
+2026-08-18 11:13:31.953 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:13:31.954 | INFO    | server        | >> TOOL resolve_entity  term='Parkinson disease'  limit=10  biolink_type=None
+2026-08-18 11:13:31.954 | INFO    | kg2_core      |   name-resolution lookup: term='Parkinson disease' limit=10 biolink_type=(any)
+2026-08-18 11:13:32.328 | INFO    | kg2_core      |   .. HTTP name-resolution-sri.renci.org replied in 374ms
+2026-08-18 11:13:32.328 | INFO    | kg2_core      |   name-resolution returned 10 candidate(s)
+2026-08-18 11:13:32.328 | INFO    | server        |   candidates for 'Parkinson disease':
+2026-08-18 11:13:32.328 | INFO    | server        | id                      name                                      category         score 
+2026-08-18 11:13:32.329 | INFO    | server        | ----------------------  ----------------------------------------  ---------------  ------
+2026-08-18 11:13:32.329 | INFO    | server        | MONDO:0005180           Parkinson disease                         biolink:Disease  3588.5
+2026-08-18 11:13:32.329 | INFO    | server        | MONDO:0006966           secondary Parkinson disease               biolink:Disease  1090.9
+2026-08-18 11:13:32.329 | INFO    | server        | MONDO:0001945           postencephalitic Parkinson disease        biolink:Disease  1056.8
+2026-08-18 11:13:32.330 | INFO    | server        | MONDO:0008199           late-onset Parkinson disease              biolink:Disease  875.2 
+2026-08-18 11:13:32.330 | INFO    | server        | MONDO:0008200           autosomal dominant Parkinson disease 1    biolink:Disease  862.6 
+2026-08-18 11:13:32.330 | INFO    | server        | MONDO:0013060           autosomal recessive Parkinson disease 14  biolink:Disease  862.6 
+2026-08-18 11:13:32.330 | INFO    | server        | PANTHER.PATHWAY:P00049  Parkinson disease                         biolink:Pathway  855.3 
+2026-08-18 11:13:32.331 | INFO    | server        | MONDO:0013625           Parkinson disease 17                      biolink:Disease  827.6 
+2026-08-18 11:13:32.331 | INFO    | server        | MONDO:0011562           autosomal dominant Parkinson disease 4    biolink:Disease  779.0 
+2026-08-18 11:13:32.331 | INFO    | server        | MONDO:0014231           juvenile onset Parkinson disease 19A      biolink:Disease  779.0 
+2026-08-18 11:13:32.332 | INFO    | server        | << TOOL resolve_entity finished in 378ms
+2026-08-18 11:13:32.332 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:13:32.363 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:13:32.364 | INFO    | server        | >> TOOL list_predicates
+2026-08-18 11:13:32.365 | INFO    | kg2_core      |   loaded 61 predicates from /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/data/reference/distinct_core_predicate.tsv in 1ms
+2026-08-18 11:13:32.365 | INFO    | server        |   top predicates: biolink:has_participant, biolink:subclass_of, biolink:occurs_in, biolink:affects, biolink:related_to  ... +56 more
+2026-08-18 11:13:32.365 | INFO    | server        | << TOOL list_predicates finished in 1ms
+2026-08-18 11:13:32.365 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:13:37.967 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:13:37.967 | INFO    | server        | >> TOOL expand_entity  n_curies=1
+2026-08-18 11:13:37.967 | INFO    | server        |   input CURIEs (1):
+2026-08-18 11:13:37.968 | INFO    | server        |     MONDO:0005180
+2026-08-18 11:13:37.968 | INFO    | server        |   * expand MONDO:0005180 ...
+2026-08-18 11:13:37.968 | INFO    | kg2_core      |   node-normalizer clique for MONDO:0005180
+2026-08-18 11:13:38.443 | INFO    | kg2_core      |   .. HTTP nodenormalization-sri.renci.org replied in 474ms
+2026-08-18 11:13:38.443 | INFO    | kg2_core      |   clique for MONDO:0005180: 16 equivalent id(s) -> MONDO:0005180, DOID:14330, OMIM.PS:168600, UMLS:C0030567, MESH:D010300, MEDDRA:10013113, MEDDRA:10033801, MEDDRA:10034007, MEDDRA:10034008, MEDDRA:10061536  ... +6 more
+2026-08-18 11:13:38.443 | INFO    | kg2_core      |   opening existing node DB /tmp/kg2_nodes_aayush.shrestha@ad.wsu.edu.sqlite (2225 MB)
+2026-08-18 11:13:38.444 | INFO    | kg2_core      |   expand MONDO:0005180: 16 clique id(s) -> 6 present in KG2 (10 not in KG2) in 476ms
+2026-08-18 11:13:38.444 | INFO    | kg2_core      |     kept   : MONDO:0005180, DOID:14330, UMLS:C0030567, MESH:D010300, NCIT:C26845, ICD9:332
+2026-08-18 11:13:38.444 | INFO    | server        |   + expand MONDO:0005180 done in 476ms
+2026-08-18 11:13:38.444 | INFO    | server        |   1 input CURIE(s) -> 6 distinct KG2 id(s)
+2026-08-18 11:13:38.445 | INFO    | server        |   kg2_ids (6):
+2026-08-18 11:13:38.445 | INFO    | server        |     MONDO:0005180  DOID:14330     UMLS:C0030567  MESH:D010300
+2026-08-18 11:13:38.445 | INFO    | server        |     NCIT:C26845    ICD9:332
+2026-08-18 11:13:38.445 | INFO    | server        | << TOOL expand_entity finished in 478ms
+2026-08-18 11:13:38.446 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:13:46.400 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:13:46.401 | INFO    | server        | >> TOOL run_slog  limit=500
+2026-08-18 11:13:46.403 | INFO    | server        |   query file /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog (342 bytes, modified 2026-08-18 11:13:43)
+2026-08-18 11:13:46.403 | INFO    | server        |   archived as queries/004_run_slog.slog
+2026-08-18 11:13:46.403 | INFO    | server        |   shape: 3 table(s) declared, 2 derived relation(s) -- expect ~13s per derived relation
+2026-08-18 11:13:46.404 | INFO    | server        |   program:
+                                                        | ;; What drugs treat Parkinson disease?
+                                                        | table (edge str str str)
+                                                        | table (pd_set str)
+                                                        | table (result str)
+                                                        | 
+                                                        | rule (pd_set "MONDO:0005180")
+                                                        | rule (pd_set "DOID:14330")
+                                                        | rule (pd_set "UMLS:C0030567")
+                                                        | rule (pd_set "MESH:D010300")
+                                                        | rule (pd_set "NCIT:C26845")
+                                                        | rule (pd_set "ICD9:332")
+                                                        | 
+                                                        | rule (result drug) <--
+                                                        |   (pd_set d)
+                                                        |   (edge drug "biolink:treats" d)
+2026-08-18 11:13:46.404 | INFO    | slog          |   -> slog drop: {"op": "drop", "rel": "result"}
+2026-08-18 11:20:55.840 | ERROR   | slog          |   x slog drop failed after 7m 09.4s: transform path is unbound: result
+2026-08-18 11:20:55.840 | INFO    | server        |   no previous `result` to drop (transform path is unbound: result)
+2026-08-18 11:20:55.840 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-18 11:21:01.942 | INFO    | slog          |   <- slog dump ok in 6.10s (95 bytes of response)
+2026-08-18 11:21:01.943 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-18 11:21:07.255 | INFO    | slog          |   <- slog dump ok in 5.31s (243 bytes of response)
+2026-08-18 11:21:07.255 | INFO    | server        |   * slog run (KG load on first call of a session) ...
+2026-08-18 11:21:07.256 | INFO    | slog          |   -> slog run: {"op": "run", "path": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog"}
+2026-08-18 11:22:10.545 | INFO    | slog          |   <- slog run ok in 1m 03.3s (12 bytes of response)
+2026-08-18 11:22:10.546 | WARNING | slog          |   !! slog run took 1m 03.3s. First call of a session pays the KG load (several minutes); later calls this slow mean the query itself is expensive.
+2026-08-18 11:22:10.546 | INFO    | server        |   + slog run (KG load on first call of a session) done in 1m 03.3s
+2026-08-18 11:22:10.546 | INFO    | server        |   * dump `result` (limit 500) ...
+2026-08-18 11:22:10.546 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "result", "limit": 500}
+2026-08-18 11:22:17.106 | INFO    | slog          |   <- slog dump ok in 6.56s (9104 bytes of response)
+2026-08-18 11:22:17.107 | INFO    | server        |   + dump `result` (limit 500) done in 6.56s
+2026-08-18 11:22:17.109 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-18 11:22:17.114 | INFO    | slog          |   <- slog dump ok in 6ms (159 bytes of response)
+2026-08-18 11:22:17.114 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-18 11:22:17.121 | INFO    | slog          |   <- slog dump ok in 6ms (451 bytes of response)
+2026-08-18 11:22:17.121 | INFO    | server        |   timing: total=8m 30.7s  compile=7m 32.9s  exec=0ms  (strata compiled=13, executed=2)
+2026-08-18 11:22:17.121 | INFO    | server        |   daemon: fixpoint=39389.8ms  iterations=4  rule_fires=1633
+2026-08-18 11:22:17.122 | INFO    | server        |   cost model predicted ~35s for this shape
+2026-08-18 11:22:17.122 | INFO    | server        |   result: n_rows=1627 returned=500 truncated=True
+2026-08-18 11:22:17.123 | INFO    | server        |   IR -- CURIEs out of the answer relation, unnamed at this point:
+2026-08-18 11:22:17.123 | INFO    | server        |   result CURIEs (500):
+2026-08-18 11:22:17.124 | INFO    | server        |     UMLS:C0142469     UMLS:C0225326     UMLS:C0729338     UMLS:C0454512
+2026-08-18 11:22:17.124 | INFO    | server        |     UMLS:C0664589     UMLS:C0021083     UMLS:C0917964     UMLS:C0068899
+2026-08-18 11:22:17.124 | INFO    | server        |     UMLS:C0042209     UMLS:C1527378     UMLS:C0006462     UMLS:C0073561
+2026-08-18 11:22:17.124 | INFO    | server        |     UMLS:C0870721     UMLS:C0011816     UMLS:C1706912     UMLS:C5238484
+2026-08-18 11:22:17.125 | INFO    | server        |     UMLS:C0024730     UMLS:C0245561     UMLS:C0003297     UMLS:C0558024
+2026-08-18 11:22:17.125 | INFO    | server        |     UMLS:C0166552     UMLS:C0027930     UMLS:C0086583     UMLS:C4277545
+2026-08-18 11:22:17.125 | INFO    | server        |     UMLS:C0014935     UMLS:C0679750     UMLS:C0283703     UMLS:C0243072
+2026-08-18 11:22:17.125 | INFO    | server        |     UMLS:C0037659     UMLS:C0033497     UMLS:C0016365     UMLS:C0041290
+2026-08-18 11:22:17.126 | INFO    | server        |     UMLS:C0128329     UMLS:C0038317     UMLS:C0600015     UMLS:C0175637
+2026-08-18 11:22:17.126 | INFO    | server        |     UMLS:C0040732     UMLS:C0007876     UMLS:C0047611     UMLS:C0011501
+2026-08-18 11:22:17.126 | INFO    | server        |     UMLS:C0016642     UMLS:C0031008     UMLS:C0026457     UMLS:C0020852
+2026-08-18 11:22:17.127 | INFO    | server        |     UMLS:C0042210     UMLS:C0019590     UMLS:C0472699     UMLS:C0076147
+2026-08-18 11:22:17.127 | INFO    | server        |     UMLS:C0597834     UMLS:C1434556     UMLS:C0040771     UMLS:C1171257
+2026-08-18 11:22:17.127 | INFO    | server        |     UMLS:C0020740     UMLS:C0870913     UMLS:C0936072     UMLS:C0001443
+2026-08-18 11:22:17.128 | INFO    | server        |     UMLS:C0195775     UMLS:C0006949     UMLS:C1516735     UMLS:C0023570
+2026-08-18 11:22:17.128 | INFO    | server        |     UMLS:C1562292     DrugCentral:333   UMLS:C0046983     UMLS:C0006982
+2026-08-18 11:22:17.128 | INFO    | server        |     UMLS:C0017986     UMLS:C1101411     UMLS:C0014939     UMLS:C0026055
+2026-08-18 11:22:17.128 | INFO    | server        |     UMLS:C0055633     UMLS:C0056650     UMLS:C0935576     UMLS:C0127649
+2026-08-18 11:22:17.129 | INFO    | server        |     UMLS:C0419189     UMLS:C0000477     UMLS:C0026606     UMLS:C1532411
+2026-08-18 11:22:17.129 | INFO    | server        |     UMLS:C0005527     UMLS:C0524861     UMLS:C0039845     UMLS:C0545084
+2026-08-18 11:22:17.129 | INFO    | server        |     UMLS:C0162589     UMLS:C0073096     UMLS:C0966149     UMLS:C0140801
+2026-08-18 11:22:17.129 | INFO    | server        |     UMLS:C0038803     UMLS:C0304411     UMLS:C0002712     UMLS:C4475891
+2026-08-18 11:22:17.130 | INFO    | server        |     UMLS:C0013786     UMLS:C0008952     UMLS:C0084178     UMLS:C0003295
+2026-08-18 11:22:17.130 | INFO    | server        |     UMLS:C0220780     UMLS:C2922974     UMLS:C1138408     UMLS:C0520484
+2026-08-18 11:22:17.130 | INFO    | server        |     UMLS:C0150593     UMLS:C0206788     UMLS:C1883583     UMLS:C0068994
+2026-08-18 11:22:17.131 | INFO    | server        |     UMLS:C1454234     DrugCentral:144   UMLS:C0556033     UMLS:C0036753
+2026-08-18 11:22:17.131 | INFO    | server        |     UMLS:C0087162     NCBIGene:1312     UMLS:C0949266     UMLS:C0056501
+2026-08-18 11:22:17.131 | INFO    | server        |     UMLS:C0048297     UMLS:C0075083     UMLS:C0042291     UMLS:C0023776
+2026-08-18 11:22:17.131 | INFO    | server        |     UMLS:C0002844     UMLS:C0007975     UMLS:C0184617     UMLS:C0035762
+2026-08-18 11:22:17.132 | INFO    | server        |     UMLS:C0001648     UMLS:C0031935     UMLS:C0740218     UMLS:C0279328
+2026-08-18 11:22:17.132 | INFO    | server        |     UMLS:C0080331     UMLS:C0034927     UMLS:C0003015     UMLS:C0013015
+2026-08-18 11:22:17.132 | INFO    | server        |     UMLS:C0024977     UMLS:C0150184     UMLS:C0076252     UMLS:C0001047
+2026-08-18 11:22:17.132 | INFO    | server        |     UMLS:C0353697     UMLS:C0078489     UMLS:C0343138     UMLS:C0870222
+2026-08-18 11:22:17.133 | INFO    | server        |     UMLS:C0017118     UMLS:C0061851     UMLS:C1514967     UMLS:C0237934
+2026-08-18 11:22:17.133 | INFO    | server        |     UMLS:C0073590     UMLS:C0207661     UMLS:C0107994     UMLS:C0598695
+2026-08-18 11:22:17.133 | INFO    | server        |     UMLS:C0146876     UMLS:C0181741     UMLS:C0021079     UMLS:C0012290
+2026-08-18 11:22:17.134 | INFO    | server        |     UMLS:C0242708     UMLS:C0020974     UMLS:C0036720     UMLS:C0600364
+2026-08-18 11:22:17.134 | INFO    | server        |     UMLS:C0023870     UMLS:C0064774     UMLS:C0059932     UMLS:C0034754
+2026-08-18 11:22:17.134 | INFO    | server        |     UMLS:C0587591     UMLS:C0058698     UMLS:C0024911     UMLS:C0056633
+2026-08-18 11:22:17.134 | INFO    | server        |     UMLS:C0055729     UMLS:C0003211     UMLS:C0031184     UMLS:C0031916
+2026-08-18 11:22:17.135 | INFO    | server        |     DrugCentral:2276  UMLS:C0078844     UMLS:C1273869     UMLS:C0683474
+2026-08-18 11:22:17.135 | INFO    | server        |     UMLS:C0051318     UMLS:C0023369     UMLS:C0699936     UMLS:C0021528
+2026-08-18 11:22:17.135 | INFO    | server        |     UMLS:C0242897     UMLS:C0030040     UMLS:C0344211     UMLS:C0969677
+2026-08-18 11:22:17.135 | INFO    | server        |     UMLS:C0752189     UMLS:C1123457     UMLS:C0010137     UMLS:C0071649
+2026-08-18 11:22:17.136 | INFO    | server        |     UMLS:C0074710     UMLS:C1550600     UMLS:C0006657     DrugCentral:4921
+2026-08-18 11:22:17.136 | INFO    | server        |     UMLS:C0700899     UMLS:C0068168     UMLS:C0041056     DRUGBANK:DB00494
+2026-08-18 11:22:17.136 | INFO    | server        |     UMLS:C0005117     UMLS:C4704697     UMLS:C0010637     UMLS:C0125606
+2026-08-18 11:22:17.136 | INFO    | server        |     UMLS:C0012963     UMLS:C0080232     UMLS:C2717877     UMLS:C0242889
+2026-08-18 11:22:17.137 | INFO    | server        |     UMLS:C0030054     UMLS:C0086225     UMLS:C0696628     UMLS:C0813141
+2026-08-18 11:22:17.137 | INFO    | server        |     UMLS:C0388812     UMLS:C0871707     UMLS:C0179038     UMLS:C0871198
+2026-08-18 11:22:17.137 | INFO    | server        |     UMLS:C0378018     UMLS:C0182934     UMLS:C1138603     DRUGBANK:DB00376
+2026-08-18 11:22:17.137 | INFO    | server        |     UMLS:C0496675     UMLS:C0058218     UMLS:C0751429     UMLS:C0842093
+2026-08-18 11:22:17.138 | INFO    | server        |     UMLS:C0066801     UMLS:C0031007     UMLS:C0025746     UMLS:C1527386
+2026-08-18 11:22:17.138 | INFO    | server        |     UMLS:C0142805     UMLS:C0285984     UMLS:C0911014     UMLS:C0729377
+2026-08-18 11:22:17.138 | INFO    | server        |     UMLS:C0025242     UMLS:C0012132     UMLS:C0012265     UMLS:C0057163
+2026-08-18 11:22:17.138 | INFO    | server        |     UMLS:C0014708     UMLS:C0740287     UMLS:C0024027     UMLS:C0184338
+2026-08-18 11:22:17.139 | INFO    | server        |     UMLS:C0528561     UMLS:C0987131     UMLS:C0381061     UMLS:C0540511
+2026-08-18 11:22:17.139 | INFO    | server        |     UMLS:C0034272     UMLS:C0062127     UMLS:C0053508     UMLS:C0176751
+2026-08-18 11:22:17.139 | INFO    | server        |     UMLS:C0011684     UMLS:C0439775     UMLS:C0163159     UMLS:C0040613
+2026-08-18 11:22:17.140 | INFO    | server        |     UMLS:C1722267     UMLS:C0140182     UMLS:C2981820     UMLS:C0242297
+2026-08-18 11:22:17.140 | INFO    | server        |     UMLS:C0289884     UMLS:C0085203     UMLS:C0032207     UMLS:C0040736
+2026-08-18 11:22:17.140 | INFO    | server        |     UMLS:C0028908     UMLS:C0017797     UMLS:C0358430     UMLS:C0025228
+2026-08-18 11:22:17.140 | INFO    | server        |     UMLS:C0150764     UMLS:C1312149     UMLS:C0003289     UMLS:C0175723
+2026-08-18 11:22:17.141 | INFO    | server        |     UMLS:C1138412     UMLS:C0392535     UMLS:C0037494     UMLS:C0650235
+2026-08-18 11:22:17.141 | INFO    | server        |     UMLS:C0181209     UMLS:C4706197     UMLS:C0023863     UMLS:C0052946
+2026-08-18 11:22:17.142 | INFO    | server        |     UMLS:C2353951     UMLS:C0242913     UMLS:C0011331     UMLS:C0003385
+2026-08-18 11:22:17.142 | INFO    | server        |     UMLS:C0813618     UMLS:C0729168     UMLS:C1098261     UMLS:C0184069
+2026-08-18 11:22:17.142 | INFO    | server        |     UMLS:C0017887     UMLS:C0009818     UMLS:C0006931     UMLS:C0376626
+2026-08-18 11:22:17.142 | INFO    | server        |     UMLS:C0037533     UMLS:C0001164     UMLS:C3852966     UMLS:C0078032
+2026-08-18 11:22:17.143 | INFO    | server        |     UMLS:C0003009     UMLS:C0873188     UMLS:C0010976     UMLS:C0059438
+2026-08-18 11:22:17.143 | INFO    | server        |     UMLS:C0012968     UMLS:C0086930     UMLS:C0018546     UMLS:C0021587
+2026-08-18 11:22:17.143 | INFO    | server        |     UMLS:C0042890     DrugCentral:3521  UMLS:C0206080     UMLS:C0893636
+2026-08-18 11:22:17.144 | INFO    | server        |     UMLS:C0024808     UMLS:C0149684     UMLS:C0377892     UMLS:C0010963
+2026-08-18 11:22:17.144 | INFO    | server        |     UMLS:C0000378     UMLS:C0022471     UMLS:C0489525     UMLS:C0019993
+2026-08-18 11:22:17.144 | INFO    | server        |     UMLS:C0040808     UMLS:C0756261     UMLS:C0034261     UMLS:C0007258
+2026-08-18 11:22:17.145 | INFO    | server        |     UMLS:C1611640     UMLS:C0142340     UMLS:C0546852     UMLS:C1615645
+2026-08-18 11:22:17.145 | INFO    | server        |     UMLS:C0006669     UMLS:C0015827     UMLS:C0007974     UMLS:C0033228
+2026-08-18 11:22:17.145 | INFO    | server        |     UMLS:C0772054     UMLS:C0086511     UMLS:C0018738     UMLS:C0039245
+2026-08-18 11:22:17.145 | INFO    | server        |     UMLS:C0017313     UMLS:C0008287     DRUGBANK:DB00190  UMLS:C0007044
+2026-08-18 11:22:17.145 | INFO    | server        |     UMLS:C1321564     UMLS:C0556030     UMLS:C2945704     UMLS:C0053947
+2026-08-18 11:22:17.146 | INFO    | server        |     UMLS:C0171023     UMLS:C0185026     UMLS:C0700876     UMLS:C0001644
+2026-08-18 11:22:17.146 | INFO    | server        |     UMLS:C0196911     UMLS:C0012030     UMLS:C0082384     UMLS:C0000578
+2026-08-18 11:22:17.146 | INFO    | server        |     UMLS:C0257343     UMLS:C0304229     UMLS:C1136250     UMLS:C0255998
+2026-08-18 11:22:17.146 | INFO    | server        |     UMLS:C0180665     UMLS:C0194810     UMLS:C0376211     UMLS:C0595267
+2026-08-18 11:22:17.147 | INFO    | server        |     UMLS:C0068366     UMLS:C0025741     UMLS:C0028040     UMLS:C0019930
+2026-08-18 11:22:17.147 | INFO    | server        |     UMLS:C0040805     UMLS:C0074460     UMLS:C0180860     UMLS:C0056060
+2026-08-18 11:22:17.147 | INFO    | server        |     UMLS:C1139855     UMLS:C0045724     UMLS:C0026642     UMLS:C0070559
+2026-08-18 11:22:17.147 | INFO    | server        |     DRUGBANK:DB00245  UMLS:C1553667     UMLS:C0022024     UMLS:C0056506
+2026-08-18 11:22:17.148 | INFO    | server        |     UMLS:C0183185     UMLS:C0220821     UMLS:C0242896     UMLS:C0003209
+2026-08-18 11:22:17.148 | INFO    | server        |     UMLS:C0633056     UMLS:C0009011     UMLS:C0185115     UMLS:C0279492
+2026-08-18 11:22:17.148 | INFO    | server        |     DrugCentral:2697  UMLS:C0021461     UMLS:C0020431     UMLS:C0381385
+2026-08-18 11:22:17.149 | INFO    | server        |     UMLS:C0013216     UMLS:C0069939     UMLS:C0012159     UMLS:C0966897
+2026-08-18 11:22:17.149 | INFO    | server        |     UMLS:C0813036     UMLS:C0075857     UMLS:C0304926     UMLS:C0003729
+2026-08-18 11:22:17.149 | INFO    | server        |     UMLS:C0935989     UMLS:C0008845     UMLS:C0529793     UMLS:C0012497
+2026-08-18 11:22:17.150 | INFO    | server        |     UMLS:C0097797     UMLS:C0006353     UMLS:C5392103     UMLS:C0441509
+2026-08-18 11:22:17.150 | INFO    | server        |     UMLS:C0336660     UMLS:C0199451     UMLS:C0042878     UMLS:C0000975
+2026-08-18 11:22:17.150 | INFO    | server        |     UMLS:C0206056     UMLS:C0006213     UMLS:C1311105     UMLS:C0208881
+2026-08-18 11:22:17.150 | INFO    | server        |     UMLS:C1513403     UMLS:C0060926     UMLS:C0181904     UMLS:C0068485
+2026-08-18 11:22:17.151 | INFO    | server        |     UMLS:C0085155     UMLS:C0019392     UMLS:C0199171     DRUGBANK:DB00323
+2026-08-18 11:22:17.151 | INFO    | server        |     UMLS:C0196913     UMLS:C0068788     UMLS:C0150162     UMLS:C0682880
+2026-08-18 11:22:17.151 | INFO    | server        |     UMLS:C1119918     UMLS:C0013231     UMLS:C1530072     UMLS:C0037125
+2026-08-18 11:22:17.151 | INFO    | server        |     UMLS:C0595265     UMLS:C0023749     UMLS:C1100626     UMLS:C0242701
+2026-08-18 11:22:17.152 | INFO    | server        |     UMLS:C0377265     UMLS:C0392806     UMLS:C0184666     UMLS:C0770932
+2026-08-18 11:22:17.152 | INFO    | server        |     UMLS:C1277078     UMLS:C0032015     UMLS:C0454527     UMLS:C0394374
+2026-08-18 11:22:17.152 | INFO    | server        |     UMLS:C0376518     UMLS:C0015952     UMLS:C1293132     UMLS:C1883350
+2026-08-18 11:22:17.153 | INFO    | server        |     UMLS:C0079083     UMLS:C0026549     UMLS:C0002423     UMLS:C0023828
+2026-08-18 11:22:17.153 | INFO    | server        |     UMLS:C0063327     UMLS:C0038039     UMLS:C0237406     UMLS:C0312452
+2026-08-18 11:22:17.153 | INFO    | server        |     UMLS:C0205991     UMLS:C0008425     UMLS:C0001641     UMLS:C0034392
+2026-08-18 11:22:17.153 | INFO    | server        |     UMLS:C0071097     UMLS:C0028008     DrugCentral:1567  UMLS:C4255216
+2026-08-18 11:22:17.154 | INFO    | server        |     UMLS:C0002641     UMLS:C0028678     UMLS:C0013900     UMLS:C0242402
+2026-08-18 11:22:17.154 | INFO    | server        |     UMLS:C0186010     UMLS:C0279033     UMLS:C1364955     UMLS:C0003232
+2026-08-18 11:22:17.154 | INFO    | server        |     UMLS:C0007447     UMLS:C0015506     UMLS:C0026056     UMLS:C0058516
+2026-08-18 11:22:17.154 | INFO    | server        |     UMLS:C0031436     UMLS:C0002911     UMLS:C0281603     UMLS:C0006507
+2026-08-18 11:22:17.155 | INFO    | server        |     UMLS:C0683465     UMLS:C0013794     UMLS:C0071304     UMLS:C3539957
+2026-08-18 11:22:17.155 | INFO    | server        |     UMLS:C0144576     UMLS:C0769581     UMLS:C0011134     UMLS:C0074554
+2026-08-18 11:22:17.155 | INFO    | server        |     UMLS:C3858690     UMLS:C0076316     UMLS:C0071538     UMLS:C0036079
+2026-08-18 11:22:17.155 | INFO    | server        |     UMLS:C0039043     UMLS:C0679543     UMLS:C0237429     UMLS:C1171350
+2026-08-18 11:22:17.156 | INFO    | server        |     UMLS:C0021753     UMLS:C0085208     UMLS:C1504389     UMLS:C1274136
+2026-08-18 11:22:17.156 | INFO    | server        |     UMLS:C0278347     UMLS:C0086969     UMLS:C0043031     UMLS:C0012228
+2026-08-18 11:22:17.156 | INFO    | server        |     UMLS:C0003893     UMLS:C0287163     UMLS:C1963758     UMLS:C0085143
+2026-08-18 11:22:17.156 | INFO    | server        |     UMLS:C0167117     UMLS:C0339897     UMLS:C3242284     UMLS:C0870507
+2026-08-18 11:22:17.157 | INFO    | server        |     UMLS:C0010467     UMLS:C0042105     DRUGBANK:DB00942  UMLS:C0419144
+2026-08-18 11:22:17.157 | INFO    | server        |     UMLS:C0041249     UMLS:C0060794     UMLS:C0011211     UMLS:C0065936
+2026-08-18 11:22:17.157 | INFO    | server        |     UMLS:C0579118     UMLS:C0065331     UMLS:C0949288     UMLS:C0041536
+2026-08-18 11:22:17.158 | INFO    | server        |     UMLS:C1514821     UMLS:C0279493     UMLS:C0278329     UMLS:C0864243
+2026-08-18 11:22:17.158 | WARNING | server        |   !! truncated: 1627 rows exist, only 500 returned (limit 500)
+2026-08-18 11:22:17.158 | INFO    | server        | << TOOL run_slog finished in 8m 30.8s
+2026-08-18 11:22:17.159 | WARNING | server        | !! run_slog took 8m 30.8s -- slow call
+2026-08-18 11:22:17.159 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:24:18.330 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:24:18.331 | INFO    | server        | >> TOOL run_slog  limit=2000
+2026-08-18 11:24:18.333 | INFO    | server        |   query file /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog (418 bytes, modified 2026-08-18 11:24:16)
+2026-08-18 11:24:18.333 | INFO    | server        |   archived as queries/005_run_slog.slog
+2026-08-18 11:24:18.334 | INFO    | server        |   shape: 4 table(s) declared, 2 derived relation(s) -- expect ~13s per derived relation
+2026-08-18 11:24:18.334 | INFO    | server        |   program:
+                                                        | ;; What drugs treat Parkinson disease? -- return distinct node names
+                                                        | table (edge str str str)
+                                                        | table (node str str str)
+                                                        | table (pd_set str)
+                                                        | table (result str)
+                                                        | 
+                                                        | rule (pd_set "MONDO:0005180")
+                                                        | rule (pd_set "DOID:14330")
+                                                        | rule (pd_set "UMLS:C0030567")
+                                                        | rule (pd_set "MESH:D010300")
+                                                        | rule (pd_set "NCIT:C26845")
+                                                        | rule (pd_set "ICD9:332")
+                                                        | 
+                                                        | rule (result name) <--
+                                                        |   (pd_set d)
+                                                        |   (edge drug "biolink:treats" d)
+                                                        |   (node drug name _)
+2026-08-18 11:24:18.335 | INFO    | slog          |   -> slog drop: {"op": "drop", "rel": "result"}
+2026-08-18 11:24:18.348 | INFO    | slog          |   <- slog drop ok in 14ms (12 bytes of response)
+2026-08-18 11:24:18.349 | INFO    | server        |   dropped previous `result` relation
+2026-08-18 11:24:18.349 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-18 11:24:18.354 | INFO    | slog          |   <- slog dump ok in 5ms (159 bytes of response)
+2026-08-18 11:24:18.354 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-18 11:24:18.360 | INFO    | slog          |   <- slog dump ok in 5ms (451 bytes of response)
+2026-08-18 11:24:18.360 | INFO    | server        |   * slog run (KG load on first call of a session) ...
+2026-08-18 11:24:18.360 | INFO    | slog          |   -> slog run: {"op": "run", "path": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog"}
+2026-08-18 11:24:54.654 | INFO    | slog          |   <- slog run ok in 36.29s (12 bytes of response)
+2026-08-18 11:24:54.654 | INFO    | server        |   + slog run (KG load on first call of a session) done in 36.29s
+2026-08-18 11:24:54.654 | INFO    | server        |   * dump `result` (limit 500) ...
+2026-08-18 11:24:54.655 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "result", "limit": 500}
+2026-08-18 11:24:54.710 | INFO    | slog          |   <- slog dump ok in 55ms (10621 bytes of response)
+2026-08-18 11:24:54.711 | INFO    | server        |   + dump `result` (limit 500) done in 56ms
+2026-08-18 11:24:54.712 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-18 11:24:54.717 | INFO    | slog          |   <- slog dump ok in 5ms (223 bytes of response)
+2026-08-18 11:24:54.717 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-18 11:24:54.724 | INFO    | slog          |   <- slog dump ok in 7ms (516 bytes of response)
+2026-08-18 11:24:54.724 | INFO    | server        |   timing: total=36.38s  compile=7.70s  exec=28.60s  (strata compiled=2, executed=2)
+2026-08-18 11:24:54.724 | INFO    | server        |   daemon: fixpoint=22269.3ms  iterations=3  rule_fires=1628
+2026-08-18 11:24:54.725 | INFO    | server        |   cost model predicted ~35s for this shape
+2026-08-18 11:24:54.725 | INFO    | server        |   result: n_rows=1569 returned=500 truncated=True
+2026-08-18 11:24:54.725 | INFO    | server        |   IR -- CURIEs out of the answer relation, unnamed at this point:
+2026-08-18 11:24:54.726 | INFO    | server        |   result CURIEs: (empty)
+2026-08-18 11:24:54.726 | WARNING | server        |   !! truncated: 1569 rows exist, only 500 returned (limit 500)
+2026-08-18 11:24:54.726 | INFO    | server        | << TOOL run_slog finished in 36.40s
+2026-08-18 11:24:54.727 | WARNING | server        | !! run_slog took 36.40s -- slow call
+2026-08-18 11:24:54.727 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:25:53.939 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:25:53.940 | INFO    | server        | >> TOOL resolve_entity  term='hypertension'  limit=10  biolink_type=None
+2026-08-18 11:25:53.940 | INFO    | kg2_core      |   name-resolution lookup: term='hypertension' limit=10 biolink_type=(any)
+2026-08-18 11:25:54.837 | INFO    | kg2_core      |   .. HTTP name-resolution-sri.renci.org replied in 897ms
+2026-08-18 11:25:54.837 | INFO    | kg2_core      |   name-resolution returned 10 candidate(s)
+2026-08-18 11:25:54.837 | INFO    | server        |   candidates for 'hypertension':
+2026-08-18 11:25:54.837 | INFO    | server        | id             name                                            category                   score 
+2026-08-18 11:25:54.838 | INFO    | server        | -------------  ----------------------------------------------  -------------------------  ------
+2026-08-18 11:25:54.838 | INFO    | server        | MONDO:0005044  hypertension                                    biolink:Disease            3770.1
+2026-08-18 11:25:54.838 | INFO    | server        | MONDO:0024664  hypertension, pregnancy-induced                 biolink:Disease            508.4 
+2026-08-18 11:25:54.839 | INFO    | server        | NCIT:C55060    Hypertension, CTCAE                             biolink:PhenotypicFeature  444.1 
+2026-08-18 11:25:54.839 | INFO    | server        | HP:0430034     Hypertension resistant to conventional therapy  biolink:PhenotypicFeature  419.9 
+2026-08-18 11:25:54.839 | INFO    | server        | MONDO:0006810  intracranial hypertension                       biolink:Disease            407.3 
+2026-08-18 11:25:55.069 | INFO    | server        | MONDO:0005149  pulmonary hypertension                          biolink:Disease            393.9 
+2026-08-18 11:25:55.069 | INFO    | server        | MONDO:0001200  secondary hypertension                          biolink:Disease            370.9 
+2026-08-18 11:25:55.070 | INFO    | server        | MONDO:0005080  portal hypertension                             biolink:Disease            370.9 
+2026-08-18 11:25:55.070 | INFO    | server        | MONDO:0001134  essential hypertension                          biolink:Disease            362.3 
+2026-08-18 11:25:55.071 | INFO    | server        | MONDO:0006875  ocular hypertension                             biolink:Disease            353.1 
+2026-08-18 11:25:55.071 | INFO    | server        | << TOOL resolve_entity finished in 1.13s
+2026-08-18 11:25:55.071 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:25:55.099 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:25:55.099 | INFO    | server        | >> TOOL resolve_entity  term='blood pressure'  limit=10  biolink_type=None
+2026-08-18 11:25:55.099 | INFO    | kg2_core      |   name-resolution lookup: term='blood pressure' limit=10 biolink_type=(any)
+2026-08-18 11:25:55.463 | INFO    | kg2_core      |   .. HTTP name-resolution-sri.renci.org replied in 364ms
+2026-08-18 11:25:55.463 | INFO    | kg2_core      |   name-resolution returned 10 candidate(s)
+2026-08-18 11:25:55.463 | INFO    | server        |   candidates for 'blood pressure':
+2026-08-18 11:25:55.464 | INFO    | server        | id              name                                category                   score 
+2026-08-18 11:25:55.464 | INFO    | server        | --------------  ----------------------------------  -------------------------  ------
+2026-08-18 11:25:55.464 | INFO    | server        | UBERON:0000178  blood                               biolink:AnatomicalEntity   1869.2
+2026-08-18 11:25:55.465 | INFO    | server        | HP:0500104      Decreased diastolic blood pressure  biolink:PhenotypicFeature  915.6 
+2026-08-18 11:25:55.465 | INFO    | server        | UMLS:C0005823   Blood Pressure                      biolink:BiologicalProcess  864.5 
+2026-08-18 11:25:55.466 | INFO    | server        | MONDO:0005468   hypotension                         biolink:Disease            771.3 
+2026-08-18 11:25:55.466 | INFO    | server        | MONDO:0005044   hypertension                        biolink:Disease            751.5 
+2026-08-18 11:25:55.466 | INFO    | server        | HP:0500105      Decreased systolic blood pressure   biolink:PhenotypicFeature  726.3 
+2026-08-18 11:25:55.466 | INFO    | server        | NCIT:C54707     Blood Pressure Finding              biolink:PhenotypicFeature  638.1 
+2026-08-18 11:25:55.467 | INFO    | server        | EFO:0006335     systolic blood pressure             biolink:PhenotypicFeature  600.1 
+2026-08-18 11:25:55.467 | INFO    | server        | EFO:0006336     diastolic blood pressure            biolink:PhenotypicFeature  600.1 
+2026-08-18 11:25:55.467 | INFO    | server        | UMLS:C2712122   Normal blood pressure               biolink:PhenotypicFeature  600.1 
+2026-08-18 11:25:55.467 | INFO    | server        | << TOOL resolve_entity finished in 369ms
+2026-08-18 11:25:55.468 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:26:06.747 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:26:06.748 | INFO    | server        | >> TOOL expand_entity  n_curies=1
+2026-08-18 11:26:06.748 | INFO    | server        |   input CURIEs (1):
+2026-08-18 11:26:06.749 | INFO    | server        |     MONDO:0005044
+2026-08-18 11:26:06.749 | INFO    | server        |   * expand MONDO:0005044 ...
+2026-08-18 11:26:06.749 | INFO    | kg2_core      |   node-normalizer clique for MONDO:0005044
+2026-08-18 11:26:07.413 | INFO    | kg2_core      |   .. HTTP nodenormalization-sri.renci.org replied in 663ms
+2026-08-18 11:26:07.413 | INFO    | kg2_core      |   clique for MONDO:0005044: 33 equivalent id(s) -> MONDO:0005044, DOID:10763, EFO:0000537, UMLS:C0020538, UMLS:C0497247, MESH:D006973, MEDDRA:10003168, MEDDRA:10003170, MEDDRA:10005747, MEDDRA:10005750  ... +23 more
+2026-08-18 11:26:07.414 | INFO    | kg2_core      |   expand MONDO:0005044: 33 clique id(s) -> 9 present in KG2 (24 not in KG2) in 665ms
+2026-08-18 11:26:07.414 | INFO    | kg2_core      |     kept   : MONDO:0005044, DOID:10763, EFO:0000537, UMLS:C0020538, UMLS:C0497247, MESH:D006973, NCIT:C3117, ICD9:401-405.99, HP:0000822
+2026-08-18 11:26:07.414 | INFO    | server        |   + expand MONDO:0005044 done in 665ms
+2026-08-18 11:26:07.415 | INFO    | server        |   1 input CURIE(s) -> 9 distinct KG2 id(s)
+2026-08-18 11:26:07.415 | INFO    | server        |   kg2_ids (9):
+2026-08-18 11:26:07.415 | INFO    | server        |     MONDO:0005044    DOID:10763       EFO:0000537      UMLS:C0020538
+2026-08-18 11:26:07.416 | INFO    | server        |     UMLS:C0497247    MESH:D006973     NCIT:C3117       ICD9:401-405.99
+2026-08-18 11:26:07.416 | INFO    | server        |     HP:0000822
+2026-08-18 11:26:07.416 | INFO    | server        | << TOOL expand_entity finished in 668ms
+2026-08-18 11:26:07.416 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:26:14.611 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:26:14.612 | INFO    | server        | >> TOOL run_slog  limit=500
+2026-08-18 11:26:14.614 | INFO    | server        |   query file /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog (533 bytes, modified 2026-08-18 11:26:12)
+2026-08-18 11:26:14.614 | INFO    | server        |   archived as queries/009_run_slog.slog
+2026-08-18 11:26:14.614 | INFO    | server        |   shape: 4 table(s) declared, 2 derived relation(s) -- expect ~13s per derived relation
+2026-08-18 11:26:14.615 | INFO    | server        |   program:
+                                                        | ;; What drugs are used to lower blood pressure? -- things that treat hypertension
+                                                        | table (edge str str str)
+                                                        | table (node str str str)
+                                                        | table (htn_set str)
+                                                        | table (result str)
+                                                        | 
+                                                        | rule (htn_set "MONDO:0005044")
+                                                        | rule (htn_set "DOID:10763")
+                                                        | rule (htn_set "EFO:0000537")
+                                                        | rule (htn_set "UMLS:C0020538")
+                                                        | rule (htn_set "UMLS:C0497247")
+                                                        | rule (htn_set "MESH:D006973")
+                                                        | rule (htn_set "NCIT:C3117")
+                                                        | rule (htn_set "ICD9:401-405.99")
+                                                        | rule (htn_set "HP:0000822")
+                                                        | 
+                                                        | rule (result name) <--
+                                                        |   (htn_set d)
+                                                        |   (edge drug "biolink:treats" d)
+                                                        |   (node drug name _)
+2026-08-18 11:26:14.616 | INFO    | slog          |   -> slog drop: {"op": "drop", "rel": "result"}
+2026-08-18 11:26:14.633 | INFO    | slog          |   <- slog drop ok in 17ms (12 bytes of response)
+2026-08-18 11:26:14.633 | INFO    | server        |   dropped previous `result` relation
+2026-08-18 11:26:14.633 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-18 11:26:14.638 | INFO    | slog          |   <- slog dump ok in 5ms (223 bytes of response)
+2026-08-18 11:26:14.638 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-18 11:26:14.646 | INFO    | slog          |   <- slog dump ok in 8ms (516 bytes of response)
+2026-08-18 11:26:14.646 | INFO    | server        |   * slog run (KG load on first call of a session) ...
+2026-08-18 11:26:14.647 | INFO    | slog          |   -> slog run: {"op": "run", "path": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog"}
+2026-08-18 11:26:44.443 | INFO    | slog          |   <- slog run ok in 29.80s (12 bytes of response)
+2026-08-18 11:26:44.443 | INFO    | server        |   + slog run (KG load on first call of a session) done in 29.80s
+2026-08-18 11:26:44.444 | INFO    | server        |   * dump `result` (limit 500) ...
+2026-08-18 11:26:44.444 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "result", "limit": 500}
+2026-08-18 11:26:44.474 | INFO    | slog          |   <- slog dump ok in 29ms (10488 bytes of response)
+2026-08-18 11:26:44.474 | INFO    | server        |   + dump `result` (limit 500) done in 30ms
+2026-08-18 11:26:44.475 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-18 11:26:44.482 | INFO    | slog          |   <- slog dump ok in 7ms (285 bytes of response)
+2026-08-18 11:26:44.482 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-18 11:26:44.488 | INFO    | slog          |   <- slog dump ok in 5ms (639 bytes of response)
+2026-08-18 11:26:44.488 | INFO    | server        |   timing: total=29.86s  compile=7.05s  exec=22.75s  (strata compiled=2, executed=2)
+2026-08-18 11:26:44.488 | INFO    | server        |   daemon: fixpoint=17795.5ms  iterations=4  rule_fires=2882
+2026-08-18 11:26:44.488 | INFO    | server        |   cost model predicted ~35s for this shape
+2026-08-18 11:26:44.488 | INFO    | server        |   result: n_rows=2588 returned=500 truncated=True
+2026-08-18 11:26:44.489 | INFO    | server        |   IR -- CURIEs out of the answer relation, unnamed at this point:
+2026-08-18 11:26:44.489 | INFO    | server        |   result CURIEs (1):
+2026-08-18 11:26:44.489 | INFO    | server        |     guanacline sulfate (1:1)
+2026-08-18 11:26:44.489 | WARNING | server        |   !! truncated: 2588 rows exist, only 500 returned (limit 500)
+2026-08-18 11:26:44.489 | INFO    | server        | << TOOL run_slog finished in 29.88s
+2026-08-18 11:26:44.489 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:29:40.695 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:29:40.696 | INFO    | server        | >> TOOL resolve_entity  term='metformin'  limit=10  biolink_type=None
+2026-08-18 11:29:40.696 | INFO    | kg2_core      |   name-resolution lookup: term='metformin' limit=10 biolink_type=(any)
+2026-08-18 11:29:41.214 | INFO    | kg2_core      |   .. HTTP name-resolution-sri.renci.org replied in 518ms
+2026-08-18 11:29:41.214 | INFO    | kg2_core      |   name-resolution returned 10 candidate(s)
+2026-08-18 11:29:41.215 | INFO    | server        |   candidates for 'metformin':
+2026-08-18 11:29:41.215 | INFO    | server        | id               name                                                  category                  score 
+2026-08-18 11:29:41.215 | INFO    | server        | ---------------  ----------------------------------------------------  ------------------------  ------
+2026-08-18 11:29:41.216 | INFO    | server        | CHEBI:6801       Metformin                                             biolink:SmallMolecule     6310.7
+2026-08-18 11:29:41.216 | INFO    | server        | RXCUI:577093     metformin / pioglitazone Oral Tablet                  biolink:Drug              573.9 
+2026-08-18 11:29:41.216 | INFO    | server        | RXCUI:1043561    metformin / saxagliptin Extended Release Oral Tablet  biolink:Drug              563.1 
+2026-08-18 11:29:41.216 | INFO    | server        | UNII:V9AZJ7GJZ1  Metformin pamoate                                     biolink:MolecularMixture  432.2 
+2026-08-18 11:29:41.217 | INFO    | server        | RXCUI:378729     metformin / rosiglitazone Oral Tablet                 biolink:Drug              379.3 
+2026-08-18 11:29:41.217 | INFO    | server        | RXCUI:802742     metformin / repaglinide Oral Tablet                   biolink:Drug              379.3 
+2026-08-18 11:29:41.217 | INFO    | server        | UNII:KE1D8AP3J5  Metformin orotate                                     biolink:MolecularMixture  372.4 
+2026-08-18 11:29:41.217 | INFO    | server        | UNII:CG73ERQ805  Metformin icosapent                                   biolink:MolecularMixture  372.4 
+2026-08-18 11:29:41.217 | INFO    | server        | UNII:ECS8EBF633  Metformin p-chlorophenoxyacetate                      biolink:MolecularMixture  360.0 
+2026-08-18 11:29:41.218 | INFO    | server        | UNII:YEI21W005Y  Metformin glycinate                                   biolink:MolecularMixture  334.5 
+2026-08-18 11:29:41.218 | INFO    | server        | << TOOL resolve_entity finished in 522ms
+2026-08-18 11:29:41.218 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:29:41.242 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:29:41.242 | INFO    | server        | >> TOOL resolve_entity  term='type 2 diabetes mellitus'  limit=10  biolink_type=None
+2026-08-18 11:29:41.243 | INFO    | kg2_core      |   name-resolution lookup: term='type 2 diabetes mellitus' limit=10 biolink_type=(any)
+2026-08-18 11:30:04.218 | INFO    | kg2_core      |   .. HTTP name-resolution-sri.renci.org replied in 22.98s
+2026-08-18 11:30:04.218 | WARNING | kg2_core      |   !! slow remote call to name-resolution-sri.renci.org (22.98s)
+2026-08-18 11:30:04.218 | INFO    | kg2_core      |   name-resolution returned 10 candidate(s)
+2026-08-18 11:30:04.219 | INFO    | server        |   candidates for 'type 2 diabetes mellitus':
+2026-08-18 11:30:04.219 | INFO    | server        | id             name                                                 category                   score 
+2026-08-18 11:30:04.220 | INFO    | server        | -------------  ---------------------------------------------------  -------------------------  ------
+2026-08-18 11:30:04.220 | INFO    | server        | MONDO:0005148  type 2 diabetes mellitus                             biolink:Disease            4012.7
+2026-08-18 11:30:04.220 | INFO    | server        | UMLS:C0877302  Insulin-requiring type 2 diabetes mellitus           biolink:Disease            640.2 
+2026-08-18 11:30:04.221 | INFO    | server        | UMLS:C0342295  Ketoacidosis due to type 2 diabetes mellitus         biolink:Disease            606.2 
+2026-08-18 11:30:04.221 | INFO    | server        | UMLS:C1279313  Type 2 diabetes mellitus with peripheral angiopathy  biolink:Disease            606.2 
+2026-08-18 11:30:04.221 | INFO    | server        | UMLS:C0342297  Hyperosmolar coma due to type 2 diabetes mellitus    biolink:Disease            575.6 
+2026-08-18 11:30:04.221 | INFO    | server        | UMLS:C2919802  Brittle type 2 diabetes mellitus                     biolink:Disease            537.6 
+2026-08-18 11:30:04.222 | INFO    | server        | UMLS:C2733146  Uncontrolled type 2 diabetes mellitus                biolink:PhenotypicFeature  537.6 
+2026-08-18 11:30:04.222 | INFO    | server        | UMLS:C0579066  Type 2 diabetes mellitus with ulcer                  biolink:Disease            507.4 
+2026-08-18 11:30:04.222 | INFO    | server        | UMLS:C1282951  Type 2 diabetes mellitus in nonobese                 biolink:Disease            507.4 
+2026-08-18 11:30:04.222 | INFO    | server        | UMLS:C0342266  Insulin treated type 2 diabetes mellitus             biolink:Disease            507.4 
+2026-08-18 11:30:04.223 | INFO    | server        | << TOOL resolve_entity finished in 22.98s
+2026-08-18 11:30:04.223 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:30:06.592 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:30:06.592 | INFO    | server        | >> TOOL expand_entity  n_curies=1
+2026-08-18 11:30:06.592 | INFO    | server        |   input CURIEs (1):
+2026-08-18 11:30:06.592 | INFO    | server        |     CHEBI:6801
+2026-08-18 11:30:06.593 | INFO    | server        |   * expand CHEBI:6801 ...
+2026-08-18 11:30:06.593 | INFO    | kg2_core      |   node-normalizer clique for CHEBI:6801
+2026-08-18 11:30:07.007 | INFO    | kg2_core      |   .. HTTP nodenormalization-sri.renci.org replied in 414ms
+2026-08-18 11:30:07.008 | INFO    | kg2_core      |   clique for CHEBI:6801: 341 equivalent id(s) -> CHEBI:6801, UNII:9100L32L2N, PUBCHEM.COMPOUND:4091, PUBCHEM.COMPOUND:152743144, PUBCHEM.COMPOUND:155906370, CHEMBL.COMPOUND:CHEMBL1431, DRUGBANK:DB00331, MESH:D008687, CAS:211-517-8, CAS:657-24-9  ... +331 more
+2026-08-18 11:30:07.017 | INFO    | kg2_core      |   expand CHEBI:6801: 341 clique id(s) -> 120 present in KG2 (221 not in KG2) in 424ms
+2026-08-18 11:30:07.017 | INFO    | kg2_core      |     kept   : CHEBI:6801, CHEMBL.COMPOUND:CHEMBL1431, DRUGBANK:DB00331, MESH:D008687, DrugCentral:1725, HMDB:HMDB0001921, KEGG.COMPOUND:C07151, UMLS:C0025598, CHEBI:6802, CHEBI:90684  ... +110 more
+2026-08-18 11:30:07.017 | INFO    | server        |   + expand CHEBI:6801 done in 424ms
+2026-08-18 11:30:07.017 | INFO    | server        |   1 input CURIE(s) -> 120 distinct KG2 id(s)
+2026-08-18 11:30:07.018 | INFO    | server        |   kg2_ids (120):
+2026-08-18 11:30:07.018 | INFO    | server        |     CHEBI:6801                  CHEMBL.COMPOUND:CHEMBL1431  DRUGBANK:DB00331            MESH:D008687
+2026-08-18 11:30:07.018 | INFO    | server        |     DrugCentral:1725            HMDB:HMDB0001921            KEGG.COMPOUND:C07151        UMLS:C0025598
+2026-08-18 11:30:07.019 | INFO    | server        |     CHEBI:6802                  CHEBI:90684                 CHEMBL.COMPOUND:CHEMBL1703  MESH:C585596
+2026-08-18 11:30:07.019 | INFO    | server        |     UMLS:C3267701               UMLS:C0770893               UMLS:C0591573               UMLS:C1242236
+2026-08-18 11:30:07.019 | INFO    | server        |     UMLS:C1246863               UMLS:C1246864               UMLS:C1330510               UMLS:C1331315
+2026-08-18 11:30:07.019 | INFO    | server        |     UMLS:C1331505               UMLS:C1724447               UMLS:C1739198               UMLS:C1878773
+2026-08-18 11:30:07.020 | INFO    | server        |     UMLS:C2240742               UMLS:C2355883               UMLS:C2719777               UMLS:C0978484
+2026-08-18 11:30:07.020 | INFO    | server        |     UMLS:C2719778               UMLS:C0939052               UMLS:C2719781               UMLS:C1329024
+2026-08-18 11:30:07.020 | INFO    | server        |     UMLS:C2719782               UMLS:C2355884               UMLS:C2719784               UMLS:C0978482
+2026-08-18 11:30:07.021 | INFO    | server        |     UMLS:C2719791               UMLS:C0716527               UMLS:C0978483               UMLS:C0701677
+2026-08-18 11:30:07.021 | INFO    | server        |     UMLS:C2719792               UMLS:C0978485               UMLS:C2719793               UMLS:C0701679
+2026-08-18 11:30:07.021 | INFO    | server        |     UMLS:C2719794               UMLS:C2346234               UMLS:C2719796               UMLS:C1735400
+2026-08-18 11:30:07.021 | INFO    | server        |     UMLS:C2719798               UMLS:C1443753               UMLS:C2719800               UMLS:C1329173
+2026-08-18 11:30:07.021 | INFO    | server        |     UMLS:C2719801               UMLS:C1329932               UMLS:C2720076               UMLS:C3215946
+2026-08-18 11:30:07.022 | INFO    | server        |     UMLS:C3215947               UMLS:C3215948               UMLS:C3221985               UMLS:C3221986
+2026-08-18 11:30:07.022 | INFO    | server        |     UMLS:C3225326               UMLS:C3225327               UMLS:C3225336               UMLS:C3225337
+2026-08-18 11:30:07.022 | INFO    | server        |     UMLS:C3239100               UMLS:C3239101               UMLS:C3265896               UMLS:C3264602
+2026-08-18 11:30:07.022 | INFO    | server        |     UMLS:C3264609               UMLS:C3264616               UMLS:C3264617               UMLS:C3264618
+2026-08-18 11:30:07.023 | INFO    | server        |     UMLS:C3264619               UMLS:C3264969               UMLS:C3264979               UMLS:C1948387
+2026-08-18 11:30:07.023 | INFO    | server        |     UMLS:C3848962               UMLS:C3848671               UMLS:C3848781               UMLS:C3848832
+2026-08-18 11:30:07.023 | INFO    | server        |     UMLS:C3848870               UMLS:C3848869               UMLS:C3848780               UMLS:C3848779
+2026-08-18 11:30:07.023 | INFO    | server        |     UMLS:C3848778               UMLS:C4050747               UMLS:C4050750               UMLS:C4050751
+2026-08-18 11:30:07.024 | INFO    | server        |     UMLS:C4050752               UMLS:C4050753               UMLS:C4050754               UMLS:C4050758
+2026-08-18 11:30:07.024 | INFO    | server        |     UMLS:C4050760               UMLS:C4051105               UMLS:C4257316               UMLS:C4257142
+2026-08-18 11:30:07.024 | INFO    | server        |     UMLS:C4257060               UMLS:C4282270               UMLS:C4282269               UMLS:C4282268
+2026-08-18 11:30:07.024 | INFO    | server        |     UMLS:C4281893               UMLS:C4291600               UMLS:C4291496               UMLS:C4300850
+2026-08-18 11:30:07.025 | INFO    | server        |     UMLS:C4300852               UMLS:C4300853               UMLS:C4300862               UMLS:C5207893
+2026-08-18 11:30:07.025 | INFO    | server        |     UMLS:C5207275               UMLS:C5207803               UMLS:C5207524               UMLS:C5243465
+2026-08-18 11:30:07.025 | INFO    | server        |     UMLS:C5243133               UMLS:C5243275               UMLS:C5243312               UMLS:C5243330
+2026-08-18 11:30:07.026 | INFO    | server        |     UMLS:C5243331               UMLS:C5243276               UMLS:C5243280               UMLS:C5243281
+2026-08-18 11:30:07.026 | INFO    | server        | << TOOL expand_entity finished in 434ms
+2026-08-18 11:30:07.026 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:30:07.049 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:30:07.050 | INFO    | server        | >> TOOL expand_entity  n_curies=1
+2026-08-18 11:30:07.050 | INFO    | server        |   input CURIEs (1):
+2026-08-18 11:30:07.050 | INFO    | server        |     MONDO:0005148
+2026-08-18 11:30:07.050 | INFO    | server        |   * expand MONDO:0005148 ...
+2026-08-18 11:30:07.051 | INFO    | kg2_core      |   node-normalizer clique for MONDO:0005148
+2026-08-18 11:30:07.346 | INFO    | kg2_core      |   .. HTTP nodenormalization-sri.renci.org replied in 295ms
+2026-08-18 11:30:07.346 | INFO    | kg2_core      |   clique for MONDO:0005148: 21 equivalent id(s) -> MONDO:0005148, DOID:9352, OMIM:125853, UMLS:C0011860, UMLS:C1852091, UMLS:C4017238, MESH:D003924, MEDDRA:10012611, MEDDRA:10012613, MEDDRA:10026947  ... +11 more
+2026-08-18 11:30:07.348 | INFO    | kg2_core      |   expand MONDO:0005148: 21 clique id(s) -> 9 present in KG2 (12 not in KG2) in 297ms
+2026-08-18 11:30:07.348 | INFO    | kg2_core      |     kept   : MONDO:0005148, DOID:9352, OMIM:125853, UMLS:C0011860, UMLS:C1852091, UMLS:C4017238, MESH:D003924, NCIT:C26747, HP:0005978
+2026-08-18 11:30:07.348 | INFO    | server        |   + expand MONDO:0005148 done in 298ms
+2026-08-18 11:30:07.349 | INFO    | server        |   1 input CURIE(s) -> 9 distinct KG2 id(s)
+2026-08-18 11:30:07.349 | INFO    | server        |   kg2_ids (9):
+2026-08-18 11:30:07.349 | INFO    | server        |     MONDO:0005148  DOID:9352      OMIM:125853    UMLS:C0011860
+2026-08-18 11:30:07.349 | INFO    | server        |     UMLS:C1852091  UMLS:C4017238  MESH:D003924   NCIT:C26747
+2026-08-18 11:30:07.350 | INFO    | server        |     HP:0005978
+2026-08-18 11:30:07.350 | INFO    | server        | << TOOL expand_entity finished in 300ms
+2026-08-18 11:30:07.350 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:30:40.277 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-18 11:30:40.277 | INFO    | server        | >> TOOL run_slog  limit=500
+2026-08-18 11:30:40.280 | INFO    | server        |   query file /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog (2938 bytes, modified 2026-08-18 11:30:37)
+2026-08-18 11:30:40.280 | INFO    | server        |   archived as queries/014_run_slog.slog
+2026-08-18 11:30:40.280 | INFO    | server        |   shape: 6 table(s) declared, 3 derived relation(s) -- expect ~13s per derived relation
+2026-08-18 11:30:40.281 | INFO    | server        |   program:
+                                                        | ;; Genes metformin interacts with that are ALSO associated with type 2 diabetes.
+                                                        | ;; Two independently-derived gene sets, so join on the canonical kg2_norm key.
+                                                        | table (edge str str str)
+                                                        | table (node str str str)
+                                                        | table (kg2_norm str str)
+                                                        | table (met_set str)
+                                                        | table (t2d_set str)
+                                                        | table (result str str)
+                                                        | 
+                                                        | ;; metformin proper (core ids + hydrochloride forms); combination products excluded
+                                                        | rule (met_set "CHEBI:6801")
+                                                        | rule (met_set "CHEBI:6802")
+                                                        | rule (met_set "CHEBI:90684")
+                                                        | rule (met_set "CHEMBL.COMPOUND:CHEMBL1431")
+                                                        | rule (met_set "CHEMBL.COMPOUND:CHEMBL1703")
+                                                        | rule (met_set "DRUGBANK:DB00331")
+                                                        | rule (met_set "MESH:D008687")
+                                                        | rule (met_set "DrugCentral:1725")
+                                                        | rule (met_set "HMDB:HMDB0001921")
+                                                        | rule (met_set "KEGG.COMPOUND:C07151")
+                                                        | rule (met_set "UMLS:C0025598")
+                                                        | rule (met_set "UMLS:C0591573")
+                                                        | 
+                                                        | rule (t2d_set "MONDO:0005148")
+                                                        | rule (t2d_set "DOID:9352")
+                                                        | rule (t2d_set "OMIM:125853")
+                                                        | rule (t2d_set "UMLS:C0011860")
+                                                        | rule (t2d_set "UMLS:C1852091")
+                                                        | rule (t2d_set "UMLS:C4017238")
+                                                        | rule (t2d_set "MESH:D003924")
+                                                        | rule (t2d_set "NCIT:C26747")
+                                                        | rule (t2d_set "HP:0005978")
+                                                        | 
+                                                        | ;; metformin -> gene
+                                                        | rule (result "interacts_with" name) <--
+                                                        |   (met_set m)
+                                                        |   (edge m "biolink:interacts_with" g)
+                                                        |   (kg2_norm g k)
+                                                        |   (t2d_set d)
+                                                        |   (edge t "biolink:gene_associated_with_condition" d)
+                                                        |   (kg2_norm t k)
+                                                        |   (node g name _)
+                                                        | 
+                                                        | rule (result "physically_interacts_with" name) <--
+                                                        |   (met_set m)
+                                                        |   (edge m "biolink:physically_interacts_with" g)
+                                                        |   (kg2_norm g k)
+                                                        |   (t2d_set d)
+                                                        |   (edge t "biolink:gene_associated_with_condition" d)
+                                                        |   (kg2_norm t k)
+                                                        |   (node g name _)
+                                                        | 
+                                                        | rule (result "directly_physically_interacts_with" name) <--
+                                                        |   (met_set m)
+                                                        |   (edge m "biolink:directly_physically_interacts_with" g)
+                                                        |   (kg2_norm g k)
+                                                        |   (t2d_set d)
+                                                        |   (edge t "biolink:gene_associated_with_condition" d)
+                                                        |   (kg2_norm t k)
+                                                        |   (node g name _)
+                                                        | 
+                                                        | rule (result "affects" name) <--
+                                                        |   (met_set m)
+                                                        |   (edge m "biolink:affects" g)
+                                                        |   (kg2_norm g k)
+                                                        |   (t2d_set d)
+                                                        |   (edge t "biolink:gene_associated_with_condition" d)
+                                                        |   (kg2_norm t k)
+                                                        |   (node g name _)
+                                                        | 
+                                                        | ;; gene -> metformin (same edges stored the other way round)
+                                                        | rule (result "interacts_with" name) <--
+                                                        |   (met_set m)
+                                                        |   (edge g "biolink:interacts_with" m)
+                                                        |   (kg2_norm g k)
+                                                        |   (t2d_set d)
+                                                        |   (edge t "biolink:gene_associated_with_condition" d)
+                                                        |   (kg2_norm t k)
+                                                        |   (node g name _)
+                                                        | 
+                                                        | rule (result "physically_interacts_with" name) <--
+                                                        |   (met_set m)
+                                                        |   (edge g "biolink:physically_interacts_with" m)
+                                                        |   (kg2_norm g k)
+                                                        |   (t2d_set d)
+                                                        |   (edge t "biolink:gene_associated_with_condition" d)
+                                                        |   (kg2_norm t k)
+                                                        |   (node g name _)
+                                                        | 
+                                                        | rule (result "directly_physically_interacts_with" name) <--
+                                                        |   (met_set m)
+                                                        |   (edge g "biolink:directly_physically_interacts_with" m)
+                                                        |   (kg2_norm g k)
+                                                        |   (t2d_set d)
+                                                        |   (edge t "biolink:gene_associated_with_condition" d)
+                                                        |   (kg2_norm t k)
+                                                        |   (node g name _)
+                                                        | 
+                                                        | rule (result "affects" name) <--
+                                                        |   (met_set m)
+                                                        |   (edge g "biolink:affects" m)
+                                                        |   (kg2_norm g k)
+                                                        |   (t2d_set d)
+                                                        |   (edge t "biolink:gene_associated_with_condition" d)
+                                                        |   (kg2_norm t k)
+                                                        |   (node g name _)
+2026-08-18 11:30:40.282 | INFO    | slog          |   -> slog drop: {"op": "drop", "rel": "result"}
+2026-08-18 11:30:40.295 | INFO    | slog          |   <- slog drop ok in 14ms (12 bytes of response)
+2026-08-18 11:30:40.295 | INFO    | server        |   dropped previous `result` relation
+2026-08-18 11:30:40.296 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-18 11:30:40.301 | INFO    | slog          |   <- slog dump ok in 5ms (285 bytes of response)
+2026-08-18 11:30:40.301 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-18 11:30:40.306 | INFO    | slog          |   <- slog dump ok in 4ms (639 bytes of response)
+2026-08-18 11:30:40.306 | INFO    | server        |   * slog run (KG load on first call of a session) ...
+2026-08-18 11:30:40.306 | INFO    | slog          |   -> slog run: {"op": "run", "path": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog"}
+2026-08-18 11:31:11.300 | INFO    | slog          |   <- slog run ok in 30.99s (12 bytes of response)
+2026-08-18 11:31:11.300 | INFO    | server        |   + slog run (KG load on first call of a session) done in 30.99s
+2026-08-18 11:31:11.301 | INFO    | server        |   * dump `result` (limit 500) ...
+2026-08-18 11:31:11.302 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "result", "limit": 500}
+2026-08-18 11:31:11.321 | INFO    | slog          |   <- slog dump ok in 19ms (13067 bytes of response)
+2026-08-18 11:31:11.321 | INFO    | server        |   + dump `result` (limit 500) done in 19ms
+2026-08-18 11:31:11.322 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-18 11:31:11.329 | INFO    | slog          |   <- slog dump ok in 7ms (348 bytes of response)
+2026-08-18 11:31:11.329 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-18 11:31:11.337 | INFO    | slog          |   <- slog dump ok in 7ms (1241 bytes of response)
+2026-08-18 11:31:11.337 | INFO    | server        |   timing: total=31.04s  compile=7.61s  exec=23.39s  (strata compiled=2, executed=2)
+2026-08-18 11:31:11.337 | INFO    | server        |   daemon: fixpoint=18809.6ms  iterations=4  rule_fires=581
+2026-08-18 11:31:11.337 | INFO    | server        |   cost model predicted ~48s for this shape
+2026-08-18 11:31:11.337 | INFO    | server        |   result: n_rows=489 returned=489 truncated=False
+2026-08-18 11:31:11.338 | INFO    | server        |   IR -- CURIEs out of the answer relation, unnamed at this point:
+2026-08-18 11:31:11.338 | INFO    | server        |   result CURIEs: (empty)
+2026-08-18 11:31:11.338 | INFO    | server        | << TOOL run_slog finished in 31.06s
+2026-08-18 11:31:11.338 | WARNING | server        | !! run_slog took 31.06s -- slow call
+2026-08-18 11:31:11.339 | INFO    | server        | ------------------------------------------------------------------------------

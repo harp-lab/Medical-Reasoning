@@ -10,7 +10,7 @@ from mcp.server.fastmcp import FastMCP
 import kg2_core as core
 import mr_stats as stats
 import slog_client as slog
-from mr_logging import (RULE, SESSION_DIR, csv_row, fmt_dur, full_list,
+from mr_logging import (RULE, SESSION_DIR, banner, csv_row, fmt_dur, full_list,
                         get_logger, next_seq, preview, save_query, step, table,
                         tool_call)
 
@@ -22,25 +22,19 @@ QUERY_FILE = Path(os.environ.get(
     Path(__file__).resolve().parent.parent / "slog" / "query.slog"))
 
 log = get_logger("server")
-log.info(f"query file: {QUERY_FILE}")
-log.info(f"slog server: {slog.HOST}:{slog.PORT} (client timeout {slog.TIMEOUT_S}s)")
-log.info(f"node DB: {core.NODE_DB}")
-log.info(RULE)
 
 mcp = FastMCP("kg2", instructions=INSTRUCTIONS)
 
-# Last CURIE column seen from run_slog, so name_curies can report how much of
-# the previous result set actually got named.
 _last_slog_curies = []
 
 
 @contextmanager
 def _record(name, **params):
-    """Bracket a tool call: pretty log banner, plus exactly one CSV row.
-
-    The row is written in a finally, so a failed call is recorded too rather
-    than silently vanishing from the summary.
-    """
+    if banner():
+        log.info(f"query file: {QUERY_FILE}")
+        log.info(f"slog server: {slog.HOST}:{slog.PORT} (client timeout {slog.TIMEOUT_S}s)")
+        log.info(f"node DB: {core.NODE_DB}")
+        log.info(RULE)
     row = {"tool": name, "seq": next_seq(),
            "ts_start": datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]}
     t0 = time.perf_counter()
@@ -68,7 +62,6 @@ def _record(name, **params):
 
 
 def _curie_columns(rows):
-    """Pull CURIE-looking values out of dumped Slog rows, in first-seen order."""
     seen = []
     for row in rows:
         for cell in (row if isinstance(row, (list, tuple)) else [row]):
@@ -135,7 +128,7 @@ def run_slog(limit: int = MAX_ROWS) -> dict:
     The answer relation must be declared and named `result`. It is dropped before the
     program runs, so each query starts from an empty answer relation.
 
-    Loading the KG takes several minutes on the first call of a session. Returns
+    The session is already warm, so a query costs a compile plus evaluation. Returns
     {n_rows, returned, truncated, rows, query_file}.
     """
     global _last_slog_curies
@@ -165,7 +158,7 @@ def run_slog(limit: int = MAX_ROWS) -> dict:
         log.info("  program:\n" + "\n".join(f"    | {ln}" for ln in program.splitlines()))
 
         before_build = None
-        before_stats = None  # stat_delta(None) yields blanks, never raises
+        before_stats = None
         t_start = None
         t_total = time.perf_counter()
         try:
@@ -177,19 +170,12 @@ def run_slog(limit: int = MAX_ROWS) -> dict:
                 log.info(f"  no previous `{OUTPUT_REL}` to drop ({e})")
             row["drop_s"] = time.perf_counter() - t0
 
-            # Only now: the drop has already opened the session, so this cannot
-            # be the call that pays the multi-minute KG load.  A drop creates no
-            # strata, so it is still a valid baseline for the run's own numbers.
-            # Baselining the build directory here matters too -- on a cold
-            # session the drop triggers the KG load, during which setup.slog
-            # compiles its own modules; measuring from before that would charge
-            # the whole load to this query's compile time.
             before_stats = stats.stat_snapshot()
             before_build = stats.build_snapshot()
             t_start = time.time()
 
             t0 = time.perf_counter()
-            with step(log, "slog run (KG load on first call of a session)"):
+            with step(log, "slog run"):
                 slog.run_file(QUERY_FILE)
             row["run_s"] = time.perf_counter() - t0
 
@@ -236,11 +222,10 @@ def run_slog(limit: int = MAX_ROWS) -> dict:
         row["returned"] = d["returned"]
         row["truncated"] = d["truncated"]
 
-        # Intermediate result: the raw CURIEs Slog produced, BEFORE name_curies().
         curies = _curie_columns(d["rows"])
         _last_slog_curies = curies
         row["n_curies"] = len(curies)
-        log.info("  IR -- CURIEs out of the answer relation, unnamed at this point:")
+        log.info("  CURIEs out of the answer relation, unnamed at this point:")
         full_list(log, "result CURIEs", curies)
 
         if d["n_rows"] == 0:
@@ -252,7 +237,7 @@ def run_slog(limit: int = MAX_ROWS) -> dict:
             log.warning(f"  !! truncated: {d['n_rows']} rows exist, only "
                         f"{d['returned']} returned (limit {min(limit, MAX_ROWS)})")
         if row.get("run_s", 0) > 120:
-            notes.append("cold-kg-load")
+            notes.append("slow-run")
         row["notes"] = " ".join(notes)
 
         return {"n_rows": d["n_rows"], "returned": d["returned"],
@@ -264,8 +249,7 @@ def run_slog(limit: int = MAX_ROWS) -> dict:
 def name_curies(curies: list[str]) -> list[dict]:
     """Map result CURIEs to readable rows [{id, name, category}]."""
     with _record("name_curies", n_curies=len(curies)) as row:
-        # IR going in: the CURIEs as they came out of the query.
-        log.info("  IR in -- CURIEs to name:")
+        log.info("  CURIEs to name:")
         full_list(log, "input", curies)
         if _last_slog_curies:
             overlap = len(set(curies) & set(_last_slog_curies))
@@ -274,8 +258,7 @@ def name_curies(curies: list[str]) -> list[dict]:
 
         named = core.name_curies(curies)
 
-        # IR coming out: what each CURIE resolved to.
-        log.info(f"  IR out -- {len(named)} CURIE(s) resolved to names:")
+        log.info(f"  {len(named)} CURIE(s) resolved to names:")
         table(log, ["id", "name", "category"],
               [(r["id"], r["name"], r["category"]) for r in named], limit=len(named))
         by_cat = {}
@@ -297,9 +280,4 @@ def name_curies(curies: list[str]) -> list[dict]:
 
 
 if __name__ == "__main__":
-    log.info(f"starting FastMCP stdio server -- logging to {SESSION_DIR}")
-    try:
-        mcp.run()
-    finally:
-        log.info("server stopped")
-        log.info(RULE)
+    mcp.run()

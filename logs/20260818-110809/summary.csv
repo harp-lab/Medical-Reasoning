@@ -1,0 +1,15 @@
+ts_start,session_id,seq,tool,status,wall_s,notes,error,query_file,program_sha8,program_bytes,n_tables_declared,n_derived_rels,n_strata_compiled,n_strata_executed,compile_s,exec_s,drop_s,run_s,dump_s,fixpoint_ms,iterations,rule_fires,predicted_s,cost_ratio,n_rows,returned,truncated,n_curies,term,n_in,n_out,n_unresolved,http_s,http_calls,slogd_rss_gb,mem_avail_gb
+2026-08-18 11:13:31.953,20260818-110809,1,resolve_entity,ok,0.379,,,,,,,,,,,,,,,,,,,,,,,,Parkinson disease,,10,,0.374,1,,310.400
+2026-08-18 11:13:32.363,20260818-110809,2,list_predicates,ok,0.002,,,,,,,,,,,,,,,,,,,,,,,,,,61,,,,,310.400
+2026-08-18 11:13:37.967,20260818-110809,3,expand_entity,ok,0.479,,,,,,,,,,,,,,,,,,,,,,,,,1,6,,0.474,1,,310.400
+2026-08-18 11:13:46.400,20260818-110809,4,run_slog,ok,510.759,truncated,,/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog,d6c805ff,342,3,2,13,2,452.941,0.000,429.436,63.290,6.561,39389.800,4,1633,35.000,14.590,1627,500,true,500,,,,,,,130.300,179.000
+2026-08-18 11:24:18.330,20260818-110809,5,run_slog,ok,36.397,truncated,,/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog,fd6e3b4f,418,4,2,2,2,7.697,28.597,0.014,36.295,0.057,22269.300,3,1628,35.000,1.040,1569,500,true,0,,,,,,,149.200,160.300
+2026-08-18 11:25:53.939,20260818-110809,6,resolve_entity,ok,1.132,,,,,,,,,,,,,,,,,,,,,,,,hypertension,,10,,0.897,1,149.200,160.400
+2026-08-18 11:25:55.099,20260818-110809,7,resolve_entity,ok,0.369,,,,,,,,,,,,,,,,,,,,,,,,blood pressure,,10,,0.364,1,149.200,160.400
+2026-08-18 11:26:06.747,20260818-110809,8,expand_entity,ok,0.670,,,,,,,,,,,,,,,,,,,,,,,,,1,9,,0.663,1,149.200,160.400
+2026-08-18 11:26:14.611,20260818-110809,9,run_slog,ok,29.877,truncated,,/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog,970928c0,533,4,2,2,2,7.051,22.747,0.017,29.797,0.030,17795.500,4,2882,35.000,0.850,2588,500,true,1,,,,,,,156.400,153.200
+2026-08-18 11:29:40.695,20260818-110809,10,resolve_entity,ok,0.523,,,,,,,,,,,,,,,,,,,,,,,,metformin,,10,,0.518,1,156.400,153.300
+2026-08-18 11:29:41.242,20260818-110809,11,resolve_entity,ok,22.981,,,,,,,,,,,,,,,,,,,,,,,,type 2 diabetes mellitus,,10,,22.975,1,156.400,153.200
+2026-08-18 11:30:06.592,20260818-110809,12,expand_entity,ok,0.434,,,,,,,,,,,,,,,,,,,,,,,,,1,120,,0.414,1,156.400,153.200
+2026-08-18 11:30:07.049,20260818-110809,13,expand_entity,ok,0.301,,,,,,,,,,,,,,,,,,,,,,,,,1,9,,0.295,1,156.400,153.200
+2026-08-18 11:30:40.277,20260818-110809,14,run_slog,ok,31.062,,,/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog,af4af186,2938,6,3,2,2,7.608,23.388,0.014,30.996,0.020,18809.600,4,581,48.000,0.650,489,489,false,0,,,,,,,164.000,145.300

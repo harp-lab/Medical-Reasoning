@@ -30,14 +30,11 @@ _node_conn = None
 
 log = get_logger("kg2_core")
 
-# Remote-call time accumulated since the last take_http_stats(); the server
-# drains this once per tool call so it can land in the summary CSV.
 _http_s = 0.0
 _http_calls = 0
 
 
 def take_http_stats():
-    """(seconds, calls) spent on remote SRI services since the last call."""
     global _http_s, _http_calls
     s, n = round(_http_s, 3), _http_calls
     _http_s, _http_calls = 0.0, 0
@@ -57,7 +54,6 @@ def load_predicates():
 
 
 def _get_json(url):
-    """One HTTP GET, timed -- these are the remote SRI services."""
     global _http_s, _http_calls
     host = urllib.parse.urlsplit(url).netloc
     t0 = time.perf_counter()
@@ -111,7 +107,6 @@ def nodenorm_clique(curie):
 
 
 def expand_to_kg2(curie):
-    """CURIE -> its normalization clique -> the members KG2 actually contains."""
     t0 = time.perf_counter()
     clique = nodenorm_clique(curie)
     present = _kg2_has_ids(list(clique) + [curie])
@@ -201,7 +196,6 @@ def _kg2_has_ids(ids):
 
 
 def name_curies(curies):
-    """Look CURIEs up in the node DB.  Logs which ones came back empty-handed."""
     ids = [str(c) for c in curies if str(c)]
     if not ids:
         log.info("  name_curies called with no CURIEs; nothing to do")

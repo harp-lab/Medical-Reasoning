@@ -1,0 +1,20 @@
+;; What drugs are used to lower blood pressure? -- things that treat hypertension
+table (edge str str str)
+table (node str str str)
+table (htn_set str)
+table (result str)
+
+rule (htn_set "MONDO:0005044")
+rule (htn_set "DOID:10763")
+rule (htn_set "EFO:0000537")
+rule (htn_set "UMLS:C0020538")
+rule (htn_set "UMLS:C0497247")
+rule (htn_set "MESH:D006973")
+rule (htn_set "NCIT:C3117")
+rule (htn_set "ICD9:401-405.99")
+rule (htn_set "HP:0000822")
+
+rule (result name) <--
+  (htn_set d)
+  (edge drug "biolink:treats" d)
+  (node drug name _)

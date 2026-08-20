@@ -6,7 +6,6 @@ __pycache__/
 .env
 archive/
 data/
-docs/
 tmp/
 eval/runs/
 preprocess/

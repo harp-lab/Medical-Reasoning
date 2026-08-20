@@ -1,0 +1,5 @@
+ts_start,session_id,seq,tool,status,wall_s,notes,error,query_file,program_sha8,program_bytes,n_tables_declared,n_derived_rels,n_strata_compiled,n_strata_executed,compile_s,exec_s,drop_s,run_s,dump_s,fixpoint_ms,iterations,rule_fires,predicted_s,cost_ratio,n_rows,returned,truncated,n_curies,term,n_in,n_out,n_unresolved,http_s,http_calls,slogd_rss_gb,mem_avail_gb
+2026-08-20 16:10:59.291,20260820-161029,1,list_predicates,ok,0.002,,,,,,,,,,,,,,,,,,,,,,,,,,61,,,,124.100,251.500
+2026-08-20 16:10:59.333,20260820-161029,2,resolve_entity,ok,0.376,,,,,,,,,,,,,,,,,,,,,,,,Parkinson disease,,10,,0.370,1,124.100,251.500
+2026-08-20 16:11:03.475,20260820-161029,3,expand_entity,ok,0.286,,,,,,,,,,,,,,,,,,,,,,,,,1,6,,0.281,1,124.100,251.500
+2026-08-20 16:11:17.979,20260820-161029,4,run_slog,ok,26.206,,,/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog,b522c265,1337,3,1,1,1,7.831,18.318,0.013,26.149,0.008,15038.800,2,4,22.000,1.190,133,133,false,133,,,,,,,136.100,239.200

@@ -1,0 +1,29 @@
+;; What drugs are used to lower blood pressure?
+;;
+;; Two readings, answered in one stage, tagged by the first column:
+;;   "treats_HTN"  -- therapeutic reading: X treats hypertension.
+;;                    MONDO:0005044 expanded to its 9 KG2 ids, inlined as literals.
+;;                    Pulmonary / portal / ocular / intracranial hypertension are
+;;                    deliberately NOT included -- different diseases, not senses.
+;;   "affects_BP"  -- mechanistic reading: X affects the Blood Pressure process, with
+;;                    the qualifier direction returned rather than assumed, so the
+;;                    lowering rows are identifiable and the vocabulary is visible.
+
+table (edge str str str)
+table (edge_dir str str str str str)
+table (node str str str)
+table (result str str str str)
+
+rule (result "treats_HTN" name d "-") <-- (edge d "biolink:treats" "MONDO:0005044")     (node d name _)
+rule (result "treats_HTN" name d "-") <-- (edge d "biolink:treats" "DOID:10763")        (node d name _)
+rule (result "treats_HTN" name d "-") <-- (edge d "biolink:treats" "EFO:0000537")       (node d name _)
+rule (result "treats_HTN" name d "-") <-- (edge d "biolink:treats" "UMLS:C0020538")     (node d name _)
+rule (result "treats_HTN" name d "-") <-- (edge d "biolink:treats" "UMLS:C0497247")     (node d name _)
+rule (result "treats_HTN" name d "-") <-- (edge d "biolink:treats" "MESH:D006973")      (node d name _)
+rule (result "treats_HTN" name d "-") <-- (edge d "biolink:treats" "NCIT:C3117")        (node d name _)
+rule (result "treats_HTN" name d "-") <-- (edge d "biolink:treats" "ICD9:401-405.99")   (node d name _)
+rule (result "treats_HTN" name d "-") <-- (edge d "biolink:treats" "HP:0000822")        (node d name _)
+
+rule (result "affects_BP" name d dir) <-- (edge_dir d "biolink:affects" "UMLS:C0005823" _ dir) (node d name _)
+rule (result "affects_BP" name d dir) <-- (edge_dir d "biolink:affects" "EFO:0006335"   _ dir) (node d name _)
+rule (result "affects_BP" name d dir) <-- (edge_dir d "biolink:affects" "EFO:0006336"   _ dir) (node d name _)

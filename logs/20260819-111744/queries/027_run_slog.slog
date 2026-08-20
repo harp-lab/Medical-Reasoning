@@ -1,0 +1,300 @@
+;; Genes metformin interacts with that are ALSO associated with type 2 diabetes.
+;;
+;; Metformin expands to 120 KG2 ids -> too many to inline, so it gets one membership
+;; relation (one stage).  T2D expands to 9 ids -> inlined as literals across many rules
+;; sharing the head `result`, which stays a single stage.
+;;
+;; CRITICAL: the metformin-side gene (g) and the T2D-side gene (g2) are derived
+;; independently and land in different vocabularies (NCBIGene vs UniProtKB vs HGNC vs
+;; UMLS).  Joining them on the raw id returns 0 rows.  They are joined on the canonical
+;; key k from kg2_norm, and a real KG2 id is returned alongside k so it can be named.
+
+table (edge str str str)
+table (node str str str)
+table (kg2_norm str str)
+table (met_set str)
+table (result str str str str str)
+
+rule (met_set "CHEBI:6801")
+rule (met_set "CHEMBL.COMPOUND:CHEMBL1431")
+rule (met_set "DRUGBANK:DB00331")
+rule (met_set "MESH:D008687")
+rule (met_set "DrugCentral:1725")
+rule (met_set "HMDB:HMDB0001921")
+rule (met_set "KEGG.COMPOUND:C07151")
+rule (met_set "UMLS:C0025598")
+rule (met_set "CHEBI:6802")
+rule (met_set "CHEBI:90684")
+rule (met_set "CHEMBL.COMPOUND:CHEMBL1703")
+rule (met_set "MESH:C585596")
+rule (met_set "UMLS:C3267701")
+rule (met_set "UMLS:C0770893")
+rule (met_set "UMLS:C0591573")
+rule (met_set "UMLS:C1242236")
+rule (met_set "UMLS:C1246863")
+rule (met_set "UMLS:C1246864")
+rule (met_set "UMLS:C1330510")
+rule (met_set "UMLS:C1331315")
+rule (met_set "UMLS:C1331505")
+rule (met_set "UMLS:C1724447")
+rule (met_set "UMLS:C1739198")
+rule (met_set "UMLS:C1878773")
+rule (met_set "UMLS:C2240742")
+rule (met_set "UMLS:C2355883")
+rule (met_set "UMLS:C2719777")
+rule (met_set "UMLS:C0978484")
+rule (met_set "UMLS:C2719778")
+rule (met_set "UMLS:C0939052")
+rule (met_set "UMLS:C2719781")
+rule (met_set "UMLS:C1329024")
+rule (met_set "UMLS:C2719782")
+rule (met_set "UMLS:C2355884")
+rule (met_set "UMLS:C2719784")
+rule (met_set "UMLS:C0978482")
+rule (met_set "UMLS:C2719791")
+rule (met_set "UMLS:C0716527")
+rule (met_set "UMLS:C0978483")
+rule (met_set "UMLS:C0701677")
+rule (met_set "UMLS:C2719792")
+rule (met_set "UMLS:C0978485")
+rule (met_set "UMLS:C2719793")
+rule (met_set "UMLS:C0701679")
+rule (met_set "UMLS:C2719794")
+rule (met_set "UMLS:C2346234")
+rule (met_set "UMLS:C2719796")
+rule (met_set "UMLS:C1735400")
+rule (met_set "UMLS:C2719798")
+rule (met_set "UMLS:C1443753")
+rule (met_set "UMLS:C2719800")
+rule (met_set "UMLS:C1329173")
+rule (met_set "UMLS:C2719801")
+rule (met_set "UMLS:C1329932")
+rule (met_set "UMLS:C2720076")
+rule (met_set "UMLS:C3215946")
+rule (met_set "UMLS:C3215947")
+rule (met_set "UMLS:C3215948")
+rule (met_set "UMLS:C3221985")
+rule (met_set "UMLS:C3221986")
+rule (met_set "UMLS:C3225326")
+rule (met_set "UMLS:C3225327")
+rule (met_set "UMLS:C3225336")
+rule (met_set "UMLS:C3225337")
+rule (met_set "UMLS:C3239100")
+rule (met_set "UMLS:C3239101")
+rule (met_set "UMLS:C3265896")
+rule (met_set "UMLS:C3264602")
+rule (met_set "UMLS:C3264609")
+rule (met_set "UMLS:C3264616")
+rule (met_set "UMLS:C3264617")
+rule (met_set "UMLS:C3264618")
+rule (met_set "UMLS:C3264619")
+rule (met_set "UMLS:C3264969")
+rule (met_set "UMLS:C3264979")
+rule (met_set "UMLS:C1948387")
+rule (met_set "UMLS:C3848962")
+rule (met_set "UMLS:C3848671")
+rule (met_set "UMLS:C3848781")
+rule (met_set "UMLS:C3848832")
+rule (met_set "UMLS:C3848870")
+rule (met_set "UMLS:C3848869")
+rule (met_set "UMLS:C3848780")
+rule (met_set "UMLS:C3848779")
+rule (met_set "UMLS:C3848778")
+rule (met_set "UMLS:C4050747")
+rule (met_set "UMLS:C4050750")
+rule (met_set "UMLS:C4050751")
+rule (met_set "UMLS:C4050752")
+rule (met_set "UMLS:C4050753")
+rule (met_set "UMLS:C4050754")
+rule (met_set "UMLS:C4050758")
+rule (met_set "UMLS:C4050760")
+rule (met_set "UMLS:C4051105")
+rule (met_set "UMLS:C4257316")
+rule (met_set "UMLS:C4257142")
+rule (met_set "UMLS:C4257060")
+rule (met_set "UMLS:C4282270")
+rule (met_set "UMLS:C4282269")
+rule (met_set "UMLS:C4282268")
+rule (met_set "UMLS:C4281893")
+rule (met_set "UMLS:C4291600")
+rule (met_set "UMLS:C4291496")
+rule (met_set "UMLS:C4300850")
+rule (met_set "UMLS:C4300852")
+rule (met_set "UMLS:C4300853")
+rule (met_set "UMLS:C4300862")
+rule (met_set "UMLS:C5207893")
+rule (met_set "UMLS:C5207275")
+rule (met_set "UMLS:C5207803")
+rule (met_set "UMLS:C5207524")
+rule (met_set "UMLS:C5243465")
+rule (met_set "UMLS:C5243133")
+rule (met_set "UMLS:C5243275")
+rule (met_set "UMLS:C5243312")
+rule (met_set "UMLS:C5243330")
+rule (met_set "UMLS:C5243331")
+rule (met_set "UMLS:C5243276")
+rule (met_set "UMLS:C5243280")
+rule (met_set "UMLS:C5243281")
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "MONDO:0005148")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:physically_interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "MONDO:0005148")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:directly_physically_interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "MONDO:0005148")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "DOID:9352")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:physically_interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "DOID:9352")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:directly_physically_interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "DOID:9352")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "OMIM:125853")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:physically_interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "OMIM:125853")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:directly_physically_interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "OMIM:125853")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "UMLS:C0011860")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:physically_interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "UMLS:C0011860")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:directly_physically_interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "UMLS:C0011860")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "UMLS:C1852091")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:physically_interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "UMLS:C1852091")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:directly_physically_interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "UMLS:C1852091")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "UMLS:C4017238")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:physically_interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "UMLS:C4017238")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:directly_physically_interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "UMLS:C4017238")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "MESH:D003924")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:physically_interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "MESH:D003924")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:directly_physically_interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "MESH:D003924")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "NCIT:C26747")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:physically_interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "NCIT:C26747")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:directly_physically_interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "NCIT:C26747")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "HP:0005978")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:physically_interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "HP:0005978")
+  (node g gname cat)
+
+rule (result gname cat g g2 k) <--
+  (met_set m) (edge m "biolink:directly_physically_interacts_with" g)
+  (kg2_norm g k) (kg2_norm g2 k)
+  (edge g2 "biolink:gene_associated_with_condition" "HP:0005978")
+  (node g gname cat)
+

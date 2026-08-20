@@ -1,0 +1,20 @@
+;; Category distribution of everything that biolink:treats Parkinson disease.
+;; Same pd_set anchor; drops the cat_set filter so the third column shows which
+;; categories the two requested ones leave out.
+
+table (edge str str str)
+table (node str str str)
+table (pd_set str)
+table (result str str str)
+
+rule (pd_set "MONDO:0005180")
+rule (pd_set "DOID:14330")
+rule (pd_set "UMLS:C0030567")
+rule (pd_set "MESH:D010300")
+rule (pd_set "NCIT:C26845")
+rule (pd_set "ICD9:332")
+
+rule (result cat drug name) <--
+  (pd_set d)
+  (edge drug "biolink:treats" d)
+  (node drug name cat)

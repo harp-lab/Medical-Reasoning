@@ -1,0 +1,106 @@
+;; Genes metformin interacts with that are ALSO associated with type 2 diabetes.
+;; Two independently-derived gene sets, so join on the canonical kg2_norm key.
+table (edge str str str)
+table (node str str str)
+table (kg2_norm str str)
+table (met_set str)
+table (t2d_set str)
+table (result str str)
+
+;; metformin proper (core ids + hydrochloride forms); combination products excluded
+rule (met_set "CHEBI:6801")
+rule (met_set "CHEBI:6802")
+rule (met_set "CHEBI:90684")
+rule (met_set "CHEMBL.COMPOUND:CHEMBL1431")
+rule (met_set "CHEMBL.COMPOUND:CHEMBL1703")
+rule (met_set "DRUGBANK:DB00331")
+rule (met_set "MESH:D008687")
+rule (met_set "DrugCentral:1725")
+rule (met_set "HMDB:HMDB0001921")
+rule (met_set "KEGG.COMPOUND:C07151")
+rule (met_set "UMLS:C0025598")
+rule (met_set "UMLS:C0591573")
+
+rule (t2d_set "MONDO:0005148")
+rule (t2d_set "DOID:9352")
+rule (t2d_set "OMIM:125853")
+rule (t2d_set "UMLS:C0011860")
+rule (t2d_set "UMLS:C1852091")
+rule (t2d_set "UMLS:C4017238")
+rule (t2d_set "MESH:D003924")
+rule (t2d_set "NCIT:C26747")
+rule (t2d_set "HP:0005978")
+
+;; metformin -> gene
+rule (result "interacts_with" name) <--
+  (met_set m)
+  (edge m "biolink:interacts_with" g)
+  (kg2_norm g k)
+  (t2d_set d)
+  (edge t "biolink:gene_associated_with_condition" d)
+  (kg2_norm t k)
+  (node g name _)
+
+rule (result "physically_interacts_with" name) <--
+  (met_set m)
+  (edge m "biolink:physically_interacts_with" g)
+  (kg2_norm g k)
+  (t2d_set d)
+  (edge t "biolink:gene_associated_with_condition" d)
+  (kg2_norm t k)
+  (node g name _)
+
+rule (result "directly_physically_interacts_with" name) <--
+  (met_set m)
+  (edge m "biolink:directly_physically_interacts_with" g)
+  (kg2_norm g k)
+  (t2d_set d)
+  (edge t "biolink:gene_associated_with_condition" d)
+  (kg2_norm t k)
+  (node g name _)
+
+rule (result "affects" name) <--
+  (met_set m)
+  (edge m "biolink:affects" g)
+  (kg2_norm g k)
+  (t2d_set d)
+  (edge t "biolink:gene_associated_with_condition" d)
+  (kg2_norm t k)
+  (node g name _)
+
+;; gene -> metformin (same edges stored the other way round)
+rule (result "interacts_with" name) <--
+  (met_set m)
+  (edge g "biolink:interacts_with" m)
+  (kg2_norm g k)
+  (t2d_set d)
+  (edge t "biolink:gene_associated_with_condition" d)
+  (kg2_norm t k)
+  (node g name _)
+
+rule (result "physically_interacts_with" name) <--
+  (met_set m)
+  (edge g "biolink:physically_interacts_with" m)
+  (kg2_norm g k)
+  (t2d_set d)
+  (edge t "biolink:gene_associated_with_condition" d)
+  (kg2_norm t k)
+  (node g name _)
+
+rule (result "directly_physically_interacts_with" name) <--
+  (met_set m)
+  (edge g "biolink:directly_physically_interacts_with" m)
+  (kg2_norm g k)
+  (t2d_set d)
+  (edge t "biolink:gene_associated_with_condition" d)
+  (kg2_norm t k)
+  (node g name _)
+
+rule (result "affects" name) <--
+  (met_set m)
+  (edge g "biolink:affects" m)
+  (kg2_norm g k)
+  (t2d_set d)
+  (edge t "biolink:gene_associated_with_condition" d)
+  (kg2_norm t k)
+  (node g name _)

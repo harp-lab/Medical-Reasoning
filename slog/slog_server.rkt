@@ -99,12 +99,8 @@
       (flush-output out)
       (loop))))
 
-;; Load before opening the port, so anything that connects successfully knows
-;; the KG is resident.  The alternative -- listen first, load on the first
-;; request -- charges the whole load to whichever query happens to arrive
-;; first, which makes that query look pathologically slow in the logs.
 (note "loading ~a before accepting connections" DB)
-(void (ensure-session!))  ; void: a module-level expression would print the session struct
+(void (ensure-session!))
 
 (note "listening on 127.0.0.1:~a (db ~a, ready)" PORT DB)
 (define listener (tcp-listen PORT 8 #t "127.0.0.1"))

@@ -27,6 +27,13 @@ export SLOG_MEM_MAX="${SLOG_MEM_MAX:-150G}"
 export SLOG_SERVER_PORT="${SLOG_SERVER_PORT:-8642}"
 export KG2_SLOG_DB="${KG2_SLOG_DB:-dataTest4}"
 
+# -O0 only.  slog's default ("tiered") runs the eager -O0 build and then spawns a
+# detached -O2 build that hot-swaps in; measured here, -O2 makes no difference
+# (12.6s vs 12.4s fixpoint on the same query) because runtime is dominated by
+# fixed per-stratum overhead rather than generated-code quality.  The background
+# builds only cost disk.
+export SLOG_OPT="${SLOG_OPT:-0}"
+
 # Refuse rather than start a load that will thrash.  No reservation is possible
 # here (cgroups are root-only, memlock is 8 MB, no systemd user session), so a
 # pre-flight check is the only guard before the daemon's own RSS cap.

@@ -42,7 +42,7 @@ the views omit.
 Measured on this deployment:
 
 ```
-total  ~=  11s compile      (paid whenever the program text changes at all)
+total  ~=  ~9s compile      (paid whenever the program text changes at all)
        +  ~13s per derived relation
 ```
 
@@ -75,11 +75,8 @@ rule (result d) <--
   (edge g "biolink:gene_associated_with_condition" d)
 ```
 
-Keep an intermediate relation only when it is genuinely reused by several rules, or when
-recursion requires it. A relation used exactly once should be inlined.
-
-**A CURIE set is a stage too.** Collecting anchor CURIEs into a membership relation costs
-a full ~13s even though it does no real work. For a handful of CURIEs, write one rule per
+**A CURIE set is a stage too.** Collecting anchor CURIEs into a membership relation costs a
+full ~13s even though it does no real work. For a handful of CURIEs, write one rule per
 CURIE with the CURIE as a literal, all with the same head -- many rules writing one
 relation are still a single stage:
 
@@ -127,9 +124,10 @@ session already has.** This is the most common mistake.
 **The answer relation must be declared and named `result`.** It is dropped before each
 run, so it always starts empty.
 
-Bind each entity as a membership relation over the exact CURIEs from `expand_entity` —
-but only once the set is too large to inline (see "A CURIE set is a stage too" above).
-Never derive a set of *predicates* this way; write those as literals in the rule body:
+For an entity with more than about ten CURIEs from `expand_entity`, bind them as a
+membership relation and accept the one extra stage. Below that, inline them as literals
+instead — see "A CURIE set is a stage too". Never derive a set of *predicates* this way;
+write those as literals in the rule body:
 
 ```slog
 table (edge str str str)
@@ -241,9 +239,9 @@ If the user asks for an explanation, give one then. Unasked, the table is the wh
 - Results are capped at 500 rows; `n_rows` tells you the true count.
 - Prefer `edge` over `kg2_edges` for readability, not for speed — scan size does not
   affect runtime here.
-- The first `run_slog` of a session takes several minutes to load the KG (~9 min). A
-  syntax error on that first call wastes the whole load, so check the program carefully
-  before the first run of a session.
+- The session is loaded before it accepts connections, so no query pays the load. If
+  `run_slog` reports that no Slog session server is reachable, the server is either still
+  loading or was never started — say so and stop; do not retry in a loop.
 - **Never split a rule to make it faster.** Splitting adds a derived relation, which adds
   ~13s. If a rule feels expensive, the fix is fewer stages, not more.
 - A returned row count of 0 usually means a join across vocabularies (see above), not an

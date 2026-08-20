@@ -1,0 +1,15 @@
+;; What drugs treat Parkinson disease?
+table (edge str str str)
+table (pd_set str)
+table (result str)
+
+rule (pd_set "MONDO:0005180")
+rule (pd_set "DOID:14330")
+rule (pd_set "UMLS:C0030567")
+rule (pd_set "MESH:D010300")
+rule (pd_set "NCIT:C26845")
+rule (pd_set "ICD9:332")
+
+rule (result drug) <--
+  (pd_set d)
+  (edge drug "biolink:treats" d)

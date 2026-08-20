@@ -1,0 +1,25 @@
+;; What drugs are used to lower blood pressure?  (antihypertensives)
+;;
+;; The mechanistic reading via edge_dir was tried and abandoned: every
+;; biolink:affects edge into Blood Pressure (UMLS:C0005823, EFO:0006335/6) has an
+;; EMPTY direction qualifier, so it cannot separate lowering from raising.
+;; Therapeutic reading only: X treats hypertension.
+;;
+;; MONDO:0005044 expanded to its 9 KG2 ids, inlined as literals -- one stage.
+;; Pulmonary / portal / ocular / intracranial hypertension excluded on purpose:
+;; separate diseases, not senses of the plain term.
+;; Category is returned so procedure / activity / gene noise can be filtered out.
+
+table (edge str str str)
+table (node str str str)
+table (result str str str)
+
+rule (result name d cat) <-- (edge d "biolink:treats" "MONDO:0005044")   (node d name cat)
+rule (result name d cat) <-- (edge d "biolink:treats" "DOID:10763")      (node d name cat)
+rule (result name d cat) <-- (edge d "biolink:treats" "EFO:0000537")     (node d name cat)
+rule (result name d cat) <-- (edge d "biolink:treats" "UMLS:C0020538")   (node d name cat)
+rule (result name d cat) <-- (edge d "biolink:treats" "UMLS:C0497247")   (node d name cat)
+rule (result name d cat) <-- (edge d "biolink:treats" "MESH:D006973")    (node d name cat)
+rule (result name d cat) <-- (edge d "biolink:treats" "NCIT:C3117")      (node d name cat)
+rule (result name d cat) <-- (edge d "biolink:treats" "ICD9:401-405.99") (node d name cat)
+rule (result name d cat) <-- (edge d "biolink:treats" "HP:0000822")      (node d name cat)

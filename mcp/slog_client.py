@@ -31,8 +31,6 @@ def request(op):
     t_wait = time.perf_counter()
     with _lock:
         waited = time.perf_counter() - t_wait
-        # A long wait here means another tool call is mid-query and holding the
-        # single session; that is queueing, not slow Slog.
         if waited > 0.5:
             log.warning(f"  .. waited {fmt_dur(waited)} for the slog client lock "
                         f"(another request was in flight)")
@@ -67,9 +65,7 @@ def request(op):
     log.info(f"  <- slog {kind} ok in {fmt_dur(elapsed)} "
              f"({len(line)} bytes of response)")
     if elapsed > 60:
-        log.warning(f"  !! slog {kind} took {fmt_dur(elapsed)}. First call of a "
-                    f"session pays the KG load (several minutes); later calls "
-                    f"this slow mean the query itself is expensive.")
+        log.warning(f"  !! slog {kind} took {fmt_dur(elapsed)}")
     return resp
 
 

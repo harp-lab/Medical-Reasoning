@@ -1,0 +1,337 @@
+2026-08-19 14:14:56.221 | INFO    | mr            | ==============================================================================
+2026-08-19 14:14:56.222 | INFO    | mr            | KG2 MCP session 20260819-141456 starting
+2026-08-19 14:14:56.222 | INFO    | mr            | pid=1008345  python=3.11.15
+2026-08-19 14:14:56.222 | INFO    | mr            | session dir : /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/data/logs/20260819-141456
+2026-08-19 14:14:56.223 | INFO    | mr            |   mcp.log     -- this narrative log
+2026-08-19 14:14:56.223 | INFO    | mr            |   summary.csv -- one row per tool call
+2026-08-19 14:14:56.223 | INFO    | mr            |   queries/    -- the exact program each run_slog executed
+2026-08-19 14:14:56.223 | INFO    | mr            | ==============================================================================
+2026-08-19 14:14:56.226 | INFO    | server        | query file: /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog
+2026-08-19 14:14:56.226 | INFO    | server        | slog server: 127.0.0.1:8642 (client timeout 3600s)
+2026-08-19 14:14:56.227 | INFO    | server        | node DB: /tmp/kg2_nodes_aayush.shrestha@ad.wsu.edu.sqlite
+2026-08-19 14:14:56.227 | INFO    | server        | ==============================================================================
+2026-08-19 14:14:56.234 | INFO    | server        | starting FastMCP stdio server -- logging to /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/data/logs/20260819-141456
+2026-08-19 14:25:48.517 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-19 14:25:48.517 | INFO    | server        | >> TOOL list_predicates
+2026-08-19 14:25:48.519 | INFO    | kg2_core      |   loaded 61 predicates from /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/data/reference/distinct_core_predicate.tsv in 1ms
+2026-08-19 14:25:48.519 | INFO    | server        |   top predicates: biolink:has_participant, biolink:subclass_of, biolink:occurs_in, biolink:affects, biolink:related_to  ... +56 more
+2026-08-19 14:25:48.519 | INFO    | server        | << TOOL list_predicates finished in 2ms
+2026-08-19 14:25:48.520 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-19 14:25:48.550 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-19 14:25:48.550 | INFO    | server        | >> TOOL resolve_entity  term='Parkinson disease'  limit=10  biolink_type=None
+2026-08-19 14:25:48.550 | INFO    | kg2_core      |   name-resolution lookup: term='Parkinson disease' limit=10 biolink_type=(any)
+2026-08-19 14:25:49.676 | INFO    | kg2_core      |   .. HTTP name-resolution-sri.renci.org replied in 1.13s
+2026-08-19 14:25:49.676 | INFO    | kg2_core      |   name-resolution returned 10 candidate(s)
+2026-08-19 14:25:49.676 | INFO    | server        |   candidates for 'Parkinson disease':
+2026-08-19 14:25:49.677 | INFO    | server        | id                      name                                      category         score 
+2026-08-19 14:25:49.677 | INFO    | server        | ----------------------  ----------------------------------------  ---------------  ------
+2026-08-19 14:25:49.677 | INFO    | server        | MONDO:0005180           Parkinson disease                         biolink:Disease  3588.5
+2026-08-19 14:25:49.678 | INFO    | server        | MONDO:0006966           secondary Parkinson disease               biolink:Disease  1090.9
+2026-08-19 14:25:49.678 | INFO    | server        | MONDO:0001945           postencephalitic Parkinson disease        biolink:Disease  1056.8
+2026-08-19 14:25:49.678 | INFO    | server        | MONDO:0008199           late-onset Parkinson disease              biolink:Disease  875.2 
+2026-08-19 14:25:49.679 | INFO    | server        | MONDO:0008200           autosomal dominant Parkinson disease 1    biolink:Disease  862.6 
+2026-08-19 14:25:49.679 | INFO    | server        | MONDO:0013060           autosomal recessive Parkinson disease 14  biolink:Disease  862.6 
+2026-08-19 14:25:49.679 | INFO    | server        | PANTHER.PATHWAY:P00049  Parkinson disease                         biolink:Pathway  855.3 
+2026-08-19 14:25:49.679 | INFO    | server        | MONDO:0013625           Parkinson disease 17                      biolink:Disease  827.6 
+2026-08-19 14:25:49.680 | INFO    | server        | MONDO:0011562           autosomal dominant Parkinson disease 4    biolink:Disease  779.0 
+2026-08-19 14:25:49.680 | INFO    | server        | MONDO:0014231           juvenile onset Parkinson disease 19A      biolink:Disease  779.0 
+2026-08-19 14:25:49.680 | INFO    | server        | << TOOL resolve_entity finished in 1.13s
+2026-08-19 14:25:49.680 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-19 14:25:52.249 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-19 14:25:52.249 | INFO    | server        | >> TOOL expand_entity  n_curies=1
+2026-08-19 14:25:52.249 | INFO    | server        |   input CURIEs (1):
+2026-08-19 14:25:52.249 | INFO    | server        |     MONDO:0005180
+2026-08-19 14:25:52.249 | INFO    | server        |   * expand MONDO:0005180 ...
+2026-08-19 14:25:52.250 | INFO    | kg2_core      |   node-normalizer clique for MONDO:0005180
+2026-08-19 14:25:52.925 | INFO    | kg2_core      |   .. HTTP nodenormalization-sri.renci.org replied in 675ms
+2026-08-19 14:25:52.925 | INFO    | kg2_core      |   clique for MONDO:0005180: 16 equivalent id(s) -> MONDO:0005180, DOID:14330, OMIM.PS:168600, UMLS:C0030567, MESH:D010300, MEDDRA:10013113, MEDDRA:10033801, MEDDRA:10034007, MEDDRA:10034008, MEDDRA:10061536  ... +6 more
+2026-08-19 14:25:52.926 | INFO    | kg2_core      |   opening existing node DB /tmp/kg2_nodes_aayush.shrestha@ad.wsu.edu.sqlite (2225 MB)
+2026-08-19 14:25:52.927 | INFO    | kg2_core      |   expand MONDO:0005180: 16 clique id(s) -> 6 present in KG2 (10 not in KG2) in 677ms
+2026-08-19 14:25:52.927 | INFO    | kg2_core      |     kept   : MONDO:0005180, DOID:14330, UMLS:C0030567, MESH:D010300, NCIT:C26845, ICD9:332
+2026-08-19 14:25:52.927 | INFO    | server        |   + expand MONDO:0005180 done in 677ms
+2026-08-19 14:25:52.927 | INFO    | server        |   1 input CURIE(s) -> 6 distinct KG2 id(s)
+2026-08-19 14:25:52.928 | INFO    | server        |   kg2_ids (6):
+2026-08-19 14:25:52.928 | INFO    | server        |     MONDO:0005180  DOID:14330     UMLS:C0030567  MESH:D010300
+2026-08-19 14:25:52.928 | INFO    | server        |     NCIT:C26845    ICD9:332
+2026-08-19 14:25:52.929 | INFO    | server        | << TOOL expand_entity finished in 680ms
+2026-08-19 14:25:52.929 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-19 14:26:01.711 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-19 14:26:01.711 | INFO    | server        | >> TOOL run_slog  limit=500
+2026-08-19 14:26:01.714 | INFO    | server        |   query file /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog (903 bytes, modified 2026-08-19 14:26:00)
+2026-08-19 14:26:01.714 | INFO    | server        |   archived as queries/004_run_slog.slog
+2026-08-19 14:26:01.714 | INFO    | server        |   shape: 5 table(s) declared, 3 derived relation(s) -- expect ~13s per derived relation
+2026-08-19 14:26:01.715 | INFO    | server        |   program:
+                                                        | ;; Which biolink:SmallMolecule or biolink:Drug entities treat Parkinson disease?
+                                                        | ;;
+                                                        | ;; Anchor: MONDO:0005180 ("Parkinson disease", the plain sense), expanded by
+                                                        | ;; expand_entity to its 6 KG2 ids, kept as the membership relation `pd_set`.
+                                                        | ;;
+                                                        | ;; Two categories are wanted, so `cat_set` holds them as a membership relation
+                                                        | ;; too and the single rule joins against it -- one rule, one stage, instead of
+                                                        | ;; two near-duplicate rules.
+                                                        | 
+                                                        | table (edge str str str)
+                                                        | table (node str str str)
+                                                        | table (pd_set str)
+                                                        | table (cat_set str)
+                                                        | table (result str str str)
+                                                        | 
+                                                        | rule (pd_set "MONDO:0005180")
+                                                        | rule (pd_set "DOID:14330")
+                                                        | rule (pd_set "UMLS:C0030567")
+                                                        | rule (pd_set "MESH:D010300")
+                                                        | rule (pd_set "NCIT:C26845")
+                                                        | rule (pd_set "ICD9:332")
+                                                        | 
+                                                        | rule (cat_set "biolink:SmallMolecule")
+                                                        | rule (cat_set "biolink:Drug")
+                                                        | 
+                                                        | rule (result drug name cat) <--
+                                                        |   (pd_set d)
+                                                        |   (edge drug "biolink:treats" d)
+                                                        |   (node drug name cat)
+                                                        |   (cat_set cat)
+2026-08-19 14:26:01.715 | INFO    | slog          |   -> slog drop: {"op": "drop", "rel": "result"}
+2026-08-19 14:26:13.126 | INFO    | slog          |   <- slog drop ok in 11.41s (12 bytes of response)
+2026-08-19 14:26:13.126 | INFO    | server        |   dropped previous `result` relation
+2026-08-19 14:26:13.126 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-19 14:26:19.480 | INFO    | slog          |   <- slog dump ok in 6.35s (1460 bytes of response)
+2026-08-19 14:26:19.481 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-19 14:26:25.322 | INFO    | slog          |   <- slog dump ok in 5.84s (3054 bytes of response)
+2026-08-19 14:26:25.393 | INFO    | server        |   * slog run (KG load on first call of a session) ...
+2026-08-19 14:26:25.393 | INFO    | slog          |   -> slog run: {"op": "run", "path": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog"}
+2026-08-19 14:27:11.689 | INFO    | slog          |   <- slog run ok in 46.30s (12 bytes of response)
+2026-08-19 14:27:11.689 | INFO    | server        |   + slog run (KG load on first call of a session) done in 46.30s
+2026-08-19 14:27:11.690 | INFO    | server        |   * dump `result` (limit 500) ...
+2026-08-19 14:27:11.690 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "result", "limit": 500}
+2026-08-19 14:27:17.336 | INFO    | slog          |   <- slog dump ok in 5.65s (7764 bytes of response)
+2026-08-19 14:27:17.336 | INFO    | server        |   + dump `result` (limit 500) done in 5.65s
+2026-08-19 14:27:17.338 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-19 14:27:17.345 | INFO    | slog          |   <- slog dump ok in 7ms (1526 bytes of response)
+2026-08-19 14:27:17.345 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-19 14:27:17.351 | INFO    | slog          |   <- slog dump ok in 6ms (3089 bytes of response)
+2026-08-19 14:27:17.351 | INFO    | server        |   timing: total=1m 15.6s  compile=13.54s  exec=32.76s  (strata compiled=5, executed=2)
+2026-08-19 14:27:17.351 | INFO    | server        |   daemon: fixpoint=27899.9ms  iterations=4  rule_fires=0
+2026-08-19 14:27:17.352 | INFO    | server        |   cost model predicted ~48s for this shape
+2026-08-19 14:27:17.352 | INFO    | server        |   result: n_rows=133 returned=133 truncated=False
+2026-08-19 14:27:17.352 | INFO    | server        |   IR -- CURIEs out of the answer relation, unnamed at this point:
+2026-08-19 14:27:17.352 | INFO    | server        |   result CURIEs (135):
+2026-08-19 14:27:17.353 | INFO    | server        |     UMLS:C0003297          biolink:Drug           UMLS:C1532411          UMLS:C4475891
+2026-08-19 14:27:17.353 | INFO    | server        |     UMLS:C0003295          UMLS:C0036753          UMLS:C0001648          UMLS:C0279328
+2026-08-19 14:27:17.353 | INFO    | server        |     UMLS:C0003015          UMLS:C0353697          UMLS:C0598695          UMLS:C0242708
+2026-08-19 14:27:17.354 | INFO    | server        |     UMLS:C0024911          UMLS:C0003211          UMLS:C0242897          UMLS:C1123457
+2026-08-19 14:27:17.354 | INFO    | server        |     UMLS:C0242889          UMLS:C0987131          UMLS:C0032207          biolink:SmallMolecule
+2026-08-19 14:27:17.354 | INFO    | server        |     UMLS:C0358430          UMLS:C0003289          UMLS:C0242913          UMLS:C0003385
+2026-08-19 14:27:17.354 | INFO    | server        |     UMLS:C1611640          UMLS:C0001644          UMLS:C0304229          UMLS:C1136250
+2026-08-19 14:27:17.354 | INFO    | server        |     UMLS:C0595267          UMLS:C0242896          UMLS:C0003209          UMLS:C0085155
+2026-08-19 14:27:17.355 | INFO    | server        |     UMLS:C0013231          UMLS:C0037125          UMLS:C0595265          UMLS:C1277078
+2026-08-19 14:27:17.355 | INFO    | server        |     UMLS:C0001641          UMLS:C0003232          UMLS:C3539957          UMLS:C1171350
+2026-08-19 14:27:17.355 | INFO    | server        |     UMLS:C0870507          UMLS:C0729502          UMLS:C3653518          UMLS:C0086440
+2026-08-19 14:27:17.355 | INFO    | server        |     UMLS:C0242948          UMLS:C0003280          UMLS:C0037766          UMLS:C0242978
+2026-08-19 14:27:17.356 | INFO    | server        |     UMLS:C0009905          UMLS:C0002932          UMLS:C0003290          UMLS:C0014432
+2026-08-19 14:27:17.356 | INFO    | server        |     UMLS:C0020275          UMLS:C3543842          UMLS:C0003451          UMLS:C4276345
+2026-08-19 14:27:17.356 | INFO    | server        |     UMLS:C0001637          UMLS:C0013973          UMLS:C5384547          UMLS:C0302837
+2026-08-19 14:27:17.356 | INFO    | server        |     UMLS:C1247912          UMLS:C0243192          UMLS:C0003364          UMLS:C0033978
+2026-08-19 14:27:17.357 | INFO    | server        |     UMLS:C0308158          UMLS:C1520007          UMLS:C0360105          UMLS:C0935929
+2026-08-19 14:27:17.357 | INFO    | server        |     UMLS:C0040614          UMLS:C0360140          UMLS:C1516312          UMLS:C1874451
+2026-08-19 14:27:17.357 | INFO    | server        |     UMLS:C0242910          UMLS:C0041658          UMLS:C4745728          UMLS:C0282090
+2026-08-19 14:27:17.357 | INFO    | server        |     UMLS:C1134558          UMLS:C0039052          UMLS:C1329991          UMLS:C0031638
+2026-08-19 14:27:17.358 | INFO    | server        |     UMLS:C0003405          UMLS:C1827106          UMLS:C0713465          UMLS:C0001046
+2026-08-19 14:27:17.358 | INFO    | server        |     UMLS:C0013230          UMLS:C0003402          UMLS:C0777852          UMLS:C0870261
+2026-08-19 14:27:17.358 | INFO    | server        |     UMLS:C2606904          UMLS:C1254351          UMLS:C0086466          UMLS:C0006684
+2026-08-19 14:27:17.358 | INFO    | server        |     DRUGBANK:DB01235       UMLS:C3653412          UMLS:C0027410          UMLS:C1135768
+2026-08-19 14:27:17.359 | INFO    | server        |     UMLS:C1449680          UMLS:C0003286          UMLS:C0242893          UMLS:C0040615
+2026-08-19 14:27:17.359 | INFO    | server        |     UMLS:C0242912          UMLS:C1514727          UMLS:C1517498          UMLS:C0051821
+2026-08-19 14:27:17.359 | INFO    | server        |     UMLS:C4553183          UMLS:C1718097          UMLS:C0813973          UMLS:C0242951
+2026-08-19 14:27:17.359 | INFO    | server        |     UMLS:C0984524          UMLS:C0013162          UMLS:C0162758          UMLS:C0243042
+2026-08-19 14:27:17.360 | INFO    | server        |     UMLS:C0242980          UMLS:C1136254          UMLS:C0242702          UMLS:C0013036
+2026-08-19 14:27:17.360 | INFO    | server        |     UMLS:C1579361          UMLS:C0162757          UMLS:C0020591          UMLS:C0178601
+2026-08-19 14:27:17.360 | INFO    | server        |     UMLS:C0003299          UMLS:C3536821          UMLS:C0083104          UMLS:C0013227
+2026-08-19 14:27:17.360 | INFO    | server        |     UMLS:C0358591          UMLS:C0040616          UMLS:C1377705          UMLS:C1310986
+2026-08-19 14:27:17.360 | INFO    | server        |     UMLS:C0242974          UMLS:C0033613          UMLS:C0599654          UMLS:C0304497
+2026-08-19 14:27:17.361 | INFO    | server        |     UMLS:C1276996          UMLS:C0259849          UMLS:C0358855
+2026-08-19 14:27:17.361 | INFO    | server        | << TOOL run_slog finished in 1m 15.6s
+2026-08-19 14:27:17.361 | WARNING | server        | !! run_slog took 1m 15.6s -- slow call
+2026-08-19 14:27:17.361 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-19 14:27:30.898 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-19 14:27:30.899 | INFO    | server        | >> TOOL run_slog  limit=2000
+2026-08-19 14:27:30.900 | INFO    | server        |   query file /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog (575 bytes, modified 2026-08-19 14:27:29)
+2026-08-19 14:27:30.901 | INFO    | server        |   archived as queries/005_run_slog.slog
+2026-08-19 14:27:30.901 | INFO    | server        |   shape: 4 table(s) declared, 2 derived relation(s) -- expect ~13s per derived relation
+2026-08-19 14:27:30.901 | INFO    | server        |   program:
+                                                        | ;; Category distribution of everything that biolink:treats Parkinson disease.
+                                                        | ;; Same pd_set anchor; drops the cat_set filter so the third column shows which
+                                                        | ;; categories the two requested ones leave out.
+                                                        | 
+                                                        | table (edge str str str)
+                                                        | table (node str str str)
+                                                        | table (pd_set str)
+                                                        | table (result str str str)
+                                                        | 
+                                                        | rule (pd_set "MONDO:0005180")
+                                                        | rule (pd_set "DOID:14330")
+                                                        | rule (pd_set "UMLS:C0030567")
+                                                        | rule (pd_set "MESH:D010300")
+                                                        | rule (pd_set "NCIT:C26845")
+                                                        | rule (pd_set "ICD9:332")
+                                                        | 
+                                                        | rule (result cat drug name) <--
+                                                        |   (pd_set d)
+                                                        |   (edge drug "biolink:treats" d)
+                                                        |   (node drug name cat)
+2026-08-19 14:27:30.902 | INFO    | slog          |   -> slog drop: {"op": "drop", "rel": "result"}
+2026-08-19 14:27:30.917 | INFO    | slog          |   <- slog drop ok in 15ms (12 bytes of response)
+2026-08-19 14:27:30.917 | INFO    | server        |   dropped previous `result` relation
+2026-08-19 14:27:30.917 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-19 14:27:30.924 | INFO    | slog          |   <- slog dump ok in 6ms (1526 bytes of response)
+2026-08-19 14:27:30.924 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-19 14:27:30.929 | INFO    | slog          |   <- slog dump ok in 5ms (3089 bytes of response)
+2026-08-19 14:27:30.929 | INFO    | server        |   * slog run (KG load on first call of a session) ...
+2026-08-19 14:27:30.929 | INFO    | slog          |   -> slog run: {"op": "run", "path": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog"}
+2026-08-19 14:28:05.951 | INFO    | slog          |   <- slog run ok in 35.02s (12 bytes of response)
+2026-08-19 14:28:05.951 | INFO    | server        |   + slog run (KG load on first call of a session) done in 35.02s
+2026-08-19 14:28:05.952 | INFO    | server        |   * dump `result` (limit 500) ...
+2026-08-19 14:28:05.952 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "result", "limit": 500}
+2026-08-19 14:28:06.005 | INFO    | slog          |   <- slog dump ok in 53ms (30900 bytes of response)
+2026-08-19 14:28:06.006 | INFO    | server        |   + dump `result` (limit 500) done in 54ms
+2026-08-19 14:28:06.007 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-19 14:28:06.016 | INFO    | slog          |   <- slog dump ok in 9ms (1592 bytes of response)
+2026-08-19 14:28:06.016 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-19 14:28:06.032 | INFO    | slog          |   <- slog dump ok in 16ms (3125 bytes of response)
+2026-08-19 14:28:06.032 | INFO    | server        |   timing: total=35.10s  compile=7.24s  exec=27.79s  (strata compiled=2, executed=2)
+2026-08-19 14:28:06.033 | INFO    | server        |   daemon: fixpoint=21972.5ms  iterations=3  rule_fires=0
+2026-08-19 14:28:06.033 | INFO    | server        |   cost model predicted ~35s for this shape
+2026-08-19 14:28:06.033 | INFO    | server        |   result: n_rows=1627 returned=500 truncated=True
+2026-08-19 14:28:06.035 | INFO    | server        |   IR -- CURIEs out of the answer relation, unnamed at this point:
+2026-08-19 14:28:06.035 | INFO    | server        |   result CURIEs (507):
+2026-08-19 14:28:06.035 | INFO    | server        |     biolink:Procedure                        UMLS:C0576773                            UMLS:C1318464                            UMLS:C0394664
+2026-08-19 14:28:06.035 | INFO    | server        |     UMLS:C0021932                            UMLS:C0185908                            UMLS:C0394374                            UMLS:C0206058
+2026-08-19 14:28:06.035 | INFO    | server        |     UMLS:C1504389                            UMLS:C0040739                            UMLS:C0152054                            UMLS:C0026268
+2026-08-19 14:28:06.036 | INFO    | server        |     UMLS:C0023690                            UMLS:C0949266                            UMLS:C0011331                            UMLS:C0040771
+2026-08-19 14:28:06.036 | INFO    | server        |     UMLS:C0042196                            UMLS:C4316303                            UMLS:C0842093                            UMLS:C0186662
+2026-08-19 14:28:06.036 | INFO    | server        |     UMLS:C0282077                            UMLS:C0376518                            UMLS:C1171257                            UMLS:C0005961
+2026-08-19 14:28:06.036 | INFO    | server        |     UMLS:C0556030                            UMLS:C0677908                            UMLS:C1274136                            UMLS:C0683474
+2026-08-19 14:28:06.037 | INFO    | server        |     UMLS:C0013938                            UMLS:C0278347                            UMLS:C0587059                            UMLS:C2945704
+2026-08-19 14:28:06.037 | INFO    | server        |     UMLS:C0194037                            UMLS:C0020431                            UMLS:C0005491                            UMLS:C0013787
+2026-08-19 14:28:06.037 | INFO    | server        |     UMLS:C0015952                            UMLS:C0444889                            UMLS:C1516635                            UMLS:C0870913
+2026-08-19 14:28:06.038 | INFO    | server        |     UMLS:C0013216                            UMLS:C0003611                            UMLS:C1293116                            UMLS:C1136080
+2026-08-19 14:28:06.038 | INFO    | server        |     UMLS:C0994537                            UMLS:C1293132                            UMLS:C0454512                            UMLS:C2985566
+2026-08-19 14:28:06.038 | INFO    | server        |     UMLS:C0199779                            UMLS:C1303150                            UMLS:C0079345                            UMLS:C0204592
+2026-08-19 14:28:06.038 | INFO    | server        |     UMLS:C0033971                            UMLS:C2718088                            UMLS:C0008971                            UMLS:C0021083
+2026-08-19 14:28:06.039 | INFO    | server        |     UMLS:C0009244                            UMLS:C0068899                            UMLS:C0600249                            UMLS:C0026652
+2026-08-19 14:28:06.039 | INFO    | server        |     UMLS:C0003893                            UMLS:C0017296                            UMLS:C0279025                            UMLS:C0042209
+2026-08-19 14:28:06.039 | INFO    | server        |     UMLS:C2242628                            UMLS:C0454279                            UMLS:C0007975                            UMLS:C0003827
+2026-08-19 14:28:06.039 | INFO    | server        |     UMLS:C1533685                            UMLS:C0150866                            UMLS:C1511790                            UMLS:C1527374
+2026-08-19 14:28:06.040 | INFO    | server        |     UMLS:C1963758                            UMLS:C0185026                            UMLS:C0195775                            UMLS:C0085143
+2026-08-19 14:28:06.040 | INFO    | server        |     UMLS:C0039038                            UMLS:C0740218                            UMLS:C0949766                            UMLS:C1527386
+2026-08-19 14:28:06.040 | INFO    | server        |     UMLS:C0949742                            UMLS:C0196911                            UMLS:C0679771                            UMLS:C0677850
+2026-08-19 14:28:06.040 | INFO    | server        |     UMLS:C0394697                            UMLS:C0702123                            UMLS:C0401181                            UMLS:C0020311
+2026-08-19 14:28:06.041 | INFO    | server        |     UMLS:C0012737                            UMLS:C0020650                            UMLS:C0870721                            UMLS:C0376626
+2026-08-19 14:28:06.041 | INFO    | server        |     UMLS:C0596171                            UMLS:C0281375                            UMLS:C0040508                            UMLS:C0339897
+2026-08-19 14:28:06.041 | INFO    | server        |     UMLS:C0001164                            UMLS:C0021493                            UMLS:C0087111                            UMLS:C0002903
+2026-08-19 14:28:06.041 | INFO    | server        |     UMLS:C0190188                            UMLS:C4699741                            UMLS:C0021153                            UMLS:C0034764
+2026-08-19 14:28:06.042 | INFO    | server        |     UMLS:C3852966                            UMLS:C0206233                            UMLS:C0021107                            UMLS:C0078040
+2026-08-19 14:28:06.042 | INFO    | server        |     UMLS:C0242972                            UMLS:C0024875                            UMLS:C0198482                            UMLS:C1456587
+2026-08-19 14:28:06.042 | INFO    | server        |     UMLS:C0038270                            UMLS:C5238484                            UMLS:C0459914                            UMLS:C0524722
+2026-08-19 14:28:06.042 | INFO    | server        |     UMLS:C0071973                            UMLS:C0002766                            UMLS:C0186193                            UMLS:C0204525
+2026-08-19 14:28:06.043 | INFO    | server        |     UMLS:C0729377                            UMLS:C0936077                            UMLS:C0205991                            UMLS:C0004361
+2026-08-19 14:28:06.043 | INFO    | server        |     UMLS:C0031006                            UMLS:C0194810                            UMLS:C4082010                            UMLS:C0765585
+2026-08-19 14:28:06.043 | INFO    | server        |     UMLS:C1504473                            UMLS:C0581602                            UMLS:C0001560                            UMLS:C0186045
+2026-08-19 14:28:06.044 | INFO    | server        |     UMLS:C0003506                            UMLS:C0744743                            UMLS:C0520526                            UMLS:C4763675
+2026-08-19 14:28:06.044 | INFO    | server        |     UMLS:C0374503                            UMLS:C0039333                            UMLS:C5392103                            UMLS:C0021587
+2026-08-19 14:28:06.044 | INFO    | server        |     UMLS:C0057163                            UMLS:C0079850                            UMLS:C0441509                            UMLS:C0969690
+2026-08-19 14:28:06.044 | INFO    | server        |     UMLS:C0740287                            UMLS:C0452240                            UMLS:C0199451                            UMLS:C0394162
+2026-08-19 14:28:06.044 | INFO    | server        |     UMLS:C0343138                            UMLS:C0034115                            UMLS:C0418992                            UMLS:C0185061
+2026-08-19 14:28:06.045 | INFO    | server        |     UMLS:C2985391                            UMLS:C0870222                            UMLS:C0027902                            UMLS:C0086258
+2026-08-19 14:28:06.045 | INFO    | server        |     UMLS:C0020587                            UMLS:C0007430                            UMLS:C0026868                            UMLS:C0019930
+2026-08-19 14:28:06.045 | INFO    | server        |     UMLS:C4277545                            UMLS:C0017118                            UMLS:C0014935                            UMLS:C0026019
+2026-08-19 14:28:06.045 | INFO    | server        |     UMLS:C0006155                            UMLS:C1514967                            UMLS:C0040591                            UMLS:C0020971
+2026-08-19 14:28:06.046 | INFO    | server        |     UMLS:C0035139                            UMLS:C0237934                            UMLS:C0206080                            UMLS:C0220908
+2026-08-19 14:28:06.046 | INFO    | server        |     UMLS:C0282402                            UMLS:C0033573                            UMLS:C1708063                            UMLS:C0021440
+2026-08-19 14:28:06.046 | INFO    | server        |     UMLS:C1964029                            UMLS:C1536570                            UMLS:C0162522                            UMLS:C1513305
+2026-08-19 14:28:06.046 | INFO    | server        |     UMLS:C0281163                            UMLS:C0002928                            UMLS:C0949216                            UMLS:C1524082
+2026-08-19 14:28:06.046 | INFO    | server        |     UMLS:C0279493                            UMLS:C0011307                            UMLS:C0010408                            UMLS:C0028678
+2026-08-19 14:28:06.047 | INFO    | server        |     UMLS:C4704697                            UMLS:C0149684                            UMLS:C0200149                            UMLS:C0195894
+2026-08-19 14:28:06.047 | INFO    | server        |     UMLS:C2936405                            UMLS:C0176751                            UMLS:C0864243                            UMLS:C1285354
+2026-08-19 14:28:06.047 | INFO    | server        |     UMLS:C0935576                            UMLS:C0439775                            UMLS:C0031765                            UMLS:C0033144
+2026-08-19 14:28:06.047 | INFO    | server        |     UMLS:C0349707                            UMLS:C0376707                            UMLS:C1096702                            UMLS:C0001701
+2026-08-19 14:28:06.048 | INFO    | server        |     UMLS:C0543467                            UMLS:C0849487                            UMLS:C0037935                            UMLS:C0186010
+2026-08-19 14:28:06.048 | INFO    | server        |     UMLS:C0001563                            UMLS:C0206153                            UMLS:C0280580                            UMLS:C0080232
+2026-08-19 14:28:06.048 | INFO    | server        |     UMLS:C2717877                            UMLS:C1304648                            UMLS:C0086153                            UMLS:C0021079
+2026-08-19 14:28:06.048 | INFO    | server        |     UMLS:C1257990                            UMLS:C0728940                            UMLS:C0279033                            UMLS:C0279027
+2026-08-19 14:28:06.049 | INFO    | server        |     UMLS:C0011900                            UMLS:C2713543                            UMLS:C0020548                            UMLS:C0150223
+2026-08-19 14:28:06.049 | INFO    | server        |     UMLS:C0041290                            UMLS:C0086225                            UMLS:C0195767                            UMLS:C0184661
+2026-08-19 14:28:06.049 | INFO    | server        |     UMLS:C0344217                            UMLS:C0870227                            UMLS:C0079595                            UMLS:C0259836
+2026-08-19 14:28:06.049 | INFO    | server        |     UMLS:C0547070                            UMLS:C0196913                            UMLS:C0005527                            UMLS:C0013806
+2026-08-19 14:28:06.050 | INFO    | server        |     UMLS:C1831743                            UMLS:C0524811                            UMLS:C0040808                            UMLS:C0872279
+2026-08-19 14:28:06.050 | INFO    | server        |     UMLS:C3850024                            UMLS:C0242297                            UMLS:C1517033                            UMLS:C0872259
+2026-08-19 14:28:06.050 | INFO    | server        |     UMLS:C0524861                            UMLS:C0524865                            UMLS:C0040590                            UMLS:C0020974
+2026-08-19 14:28:06.050 | INFO    | server        |     UMLS:C0022024                            UMLS:C0023017                            UMLS:C0920347                            UMLS:C0085203
+2026-08-19 14:28:06.051 | INFO    | server        |     UMLS:C3658321                            UMLS:C0037831                            UMLS:C0021495                            UMLS:C0002921
+2026-08-19 14:28:06.051 | INFO    | server        |     UMLS:C0150627                            UMLS:C0034991                            UMLS:C0002911                            UMLS:C0002915
+2026-08-19 14:28:06.051 | INFO    | server        |     UMLS:C0279494                            UMLS:C0040732                            UMLS:C0040736                            UMLS:C0302189
+2026-08-19 14:28:06.051 | INFO    | server        |     UMLS:C0436548                            UMLS:C0007876                            UMLS:C0565514                            UMLS:C0871664
+2026-08-19 14:28:06.051 | INFO    | server        |     UMLS:C0587591                            UMLS:C0009429                            UMLS:C2827774                            UMLS:C0086330
+2026-08-19 14:28:06.052 | INFO    | server        |     UMLS:C0195893                            UMLS:C0150126                            UMLS:C0030231                            UMLS:C0024485
+2026-08-19 14:28:06.052 | INFO    | server        |     UMLS:C0013786                            UMLS:C0013794                            UMLS:C2459996                            UMLS:C0870303
+2026-08-19 14:28:06.052 | INFO    | server        |     UMLS:C0041618                            UMLS:C2718059                            UMLS:C0056633                            UMLS:C0010962
+2026-08-19 14:28:06.052 | INFO    | server        |     UMLS:C0016642                            UMLS:C1293131                            UMLS:C0454525                            UMLS:C0004933
+2026-08-19 14:28:06.053 | INFO    | server        |     UMLS:C0065772                            UMLS:C0376287                            UMLS:C1519630                            UMLS:C3830328
+2026-08-19 14:28:06.053 | INFO    | server        |     UMLS:C0033968                            UMLS:C0033972                            UMLS:C0242388                            UMLS:C0808232
+2026-08-19 14:28:06.053 | INFO    | server        |     UMLS:C0035016                            UMLS:C0574032                            UMLS:C1292856                            UMLS:C0150764
+2026-08-19 14:28:06.053 | INFO    | server        |     UMLS:C3858690                            UMLS:C2922974                            UMLS:C0871198                            UMLS:C1138412
+2026-08-19 14:28:06.054 | INFO    | server        |     UMLS:C0935606                            UMLS:C0520484                            UMLS:C0040674                            UMLS:C0242739
+2026-08-19 14:28:06.054 | INFO    | server        |     UMLS:C0079613                            UMLS:C0029216                            UMLS:C0185027                            UMLS:C0392806
+2026-08-19 14:28:06.054 | INFO    | server        |     UMLS:C0392535                            UMLS:C0394477                            UMLS:C0199176                            UMLS:C0472699
+2026-08-19 14:28:06.054 | INFO    | server        |     UMLS:C1522449                            UMLS:C0010280                            UMLS:C0191279                            UMLS:C0039043
+2026-08-19 14:28:06.054 | INFO    | server        |     UMLS:C1831738                            UMLS:C0280604                            UMLS:C1883583                            UMLS:C0079036
+2026-08-19 14:28:06.055 | INFO    | server        |     UMLS:C0086511                            UMLS:C0872278                            UMLS:C0524850                            UMLS:C0185111
+2026-08-19 14:28:06.055 | INFO    | server        |     UMLS:C0185115                            UMLS:C2986592                            UMLS:C0679543                            UMLS:C2348331
+2026-08-19 14:28:06.055 | INFO    | server        |     UMLS:C0279492                            UMLS:C0751429                            UMLS:C0451615                            UMLS:C0178620
+2026-08-19 14:28:06.055 | INFO    | server        |     UMLS:C0017382                            UMLS:C0947647                            UMLS:C0556033                            UMLS:C0857127
+2026-08-19 14:28:06.056 | INFO    | server        |     UMLS:C5203672                            biolink:Phenomenon                       UMLS:C0034917                            biolink:Gene
+2026-08-19 14:28:06.056 | INFO    | server        |     NCBIGene:1312                            NCBIGene:3497                            biolink:PhysicalEntity                   UMLS:C0184069
+2026-08-19 14:28:06.056 | INFO    | server        |     UMLS:C0180112                            UMLS:C0180860                            UMLS:C0183185                            UMLS:C0179038
+2026-08-19 14:28:06.056 | INFO    | server        |     UMLS:C1523994                            UMLS:C0180392                            UMLS:C1289877                            biolink:BiologicalEntity
+2026-08-19 14:28:06.057 | INFO    | server        |     UMLS:C0017337                            UMLS:C1414273                            UMLS:C1333711                            biolink:PopulationOfIndividualOrganisms
+2026-08-19 14:28:06.057 | INFO    | server        |     UMLS:C0696628                            biolink:ChemicalEntity                   UMLS:C0039245                            UMLS:C0069821
+2026-08-19 14:28:06.057 | INFO    | server        |     UMLS:C0165921                            UMLS:C0033511                            UMLS:C0002404                            DrugCentral:1018
+2026-08-19 14:28:06.057 | INFO    | server        |     UMLS:C0027289                            UMLS:C0054202                            UMLS:C1144149                            UMLS:C4706197
+2026-08-19 14:28:06.058 | INFO    | server        |     UMLS:C0023863                            UMLS:C0259969                            UMLS:C0030350                            UMLS:C0671970
+2026-08-19 14:28:06.058 | INFO    | server        |     UMLS:C0074414                            UMLS:C0599473                            UMLS:C0073047                            UMLS:C0757826
+2026-08-19 14:28:06.058 | INFO    | server        |     UMLS:C0010124                            UMLS:C0025684                            UMLS:C0085208                            UMLS:C0052946
+2026-08-19 14:28:06.058 | INFO    | server        |     UMLS:C0008287                            UMLS:C2353951                            UMLS:C0008838                            UMLS:C0078844
+2026-08-19 14:28:06.059 | INFO    | server        |     UMLS:C0910688                            UMLS:C1434556                            UMLS:C0728759                            UMLS:C0087162
+2026-08-19 14:28:06.059 | INFO    | server        |     UMLS:C0665718                            DRUGBANK:DB00190                         UMLS:C0002667                            UMLS:C0069413
+2026-08-19 14:28:06.059 | INFO    | server        |     UMLS:C2948003                            UMLS:C0057684                            UMLS:C0015689                            UMLS:C0071174
+2026-08-19 14:28:06.059 | INFO    | server        |     UMLS:C0971637                            UMLS:C0003968                            UMLS:C0043603                            UMLS:C0043328
+2026-08-19 14:28:06.059 | INFO    | server        |     UMLS:C0813618                            UMLS:C0729168                            UMLS:C0007044                            UMLS:C0302912
+2026-08-19 14:28:06.060 | INFO    | server        |     UMLS:C0013030                            UMLS:C0072489                            UMLS:C0142469                            UMLS:C0036189
+2026-08-19 14:28:06.060 | INFO    | server        |     UMLS:C0969232                            DRUGBANK:DB00915                         UMLS:C0113293                            UMLS:C0600493
+2026-08-19 14:28:06.060 | INFO    | server        |     UMLS:C0108518                            UMLS:C0225326                            UMLS:C0047506                            UMLS:C0018605
+2026-08-19 14:28:06.060 | INFO    | server        |     UMLS:C0073374                            UMLS:C0020740                            UMLS:C0002771                            UMLS:C2987417
+2026-08-19 14:28:06.060 | INFO    | server        |     UMLS:C0051318                            UMLS:C0377107                            UMLS:C0056501                            UMLS:C0022816
+2026-08-19 14:28:06.061 | INFO    | server        |     UMLS:C0028277                            UMLS:C0023369                            UMLS:C0056636                            UMLS:C1098261
+2026-08-19 14:28:06.061 | INFO    | server        |     UMLS:C0936072                            UMLS:C0022209                            UMLS:C0593372                            UMLS:C0066801
+2026-08-19 14:28:06.061 | INFO    | server        |     UMLS:C0066545                            UMLS:C0048297                            DRUGBANK:DB05271                         UMLS:C0031007
+2026-08-19 14:28:06.061 | INFO    | server        |     UMLS:C0244821                            UMLS:C0016693                            UMLS:C0065767                            UMLS:C0591350
+2026-08-19 14:28:06.062 | INFO    | server        |     UMLS:C0001551                            DRUGBANK:DB01037                         UMLS:C0664589                            UMLS:C1721377
+2026-08-19 14:28:06.062 | INFO    | server        |     UMLS:C0039644                            UMLS:C0168388                            UMLS:C0133860                            UMLS:C0069939
+2026-08-19 14:28:06.062 | INFO    | server        |     UMLS:C0060444                            UMLS:C0043031                            UMLS:C0079381                            UMLS:C0014563
+2026-08-19 14:28:06.062 | INFO    | server        |     UMLS:C0075083                            UMLS:C0917964                            UMLS:C0012228                            UMLS:C0053947
+2026-08-19 14:28:06.062 | INFO    | server        |     UMLS:C0040374                            UMLS:C0056413                            UMLS:C0072186                            UMLS:C0042291
+2026-08-19 14:28:06.063 | INFO    | server        |     UMLS:C0005014                            UMLS:C0074559                            UMLS:C0125179                            UMLS:C0699936
+2026-08-19 14:28:06.063 | INFO    | server        |     UMLS:C0021528                            UMLS:C2930158                            UMLS:C0101334                            UMLS:C0025219
+2026-08-19 14:28:06.063 | INFO    | server        |     UMLS:C0528878                            UMLS:C0056457                            UMLS:C0023776                            UMLS:C0302583
+2026-08-19 14:28:06.063 | INFO    | server        |     UMLS:C0171023                            UMLS:C0075807                            UMLS:C0017887                            UMLS:C0699680
+2026-08-19 14:28:06.063 | INFO    | server        |     UMLS:C2926735                            UMLS:C0043832                            UMLS:C0055722                            UMLS:C0287163
+2026-08-19 14:28:06.064 | INFO    | server        |     UMLS:C0051767                            UMLS:C0772454                            UMLS:C0059589                            UMLS:C0005098
+2026-08-19 14:28:06.064 | INFO    | server        |     UMLS:C0304926                            UMLS:C0002844                            UMLS:C0025746                            UMLS:C0006644
+2026-08-19 14:28:06.064 | INFO    | server        |     UMLS:C0008466                            DrugCentral:228                          UMLS:C0030040                            UMLS:C0003729
+2026-08-19 14:28:06.064 | INFO    | server        |     UMLS:C0015846                            UMLS:C0036082                            UMLS:C0076652                            UMLS:C0851344
+2026-08-19 14:28:06.064 | INFO    | server        |     DrugCentral:763                          UMLS:C0209106                            UMLS:C0645690                            UMLS:C0001443
+2026-08-19 14:28:06.065 | INFO    | server        |     UMLS:C0935989                            UMLS:C0178638                            DrugCentral:2745
+2026-08-19 14:28:06.065 | WARNING | server        |   !! truncated: 1627 rows exist, only 500 returned (limit 500)
+2026-08-19 14:28:06.065 | INFO    | server        | << TOOL run_slog finished in 35.17s
+2026-08-19 14:28:06.065 | WARNING | server        | !! run_slog took 35.17s -- slow call
+2026-08-19 14:28:06.066 | INFO    | server        | ------------------------------------------------------------------------------

@@ -1,0 +1,65 @@
+;; Which drugs treat Parkinson disease AND cause an impulse-control disorder?
+;;
+;; PD anchor : MONDO:0005180 expanded (6 KG2 ids), inlined as literals -- no extra stage.
+;; ICD anchor: gambling / pathological gambling / compulsive-behaviour cluster from
+;;             expand_entity, plus the raw CURIEs expand_entity dropped (they exist as
+;;             nodes but have no norm class), kept as one membership relation.
+;; The two sides are derived from different vocabularies, so they are joined through
+;; kg2_norm on the canonical key k, never on the raw id.
+
+table (edge str str str)
+table (node str str str)
+table (kg2_norm str str)
+table (icd_set str)
+table (result str str str str str)
+
+rule (icd_set "UMLS:C0868740")   ;; Impulse control disorder NEC
+rule (icd_set "UMLS:C5883528")   ;; ICD while on dopamine agonists
+rule (icd_set "MONDO:0011662")   ;; Gambling
+rule (icd_set "DOID:12399")
+rule (icd_set "OMIM:606349")
+rule (icd_set "EFO:1001926")
+rule (icd_set "UMLS:C0030662")
+rule (icd_set "MESH:D005715")
+rule (icd_set "NCIT:C94335")
+rule (icd_set "ICD9:312.31")
+rule (icd_set "UMLS:C0312420")   ;; hypersexuality / amplified sexual behaviour
+rule (icd_set "UMLS:C2242575")   ;; Compulsive shopping
+rule (icd_set "HP:5200321")      ;; Amplification of sexual behavior
+rule (icd_set "UMLS:C1963757")   ;; Dopamine dysregulation syndrome
+
+rule (result tname cname dt dc k) <--
+  (edge dt "biolink:treats" "MONDO:0005180")
+  (kg2_norm dt k) (kg2_norm dc k)
+  (icd_set i) (edge dc "biolink:causes" i)
+  (node dt tname _) (node dc cname _)
+
+rule (result tname cname dt dc k) <--
+  (edge dt "biolink:treats" "DOID:14330")
+  (kg2_norm dt k) (kg2_norm dc k)
+  (icd_set i) (edge dc "biolink:causes" i)
+  (node dt tname _) (node dc cname _)
+
+rule (result tname cname dt dc k) <--
+  (edge dt "biolink:treats" "UMLS:C0030567")
+  (kg2_norm dt k) (kg2_norm dc k)
+  (icd_set i) (edge dc "biolink:causes" i)
+  (node dt tname _) (node dc cname _)
+
+rule (result tname cname dt dc k) <--
+  (edge dt "biolink:treats" "MESH:D010300")
+  (kg2_norm dt k) (kg2_norm dc k)
+  (icd_set i) (edge dc "biolink:causes" i)
+  (node dt tname _) (node dc cname _)
+
+rule (result tname cname dt dc k) <--
+  (edge dt "biolink:treats" "NCIT:C26845")
+  (kg2_norm dt k) (kg2_norm dc k)
+  (icd_set i) (edge dc "biolink:causes" i)
+  (node dt tname _) (node dc cname _)
+
+rule (result tname cname dt dc k) <--
+  (edge dt "biolink:treats" "ICD9:332")
+  (kg2_norm dt k) (kg2_norm dc k)
+  (icd_set i) (edge dc "biolink:causes" i)
+  (node dt tname _) (node dc cname _)
