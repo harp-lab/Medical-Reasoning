@@ -7,5 +7,5 @@ __pycache__/
 archive/
 data/
 tmp/
-eval/runs/
+eval/
 preprocess/
