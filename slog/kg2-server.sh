@@ -25,7 +25,7 @@ export LD_LIBRARY_PATH="$TC/lib:${LD_LIBRARY_PATH:-}"
 export SLOG_NO_MEM_CAP=1
 export SLOG_MEM_MAX="${SLOG_MEM_MAX:-150G}"
 export SLOG_SERVER_PORT="${SLOG_SERVER_PORT:-8642}"
-export KG2_SLOG_DB="${KG2_SLOG_DB:-dataTest4}"
+export KG2_SLOG_DB="${KG2_SLOG_DB:-rtx_kg2_281}"
 
 # -O0 only.  slog's default ("tiered") runs the eager -O0 build and then spawns a
 # detached -O2 build that hot-swaps in; measured here, -O2 makes no difference

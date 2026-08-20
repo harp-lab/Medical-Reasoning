@@ -96,14 +96,15 @@ reverse.
 ## Storage
 
 ```
-data/db/dataTest4         9.8 GB on disk  ->  ~167 GB resident
+data/db/rtx_kg2_281         9.8 GB on disk  ->  ~167 GB resident
 data/import_ready         17 GB   regenerable, input to csv2db
 data/source               4.9 GB  re-downloadable (RTX-KG2 2.8.1)
 ```
 
-`slog/data/dataTest4` is a **symlink** to `data/db/dataTest4` (same for `dataTest3` and
-`kg2norm`). A fresh checkout must recreate those symlinks; slog resolves `data/` relative
-to its own root.
+slog resolves `data/<name>` relative to its own root, so the database must be reachable at
+`slog/data/rtx_kg2_281`. In this checkout that is a **symlink** to `data/db/rtx_kg2_281`
+(same for `dataTest3` and `kg2norm`), which keeps the data owned by this project rather
+than by the slog clone. Putting it there directly works just as well.
 
 Every stage of the data is derived from the public RTX-KG2 download, so nothing here needs
 archiving for correctness — only to avoid a multi-hour rebuild.

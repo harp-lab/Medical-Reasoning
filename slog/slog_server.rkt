@@ -7,7 +7,7 @@
 (define SLOG-ROOT "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/slog")
 (define MR-ROOT "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning")
 (define SETUP (build-path MR-ROOT "slog" "setup.slog"))
-(define DB (or (getenv "KG2_SLOG_DB") "dataTest4"))
+(define DB (or (getenv "KG2_SLOG_DB") "rtx_kg2_281"))
 (define PORT (string->number (or (getenv "SLOG_SERVER_PORT") "8642")))
 
 (current-directory SLOG-ROOT)
