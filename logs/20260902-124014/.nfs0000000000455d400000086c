@@ -1,0 +1,118 @@
+2026-09-02 12:41:02.894 | INFO    | mr            | ==============================================================================
+2026-09-02 12:41:02.896 | INFO    | mr            | KG2 MCP session 20260902-124014 starting
+2026-09-02 12:41:02.896 | INFO    | mr            | pid=2650351  python=3.11.15
+2026-09-02 12:41:02.896 | INFO    | mr            | session dir : /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/logs/20260902-124014
+2026-09-02 12:41:02.897 | INFO    | server        | query file: /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog
+2026-09-02 12:41:02.897 | INFO    | server        | slog server: 127.0.0.1:8642 (client timeout 3600s)
+2026-09-02 12:41:02.897 | INFO    | server        | node DB: /tmp/kg2_nodes_aayush.shrestha@ad.wsu.edu.sqlite
+2026-09-02 12:41:02.898 | INFO    | server        | ==============================================================================
+2026-09-02 12:41:02.898 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:41:02.898 | INFO    | server        | >> TOOL expand_entity  n_curies=1
+2026-09-02 12:41:02.898 | INFO    | server        |   input CURIEs (1):
+2026-09-02 12:41:02.898 | INFO    | server        |     MONDO:0005180
+2026-09-02 12:41:02.899 | INFO    | server        |   * expand MONDO:0005180 ...
+2026-09-02 12:41:02.899 | INFO    | kg2_core      |   node-normalizer clique for MONDO:0005180
+2026-09-02 12:41:03.196 | INFO    | kg2_core      |   .. HTTP nodenormalization-sri.renci.org replied in 296ms
+2026-09-02 12:41:03.196 | INFO    | kg2_core      |   clique for MONDO:0005180: 16 equivalent id(s) -> MONDO:0005180, DOID:14330, OMIM.PS:168600, UMLS:C0030567, MESH:D010300, MEDDRA:10013113, MEDDRA:10033801, MEDDRA:10034007, MEDDRA:10034008, MEDDRA:10061536  ... +6 more
+2026-09-02 12:41:03.196 | INFO    | kg2_core      |   opening existing node DB /tmp/kg2_nodes_aayush.shrestha@ad.wsu.edu.sqlite (2225 MB)
+2026-09-02 12:41:03.197 | INFO    | kg2_core      |   expand MONDO:0005180: 16 clique id(s) -> 6 present in KG2 (10 not in KG2) in 298ms
+2026-09-02 12:41:03.197 | INFO    | kg2_core      |     kept   : MONDO:0005180, DOID:14330, UMLS:C0030567, MESH:D010300, NCIT:C26845, ICD9:332
+2026-09-02 12:41:03.198 | INFO    | server        |   + expand MONDO:0005180 done in 299ms
+2026-09-02 12:41:03.198 | INFO    | server        |   1 input CURIE(s) -> 6 distinct KG2 id(s)
+2026-09-02 12:41:03.198 | INFO    | server        |   kg2_ids (6):
+2026-09-02 12:41:03.198 | INFO    | server        |     MONDO:0005180  DOID:14330     UMLS:C0030567  MESH:D010300
+2026-09-02 12:41:03.198 | INFO    | server        |     NCIT:C26845    ICD9:332
+2026-09-02 12:41:03.199 | INFO    | server        | << TOOL expand_entity finished in 301ms
+2026-09-02 12:41:03.199 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:42:25.033 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:42:25.033 | INFO    | server        | >> TOOL run_slog  limit=50
+2026-09-02 12:42:25.037 | INFO    | server        |   query file /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog (1365 bytes, modified 2026-09-02 12:42:15)
+2026-09-02 12:42:25.037 | INFO    | server        |   archived as queries/002_run_slog.slog
+2026-09-02 12:42:25.037 | INFO    | server        |   shape: 3 table(s) declared, 1 derived relation(s) -- expect ~13s per derived relation
+2026-09-02 12:42:25.037 | INFO    | server        |   program:
+                                                        | ;; Medically approved drugs used to treat Parkinson disease.
+                                                        | ;; Parkinson disease: 6 KG2 ids from expand_entity(MONDO:0005180) --
+                                                        | ;;   MONDO:0005180, DOID:14330, UMLS:C0030567, MESH:D010300, NCIT:C26845, ICD9:332.
+                                                        | ;;   Under ten CURIEs, so inlined as literals (one rule per id) rather than a
+                                                        | ;;   membership relation, to keep the program at a single stage.
+                                                        | ;; "Medically approved drug": node category "biolink:Drug" -- KG2's marker for a
+                                                        | ;;   chemical entity that is a drug product, as opposed to biolink:SmallMolecule /
+                                                        | ;;   biolink:ChemicalEntity.
+                                                        | ;; Treatment: biolink:treats, drug as subject.
+                                                        | ;; Names carried out of the query via the node base view, which adds no stage.
+                                                        | ;; One derived relation: result.
+                                                        | 
+                                                        | table (edge str str str)
+                                                        | table (node str str str)
+                                                        | table (result str str)
+                                                        | 
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "MONDO:0005180") (node d name "biolink:Drug")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "DOID:14330")     (node d name "biolink:Drug")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "UMLS:C0030567")  (node d name "biolink:Drug")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "MESH:D010300")   (node d name "biolink:Drug")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "NCIT:C26845")    (node d name "biolink:Drug")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "ICD9:332")       (node d name "biolink:Drug")
+2026-09-02 12:42:25.038 | INFO    | slog          |   -> slog drop: {"op": "drop", "rel": "result"}
+2026-09-02 12:42:25.048 | ERROR   | slog          |   x slog drop failed after 11ms: transform path is unbound: result
+2026-09-02 12:42:25.049 | INFO    | server        |   no previous `result` to drop (transform path is unbound: result)
+2026-09-02 12:42:25.049 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-09-02 12:42:25.057 | INFO    | slog          |   <- slog dump ok in 8ms (95 bytes of response)
+2026-09-02 12:42:25.057 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-09-02 12:42:25.062 | INFO    | slog          |   <- slog dump ok in 5ms (243 bytes of response)
+2026-09-02 12:42:25.063 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-09-02 12:42:25.072 | INFO    | slog          |   <- slog dump ok in 9ms (259 bytes of response)
+2026-09-02 12:42:25.075 | INFO    | server        |   * slog run ...
+2026-09-02 12:42:25.075 | INFO    | slog          |   -> slog run: {"op": "run", "path": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog"}
+2026-09-02 12:43:23.200 | INFO    | slog          |   <- slog run ok in 58.12s (1009 bytes of response)
+2026-09-02 12:43:23.201 | INFO    | server        |   + slog run done in 58.13s
+2026-09-02 12:43:23.201 | INFO    | server        |   * dump `result` (limit 50) ...
+2026-09-02 12:43:23.201 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "result", "limit": 50}
+2026-09-02 12:43:23.211 | INFO    | slog          |   <- slog dump ok in 9ms (2217 bytes of response)
+2026-09-02 12:43:23.211 | INFO    | server        |   + dump `result` (limit 50) done in 9ms
+2026-09-02 12:43:23.214 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-09-02 12:43:23.219 | INFO    | slog          |   <- slog dump ok in 5ms (127 bytes of response)
+2026-09-02 12:43:23.220 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-09-02 12:43:23.226 | INFO    | slog          |   <- slog dump ok in 6ms (278 bytes of response)
+2026-09-02 12:43:23.226 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-09-02 12:43:23.232 | INFO    | slog          |   <- slog dump ok in 5ms (339 bytes of response)
+2026-09-02 12:43:23.233 | INFO    | server        |   join plan:
+                                                      stratum 1  c1866c36  2 iteration(s), 11627.4 ms  (/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/slog/build/c1866c36.plan, +0 internal error rules)
+                                                          query.slog:17        all:edge             edge(b=2) -> node(b=2)
+                                                          query.slog:18        all:edge             edge(b=2) -> node(b=2)
+                                                          query.slog:19        all:edge             edge(b=2) -> node(b=2)
+                                                          query.slog:20        all:edge             edge(b=2) -> node(b=2)
+                                                          query.slog:21        all:edge             edge(b=2) -> node(b=2)
+                                                          query.slog:22        all:edge             edge(b=2) -> node(b=2)
+                                                        daemon timeline (ms between emitted lines -- setup work lands here, not in the fixpoint ms):
+                                                          +     243 ms  (+     243 ms)  (pipeline (pos 3) (evaluation "eval-1a0639bd8a1-31359721-25721b89-1a10a33d") (update-epoch 1) (strat
+                                                          +     248 ms  (+       5 ms)  (update-epoch 1 settled)
+                                                          +     249 ms  (+       1 ms)  (boundary-prepared 1 (boundary "b1:layer-1a0639bd8a1-d313843-112536a2-489fb42:2") (program "p1:layer
+                                                          +   56188 ms  (+   55939 ms)  (paused (generation 1) (scc 1) (stratum "c1866c36") (iteration 0) (phase read) (settled #f) (progress (tuples 0) (exact #f)) (timing (call-ms 9846.178) (total-ms 9846.178)) (cause (budget time)))
+                                                          +   57969 ms  (+    1781 ms)  (fixpoint 1 "c1866c36" 2 11627.366)
+                                                          +   58123 ms  (+     154 ms)  (boundary-committed 2 (boundary "b1:layer-1a0639bd8a1-d313843-112536a2-489fb42:2") (position 3) (cre
+                                                          +   58123 ms  (+       0 ms)  (run-complete)
+2026-09-02 12:43:23.235 | INFO    | server        |   archived as queries/002_run_slog.plan.txt
+2026-09-02 12:43:23.235 | WARNING | server        |   !! SLOG_MULTIPLAN is on (index=budget:1) but not one rule-def in these plans carries an arm mark, so runtime plan selection had nothing to choose between and cannot be what moved the timing.  slog's arm-eligibility gate (join-planning.rkt arm-flavor-ok?) needs >= 3 body join clauses in a rule; the orders above show how many each has
+2026-09-02 12:43:23.235 | INFO    | server        |   timing: total=58.17s  compile=0ms  setup=46.50s  (strata compiled=1, executed=1)
+2026-09-02 12:43:23.235 | INFO    | server        |   daemon: fixpoint=11627.4ms  iterations=2  rule_fires=129
+2026-09-02 12:43:23.235 | INFO    | server        |   cost model predicted ~22s for this shape
+2026-09-02 12:43:23.235 | INFO    | server        |   result: n_rows=129 returned=50 truncated=True
+2026-09-02 12:43:23.235 | INFO    | server        |   CURIEs out of the answer relation, unnamed at this point:
+2026-09-02 12:43:23.235 | INFO    | server        |   result CURIEs (50):
+2026-09-02 12:43:23.235 | INFO    | server        |     UMLS:C0003297  UMLS:C1532411  UMLS:C4475891  UMLS:C0003295
+2026-09-02 12:43:23.235 | INFO    | server        |     UMLS:C0036753  UMLS:C0001648  UMLS:C0279328  UMLS:C0003015
+2026-09-02 12:43:23.235 | INFO    | server        |     UMLS:C0353697  UMLS:C0598695  UMLS:C0242708  UMLS:C0024911
+2026-09-02 12:43:23.235 | INFO    | server        |     UMLS:C0003211  UMLS:C0242897  UMLS:C1123457  UMLS:C0242889
+2026-09-02 12:43:23.235 | INFO    | server        |     UMLS:C0987131  UMLS:C0358430  UMLS:C0003289  UMLS:C0242913
+2026-09-02 12:43:23.235 | INFO    | server        |     UMLS:C0003385  UMLS:C1611640  UMLS:C0001644  UMLS:C0304229
+2026-09-02 12:43:23.235 | INFO    | server        |     UMLS:C1136250  UMLS:C0595267  UMLS:C0242896  UMLS:C0003209
+2026-09-02 12:43:23.235 | INFO    | server        |     UMLS:C0085155  UMLS:C0013231  UMLS:C0595265  UMLS:C1277078
+2026-09-02 12:43:23.235 | INFO    | server        |     UMLS:C0001641  UMLS:C0003232  UMLS:C3539957  UMLS:C1171350
+2026-09-02 12:43:23.235 | INFO    | server        |     UMLS:C0870507  UMLS:C0729502  UMLS:C3653518  UMLS:C0086440
+2026-09-02 12:43:23.235 | INFO    | server        |     UMLS:C0242948  UMLS:C0003280  UMLS:C0037766  UMLS:C0242978
+2026-09-02 12:43:23.235 | INFO    | server        |     UMLS:C0009905  UMLS:C0002932  UMLS:C0003290  UMLS:C0014432
+2026-09-02 12:43:23.235 | INFO    | server        |     UMLS:C3543842  UMLS:C0003451
+2026-09-02 12:43:23.235 | WARNING | server        |   !! truncated: 129 rows exist, only 50 returned (limit 50)
+2026-09-02 12:43:23.235 | INFO    | server        | << TOOL run_slog finished in 58.20s
+2026-09-02 12:43:23.235 | WARNING | server        | !! run_slog took 58.20s -- slow call
+2026-09-02 12:43:23.236 | INFO    | server        | ------------------------------------------------------------------------------

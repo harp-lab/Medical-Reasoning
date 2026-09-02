@@ -272,14 +272,29 @@ def collect(resp):
             plans.append(p)
 
     n_arms = sum(1 for p in plans for r in p["rules"] if r["arm"] is not None)
-    picked = ";".join(f"{a['loc']}#g{a['gid']}=arm{a['arm']}"
-                      f"{'*' if a['converged'] else ''}" for a in ev["arms"])
+    # `arm1` names nothing on its own.  The index is a position in that GROUP's
+    # own candidate list (join-planning.rkt mints it with in-naturals 1), so arm
+    # 1 of one group and arm 1 of another are different orders -- the only fixed
+    # point is arm 0, which is always the compiler's own pick.  Carry the
+    # relation each picked arm STARTS from, since for whole-order arms that is
+    # exactly what the choice is between; otherwise the cell is unreadable
+    # without cross-referencing the archived .plan listing by hand.
+    starts = {(r["gid"], r["arm"]): r["order"].split("(")[0]
+              for p in plans for r in p["rules"] if r["arm"] is not None}
+
+    def _pick(a):
+        start = starts.get((a["gid"], a["arm"]))
+        return (f"{a['loc']}#g{a['gid']}=arm{a['arm']}"
+                + (f"({start})" if start else "")
+                + ("*" if a["converged"] else ""))
+
+    picked = ";".join(_pick(a) for a in ev["arms"])
     # The heaviest inter-line stretches, biggest first: the phase breakdown of
     # the run, including the setup work no fixpoint ms accounts for.
     heavy = sorted(steps, key=lambda s: -s["delta_ms"])[:4]
     return {
         "plans": plans, "arms": ev["arms"], "notes": ev["notes"], "env": env,
-        "steps": steps,
+        "steps": steps, "arm_starts": starts,
         "csv": {
             "phase_ms": ";".join(
                 f"{s['line'].split(' ')[0].lstrip('(')}={s['delta_ms']}"
@@ -321,9 +336,14 @@ def render(info):
             out.append(f"    +{s['at_ms']:>8} ms  (+{s['delta_ms']:>8} ms)  "
                        f"{s['line'][:keep]}")
     if info["arms"]:
-        out.append("  runtime arm selection (daemon report):")
+        out.append("  runtime arm selection (daemon report; arm 0 is the "
+                   "compiler's own pick, so a non-zero arm means the runtime "
+                   "measurement overrode it):")
+        starts = info.get("arm_starts") or {}
         for a in info["arms"]:
+            start = starts.get((a["gid"], a["arm"]))
             out.append(f"    {a['loc']} group {a['gid']} -> arm {a['arm']}"
+                       f"{'  starting from ' + start if start else ''}"
                        f"{'  (converged)' if a['converged'] else ''}")
     for n in info["notes"]:
         out.append(f"  note: {n}")

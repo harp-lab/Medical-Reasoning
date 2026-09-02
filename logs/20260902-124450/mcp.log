@@ -1,0 +1,1249 @@
+2026-09-02 12:45:09.151 | INFO    | mr            | ==============================================================================
+2026-09-02 12:45:09.152 | INFO    | mr            | KG2 MCP session 20260902-124450 starting
+2026-09-02 12:45:09.153 | INFO    | mr            | pid=2655953  python=3.11.15
+2026-09-02 12:45:09.153 | INFO    | mr            | session dir : /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/logs/20260902-124450
+2026-09-02 12:45:09.153 | INFO    | server        | query file: /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog
+2026-09-02 12:45:09.153 | INFO    | server        | slog server: 127.0.0.1:8642 (client timeout 3600s)
+2026-09-02 12:45:09.154 | INFO    | server        | node DB: /tmp/kg2_nodes_aayush.shrestha@ad.wsu.edu.sqlite
+2026-09-02 12:45:09.154 | INFO    | server        | ==============================================================================
+2026-09-02 12:45:09.154 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:45:09.154 | INFO    | server        | >> TOOL list_predicates
+2026-09-02 12:45:09.156 | INFO    | kg2_core      |   loaded 61 predicates from /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/data/reference/distinct_core_predicate.tsv in 1ms
+2026-09-02 12:45:09.156 | INFO    | server        |   top predicates: biolink:has_participant, biolink:subclass_of, biolink:occurs_in, biolink:affects, biolink:related_to  ... +56 more
+2026-09-02 12:45:09.156 | INFO    | server        | << TOOL list_predicates finished in 2ms
+2026-09-02 12:45:09.156 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:45:13.416 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:45:13.416 | INFO    | server        | >> TOOL resolve_entity  term='Parkinson disease'  limit=10  biolink_type=None
+2026-09-02 12:45:13.416 | INFO    | kg2_core      |   name-resolution lookup: term='Parkinson disease' limit=10 biolink_type=(any)
+2026-09-02 12:45:13.789 | INFO    | kg2_core      |   .. HTTP name-resolution-sri.renci.org replied in 372ms
+2026-09-02 12:45:13.789 | INFO    | kg2_core      |   name-resolution returned 10 candidate(s)
+2026-09-02 12:45:13.789 | INFO    | server        |   candidates for 'Parkinson disease':
+2026-09-02 12:45:13.789 | INFO    | server        | id                      name                                      category         score 
+2026-09-02 12:45:13.790 | INFO    | server        | ----------------------  ----------------------------------------  ---------------  ------
+2026-09-02 12:45:13.790 | INFO    | server        | MONDO:0005180           Parkinson disease                         biolink:Disease  3588.5
+2026-09-02 12:45:13.790 | INFO    | server        | MONDO:0006966           secondary Parkinson disease               biolink:Disease  1090.9
+2026-09-02 12:45:13.790 | INFO    | server        | MONDO:0001945           postencephalitic Parkinson disease        biolink:Disease  1056.8
+2026-09-02 12:45:13.791 | INFO    | server        | MONDO:0008199           late-onset Parkinson disease              biolink:Disease  875.2 
+2026-09-02 12:45:13.791 | INFO    | server        | MONDO:0008200           autosomal dominant Parkinson disease 1    biolink:Disease  862.6 
+2026-09-02 12:45:13.791 | INFO    | server        | MONDO:0013060           autosomal recessive Parkinson disease 14  biolink:Disease  862.6 
+2026-09-02 12:45:13.791 | INFO    | server        | PANTHER.PATHWAY:P00049  Parkinson disease                         biolink:Pathway  855.3 
+2026-09-02 12:45:13.792 | INFO    | server        | MONDO:0013625           Parkinson disease 17                      biolink:Disease  827.6 
+2026-09-02 12:45:13.792 | INFO    | server        | MONDO:0011562           autosomal dominant Parkinson disease 4    biolink:Disease  779.0 
+2026-09-02 12:45:13.792 | INFO    | server        | MONDO:0014231           juvenile onset Parkinson disease 19A      biolink:Disease  779.0 
+2026-09-02 12:45:13.792 | INFO    | server        | << TOOL resolve_entity finished in 376ms
+2026-09-02 12:45:13.793 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:45:16.033 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:45:16.033 | INFO    | server        | >> TOOL expand_entity  n_curies=1
+2026-09-02 12:45:16.033 | INFO    | server        |   input CURIEs (1):
+2026-09-02 12:45:16.034 | INFO    | server        |     MONDO:0005180
+2026-09-02 12:45:16.034 | INFO    | server        |   * expand MONDO:0005180 ...
+2026-09-02 12:45:16.034 | INFO    | kg2_core      |   node-normalizer clique for MONDO:0005180
+2026-09-02 12:45:16.328 | INFO    | kg2_core      |   .. HTTP nodenormalization-sri.renci.org replied in 293ms
+2026-09-02 12:45:16.328 | INFO    | kg2_core      |   clique for MONDO:0005180: 16 equivalent id(s) -> MONDO:0005180, DOID:14330, OMIM.PS:168600, UMLS:C0030567, MESH:D010300, MEDDRA:10013113, MEDDRA:10033801, MEDDRA:10034007, MEDDRA:10034008, MEDDRA:10061536  ... +6 more
+2026-09-02 12:45:16.328 | INFO    | kg2_core      |   opening existing node DB /tmp/kg2_nodes_aayush.shrestha@ad.wsu.edu.sqlite (2225 MB)
+2026-09-02 12:45:16.329 | INFO    | kg2_core      |   expand MONDO:0005180: 16 clique id(s) -> 6 present in KG2 (10 not in KG2) in 295ms
+2026-09-02 12:45:16.329 | INFO    | kg2_core      |     kept   : MONDO:0005180, DOID:14330, UMLS:C0030567, MESH:D010300, NCIT:C26845, ICD9:332
+2026-09-02 12:45:16.329 | INFO    | server        |   + expand MONDO:0005180 done in 295ms
+2026-09-02 12:45:16.330 | INFO    | server        |   1 input CURIE(s) -> 6 distinct KG2 id(s)
+2026-09-02 12:45:16.330 | INFO    | server        |   kg2_ids (6):
+2026-09-02 12:45:16.330 | INFO    | server        |     MONDO:0005180  DOID:14330     UMLS:C0030567  MESH:D010300
+2026-09-02 12:45:16.330 | INFO    | server        |     NCIT:C26845    ICD9:332
+2026-09-02 12:45:16.331 | INFO    | server        | << TOOL expand_entity finished in 297ms
+2026-09-02 12:45:16.331 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:46:25.309 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:46:25.309 | INFO    | server        | >> TOOL run_slog  limit=50
+2026-09-02 12:46:25.312 | INFO    | server        |   query file /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog (832 bytes, modified 2026-09-02 12:45:38)
+2026-09-02 12:46:25.312 | INFO    | server        |   archived as queries/004_run_slog.slog
+2026-09-02 12:46:25.312 | INFO    | server        |   shape: 3 table(s) declared, 1 derived relation(s) -- expect ~13s per derived relation
+2026-09-02 12:46:25.313 | INFO    | server        |   program:
+                                                        | ;; Medically approved drugs that treat Parkinson disease
+                                                        | ;; anchor: MONDO:0005180 expansion, inlined as literals (one stage)
+                                                        | ;; "medically approved" -> node category "biolink:Drug"
+                                                        | 
+                                                        | table (edge str str str)
+                                                        | table (node str str str)
+                                                        | table (result str str)
+                                                        | 
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "MONDO:0005180") (node d name "biolink:Drug")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "DOID:14330")    (node d name "biolink:Drug")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "UMLS:C0030567") (node d name "biolink:Drug")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "MESH:D010300")  (node d name "biolink:Drug")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "NCIT:C26845")   (node d name "biolink:Drug")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "ICD9:332")      (node d name "biolink:Drug")
+2026-09-02 12:46:25.313 | INFO    | slog          |   -> slog drop: {"op": "drop", "rel": "result"}
+2026-09-02 12:46:25.353 | INFO    | slog          |   <- slog drop ok in 40ms (12 bytes of response)
+2026-09-02 12:46:25.353 | INFO    | server        |   dropped previous `result` relation
+2026-09-02 12:46:25.353 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-09-02 12:46:25.359 | INFO    | slog          |   <- slog dump ok in 6ms (127 bytes of response)
+2026-09-02 12:46:25.359 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-09-02 12:46:25.364 | INFO    | slog          |   <- slog dump ok in 4ms (278 bytes of response)
+2026-09-02 12:46:25.364 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-09-02 12:46:25.370 | INFO    | slog          |   <- slog dump ok in 5ms (339 bytes of response)
+2026-09-02 12:46:25.372 | INFO    | server        |   * slog run ...
+2026-09-02 12:46:25.372 | INFO    | slog          |   -> slog run: {"op": "run", "path": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog"}
+2026-09-02 12:47:46.344 | INFO    | slog          |   <- slog run ok in 1m 21.0s (1071 bytes of response)
+2026-09-02 12:47:46.344 | WARNING | slog          |   !! slog run took 1m 21.0s
+2026-09-02 12:47:46.345 | INFO    | server        |   + slog run done in 1m 21.0s
+2026-09-02 12:47:46.345 | INFO    | server        |   * dump `result` (limit 50) ...
+2026-09-02 12:47:46.345 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "result", "limit": 50}
+2026-09-02 12:47:46.355 | INFO    | slog          |   <- slog dump ok in 10ms (2217 bytes of response)
+2026-09-02 12:47:46.355 | INFO    | server        |   + dump `result` (limit 50) done in 10ms
+2026-09-02 12:47:46.358 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-09-02 12:47:46.362 | INFO    | slog          |   <- slog dump ok in 5ms (159 bytes of response)
+2026-09-02 12:47:46.362 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-09-02 12:47:46.368 | INFO    | slog          |   <- slog dump ok in 6ms (313 bytes of response)
+2026-09-02 12:47:46.369 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-09-02 12:47:46.374 | INFO    | slog          |   <- slog dump ok in 5ms (419 bytes of response)
+2026-09-02 12:47:46.375 | INFO    | server        |   join plan:
+                                                      stratum 2  0601e5a1  2 iteration(s), 11306.7 ms  (/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/slog/build/0601e5a1.plan, +0 internal error rules)
+                                                          query.slog:9         all:edge             edge(b=2) -> node(b=2)
+                                                          query.slog:10        all:edge             edge(b=2) -> node(b=2)
+                                                          query.slog:11        all:edge             edge(b=2) -> node(b=2)
+                                                          query.slog:12        all:edge             edge(b=2) -> node(b=2)
+                                                          query.slog:13        all:edge             edge(b=2) -> node(b=2)
+                                                          query.slog:14        all:edge             edge(b=2) -> node(b=2)
+                                                        daemon timeline (ms between emitted lines -- setup work lands here, not in the fixpoint ms):
+                                                          +     215 ms  (+     215 ms)  (pipeline (pos 6) (evaluation "eval-1a0639bd8a1-31359721-25721b89-1a10a33d") (update-epoch 3) (strat
+                                                          +     219 ms  (+       4 ms)  (update-epoch 3 settled)
+                                                          +     220 ms  (+       1 ms)  (boundary-prepared 3 (boundary "b1:layer-1a0639bd8a1-d313843-112536a2-489fb42:4") (program "p1:layer
+                                                          +   78844 ms  (+   78624 ms)  (paused (generation 3) (scc 2) (stratum "0601e5a1") (iteration 0) (phase read) (settled #f) (progress (tuples 0) (exact #f)) (timing (call-ms 9186.118) (total-ms 9186.118)) (cause (budget time)))
+                                                          +   80967 ms  (+    2123 ms)  (fixpoint 2 "0601e5a1" 2 11306.700)
+                                                          +   80970 ms  (+       3 ms)  (boundary-committed 4 (boundary "b1:layer-1a0639bd8a1-d313843-112536a2-489fb42:4") (position 6) (cre
+                                                          +   80970 ms  (+       0 ms)  (run-complete)
+2026-09-02 12:47:46.377 | INFO    | server        |   archived as queries/004_run_slog.plan.txt
+2026-09-02 12:47:46.377 | WARNING | server        |   !! SLOG_MULTIPLAN is on (index=budget:1) but not one rule-def in these plans carries an arm mark, so runtime plan selection had nothing to choose between and cannot be what moved the timing.  slog's arm-eligibility gate (join-planning.rkt arm-flavor-ok?) needs >= 3 body join clauses in a rule; the orders above show how many each has
+2026-09-02 12:47:46.377 | INFO    | server        |   timing: total=1m 21.0s  compile=0ms  setup=1m 09.7s  (strata compiled=1, executed=1)
+2026-09-02 12:47:46.377 | INFO    | server        |   daemon: fixpoint=11306.7ms  iterations=2  rule_fires=129
+2026-09-02 12:47:46.377 | INFO    | server        |   cost model predicted ~22s for this shape
+2026-09-02 12:47:46.377 | INFO    | server        |   result: n_rows=129 returned=50 truncated=True
+2026-09-02 12:47:46.377 | INFO    | server        |   CURIEs out of the answer relation, unnamed at this point:
+2026-09-02 12:47:46.377 | INFO    | server        |   result CURIEs (50):
+2026-09-02 12:47:46.377 | INFO    | server        |     UMLS:C0003297  UMLS:C1532411  UMLS:C4475891  UMLS:C0003295
+2026-09-02 12:47:46.377 | INFO    | server        |     UMLS:C0036753  UMLS:C0001648  UMLS:C0279328  UMLS:C0003015
+2026-09-02 12:47:46.377 | INFO    | server        |     UMLS:C0353697  UMLS:C0598695  UMLS:C0242708  UMLS:C0024911
+2026-09-02 12:47:46.377 | INFO    | server        |     UMLS:C0003211  UMLS:C0242897  UMLS:C1123457  UMLS:C0242889
+2026-09-02 12:47:46.377 | INFO    | server        |     UMLS:C0987131  UMLS:C0358430  UMLS:C0003289  UMLS:C0242913
+2026-09-02 12:47:46.377 | INFO    | server        |     UMLS:C0003385  UMLS:C1611640  UMLS:C0001644  UMLS:C0304229
+2026-09-02 12:47:46.377 | INFO    | server        |     UMLS:C1136250  UMLS:C0595267  UMLS:C0242896  UMLS:C0003209
+2026-09-02 12:47:46.377 | INFO    | server        |     UMLS:C0085155  UMLS:C0013231  UMLS:C0595265  UMLS:C1277078
+2026-09-02 12:47:46.377 | INFO    | server        |     UMLS:C0001641  UMLS:C0003232  UMLS:C3539957  UMLS:C1171350
+2026-09-02 12:47:46.377 | INFO    | server        |     UMLS:C0870507  UMLS:C0729502  UMLS:C3653518  UMLS:C0086440
+2026-09-02 12:47:46.377 | INFO    | server        |     UMLS:C0242948  UMLS:C0003280  UMLS:C0037766  UMLS:C0242978
+2026-09-02 12:47:46.377 | INFO    | server        |     UMLS:C0009905  UMLS:C0002932  UMLS:C0003290  UMLS:C0014432
+2026-09-02 12:47:46.377 | INFO    | server        |     UMLS:C3543842  UMLS:C0003451
+2026-09-02 12:47:46.378 | WARNING | server        |   !! truncated: 129 rows exist, only 50 returned (limit 50)
+2026-09-02 12:47:46.378 | INFO    | server        | << TOOL run_slog finished in 1m 21.1s
+2026-09-02 12:47:46.378 | WARNING | server        | !! run_slog took 1m 21.1s -- slow call
+2026-09-02 12:47:46.378 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:48:56.642 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:48:56.642 | INFO    | server        | >> TOOL resolve_entity  term='low blood pressure'  limit=10  biolink_type=None
+2026-09-02 12:48:56.642 | INFO    | kg2_core      |   name-resolution lookup: term='low blood pressure' limit=10 biolink_type=(any)
+2026-09-02 12:48:57.265 | INFO    | kg2_core      |   .. HTTP name-resolution-sri.renci.org replied in 623ms
+2026-09-02 12:48:57.265 | INFO    | kg2_core      |   name-resolution returned 10 candidate(s)
+2026-09-02 12:48:57.266 | INFO    | server        |   candidates for 'low blood pressure':
+2026-09-02 12:48:57.266 | INFO    | server        | id             name                                                 category                   score
+2026-09-02 12:48:57.266 | INFO    | server        | -------------  ---------------------------------------------------  -------------------------  -----
+2026-09-02 12:48:57.267 | INFO    | server        | MONDO:0005468  hypotension                                          biolink:Disease            602.8
+2026-09-02 12:48:57.267 | INFO    | server        | UMLS:C0476454  Blood pressure reading low                           biolink:PhenotypicFeature  340.1
+2026-09-02 12:48:57.267 | INFO    | server        | UMLS:C0436785  borderline low blood pressure reading                biolink:PhenotypicFeature  334.6
+2026-09-02 12:48:57.268 | INFO    | server        | UMLS:C2135999  reported previous low blood pressure                 biolink:PhenotypicFeature  334.6
+2026-09-02 12:48:57.268 | INFO    | server        | UMLS:C0436783  very low blood pressure reading                      biolink:PhenotypicFeature  334.6
+2026-09-02 12:48:57.268 | INFO    | server        | HP:0500104     Decreased diastolic blood pressure                   biolink:PhenotypicFeature  319.4
+2026-09-02 12:48:57.268 | INFO    | server        | UMLS:C4717764  Identifies tolerance for low blood pressure          biolink:PhenotypicFeature  315.7
+2026-09-02 12:48:57.269 | INFO    | server        | UMLS:C5697410  Use of low blood pressure complicating anesthesia    biolink:Procedure          299.0
+2026-09-02 12:48:57.269 | INFO    | server        | UMLS:C5195223  Relatively low blood pressure for degree of obesity  biolink:PhenotypicFeature  283.9
+2026-09-02 12:48:57.269 | INFO    | server        | UMLS:C4748570  Dizziness on standing due to low blood pressure      biolink:PhenotypicFeature  283.9
+2026-09-02 12:48:57.269 | INFO    | server        | << TOOL resolve_entity finished in 627ms
+2026-09-02 12:48:57.270 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:48:59.501 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:48:59.501 | INFO    | server        | >> TOOL expand_entity  n_curies=1
+2026-09-02 12:48:59.501 | INFO    | server        |   input CURIEs (1):
+2026-09-02 12:48:59.502 | INFO    | server        |     MONDO:0005468
+2026-09-02 12:48:59.502 | INFO    | server        |   * expand MONDO:0005468 ...
+2026-09-02 12:48:59.502 | INFO    | kg2_core      |   node-normalizer clique for MONDO:0005468
+2026-09-02 12:48:59.779 | INFO    | kg2_core      |   .. HTTP nodenormalization-sri.renci.org replied in 277ms
+2026-09-02 12:48:59.780 | INFO    | kg2_core      |   clique for MONDO:0005468: 27 equivalent id(s) -> MONDO:0005468, EFO:0005251, UMLS:C0020649, MESH:D007022, MEDDRA:10003146, MEDDRA:10003169, MEDDRA:10005734, MEDDRA:10005743, MEDDRA:10005744, MEDDRA:10005753  ... +17 more
+2026-09-02 12:48:59.781 | INFO    | kg2_core      |   expand MONDO:0005468: 27 clique id(s) -> 6 present in KG2 (21 not in KG2) in 278ms
+2026-09-02 12:48:59.781 | INFO    | kg2_core      |     kept   : MONDO:0005468, EFO:0005251, UMLS:C0020649, MESH:D007022, NCIT:C3128, HP:0002615
+2026-09-02 12:48:59.781 | INFO    | server        |   + expand MONDO:0005468 done in 279ms
+2026-09-02 12:48:59.782 | INFO    | server        |   1 input CURIE(s) -> 6 distinct KG2 id(s)
+2026-09-02 12:48:59.782 | INFO    | server        |   kg2_ids (6):
+2026-09-02 12:48:59.782 | INFO    | server        |     MONDO:0005468  EFO:0005251    UMLS:C0020649  MESH:D007022
+2026-09-02 12:48:59.783 | INFO    | server        |     NCIT:C3128     HP:0002615
+2026-09-02 12:48:59.783 | INFO    | server        | << TOOL expand_entity finished in 282ms
+2026-09-02 12:48:59.783 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:49:22.289 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:49:22.289 | INFO    | server        | >> TOOL run_slog  limit=50
+2026-09-02 12:49:22.289 | WARNING | server        |   !! this is run #2 of this session -- if it is a retry of the same question rather than a new question, that is minutes of wall clock the one-run-per-question rule exists to prevent (mcp/instructions/kg2.md)
+2026-09-02 12:49:22.291 | INFO    | server        |   query file /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog (6393 bytes, modified 2026-09-02 12:49:17)
+2026-09-02 12:49:22.291 | INFO    | server        |   archived as queries/007_run_slog.slog
+2026-09-02 12:49:22.292 | INFO    | server        |   shape: 4 table(s) declared, 1 derived relation(s) -- expect ~13s per derived relation
+2026-09-02 12:49:22.292 | INFO    | server        |   program:
+                                                        | ;; Medically approved drugs that treat Parkinson disease AND cause hypotension
+                                                        | ;; PD anchors: MONDO:0005180 expansion; hypotension anchors: MONDO:0005468 expansion
+                                                        | ;; treats-side and causes-side drug ids joined on the kg2_norm canonical key
+                                                        | ;; "medically approved" -> node category "biolink:Drug"
+                                                        | ;; all anchor CURIEs inlined as literals -> single derived relation
+                                                        | 
+                                                        | table (edge str str str)
+                                                        | table (node str str str)
+                                                        | table (kg2_norm str str)
+                                                        | table (result str str)
+                                                        | 
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "MONDO:0005180") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MONDO:0005468")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "MONDO:0005180") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "EFO:0005251")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "MONDO:0005180") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "UMLS:C0020649")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "MONDO:0005180") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MESH:D007022")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "MONDO:0005180") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "NCIT:C3128")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "MONDO:0005180") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "HP:0002615")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "DOID:14330") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MONDO:0005468")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "DOID:14330") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "EFO:0005251")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "DOID:14330") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "UMLS:C0020649")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "DOID:14330") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MESH:D007022")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "DOID:14330") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "NCIT:C3128")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "DOID:14330") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "HP:0002615")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "UMLS:C0030567") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MONDO:0005468")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "UMLS:C0030567") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "EFO:0005251")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "UMLS:C0030567") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "UMLS:C0020649")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "UMLS:C0030567") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MESH:D007022")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "UMLS:C0030567") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "NCIT:C3128")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "UMLS:C0030567") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "HP:0002615")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "MESH:D010300") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MONDO:0005468")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "MESH:D010300") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "EFO:0005251")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "MESH:D010300") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "UMLS:C0020649")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "MESH:D010300") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MESH:D007022")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "MESH:D010300") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "NCIT:C3128")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "MESH:D010300") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "HP:0002615")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "NCIT:C26845") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MONDO:0005468")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "NCIT:C26845") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "EFO:0005251")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "NCIT:C26845") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "UMLS:C0020649")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "NCIT:C26845") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MESH:D007022")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "NCIT:C26845") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "NCIT:C3128")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "NCIT:C26845") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "HP:0002615")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "ICD9:332") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MONDO:0005468")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "ICD9:332") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "EFO:0005251")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "ICD9:332") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "UMLS:C0020649")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "ICD9:332") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MESH:D007022")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "ICD9:332") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "NCIT:C3128")
+                                                        | rule (result d name) <-- (edge d "biolink:treats" "ICD9:332") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "HP:0002615")
+2026-09-02 12:49:22.292 | INFO    | slog          |   -> slog drop: {"op": "drop", "rel": "result"}
+2026-09-02 12:49:22.306 | INFO    | slog          |   <- slog drop ok in 13ms (12 bytes of response)
+2026-09-02 12:49:22.306 | INFO    | server        |   dropped previous `result` relation
+2026-09-02 12:49:22.306 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-09-02 12:49:22.312 | INFO    | slog          |   <- slog dump ok in 6ms (159 bytes of response)
+2026-09-02 12:49:22.312 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-09-02 12:49:22.317 | INFO    | slog          |   <- slog dump ok in 4ms (313 bytes of response)
+2026-09-02 12:49:22.317 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-09-02 12:49:22.324 | INFO    | slog          |   <- slog dump ok in 7ms (419 bytes of response)
+2026-09-02 12:49:22.327 | INFO    | server        |   * slog run ...
+2026-09-02 12:49:22.327 | INFO    | slog          |   -> slog run: {"op": "run", "path": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog"}
+2026-09-02 12:51:06.827 | INFO    | slog          |   <- slog run ok in 1m 44.5s (2189 bytes of response)
+2026-09-02 12:51:06.828 | WARNING | slog          |   !! slog run took 1m 44.5s
+2026-09-02 12:51:06.828 | INFO    | server        |   + slog run done in 1m 44.5s
+2026-09-02 12:51:06.828 | INFO    | server        |   * dump `result` (limit 50) ...
+2026-09-02 12:51:06.828 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "result", "limit": 50}
+2026-09-02 12:51:06.841 | INFO    | slog          |   <- slog dump ok in 13ms (1414 bytes of response)
+2026-09-02 12:51:06.841 | INFO    | server        |   + dump `result` (limit 50) done in 13ms
+2026-09-02 12:51:06.844 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-09-02 12:51:06.855 | INFO    | slog          |   <- slog dump ok in 11ms (191 bytes of response)
+2026-09-02 12:51:06.856 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-09-02 12:51:06.866 | INFO    | slog          |   <- slog dump ok in 10ms (351 bytes of response)
+2026-09-02 12:51:06.866 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-09-02 12:51:06.874 | INFO    | slog          |   <- slog dump ok in 8ms (1975 bytes of response)
+2026-09-02 12:51:06.895 | INFO    | server        |   join plan:
+                                                      stratum 3  f90b30f5  2 iteration(s), 19943.5 ms  (/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/slog/build/f90b30f5.plan, +0 internal error rules)
+                                                          query.slog:12        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 21#0
+                                                          query.slog:12        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 21#1
+                                                          query.slog:12        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 21#2
+                                                          query.slog:13        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 3#0
+                                                          query.slog:13        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 3#1
+                                                          query.slog:13        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 3#2
+                                                          query.slog:14        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 33#0
+                                                          query.slog:14        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 33#1
+                                                          query.slog:14        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 33#2
+                                                          query.slog:15        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 15#0
+                                                          query.slog:15        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 15#1
+                                                          query.slog:15        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 15#2
+                                                          query.slog:16        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 27#0
+                                                          query.slog:16        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 27#1
+                                                          query.slog:16        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 27#2
+                                                          query.slog:17        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 9#0
+                                                          query.slog:17        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 9#1
+                                                          query.slog:17        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 9#2
+                                                          query.slog:18        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 18#0
+                                                          query.slog:18        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 18#1
+                                                          query.slog:18        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 18#2
+                                                          query.slog:19        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 0#0
+                                                          query.slog:19        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 0#1
+                                                          query.slog:19        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 0#2
+                                                          query.slog:20        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 30#0
+                                                          query.slog:20        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 30#1
+                                                          query.slog:20        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 30#2
+                                                          query.slog:21        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 12#0
+                                                          query.slog:21        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 12#1
+                                                          query.slog:21        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 12#2
+                                                          query.slog:22        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 24#0
+                                                          query.slog:22        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 24#1
+                                                          query.slog:22        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 24#2
+                                                          query.slog:23        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 6#0
+                                                          query.slog:23        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 6#1
+                                                          query.slog:23        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 6#2
+                                                          query.slog:24        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 23#0
+                                                          query.slog:24        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 23#1
+                                                          query.slog:24        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 23#2
+                                                          query.slog:25        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 5#0
+                                                          query.slog:25        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 5#1
+                                                          query.slog:25        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 5#2
+                                                          query.slog:26        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 35#0
+                                                          query.slog:26        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 35#1
+                                                          query.slog:26        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 35#2
+                                                          query.slog:27        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 17#0
+                                                          query.slog:27        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 17#1
+                                                          query.slog:27        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 17#2
+                                                          query.slog:28        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 29#0
+                                                          query.slog:28        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 29#1
+                                                          query.slog:28        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 29#2
+                                                          query.slog:29        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 11#0
+                                                          query.slog:29        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 11#1
+                                                          query.slog:29        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 11#2
+                                                          query.slog:30        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 20#0
+                                                          query.slog:30        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 20#1
+                                                          query.slog:30        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 20#2
+                                                          query.slog:31        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 2#0
+                                                          query.slog:31        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 2#1
+                                                          query.slog:31        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 2#2
+                                                          query.slog:32        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 32#0
+                                                          query.slog:32        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 32#1
+                                                          query.slog:32        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 32#2
+                                                          query.slog:33        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 14#0
+                                                          query.slog:33        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 14#1
+                                                          query.slog:33        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 14#2
+                                                          query.slog:34        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 26#0
+                                                          query.slog:34        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 26#1
+                                                          query.slog:34        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 26#2
+                                                          query.slog:35        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 8#0
+                                                          query.slog:35        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 8#1
+                                                          query.slog:35        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 8#2
+                                                          query.slog:36        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 22#0
+                                                          query.slog:36        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 22#1
+                                                          query.slog:36        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 22#2
+                                                          query.slog:37        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 4#0
+                                                          query.slog:37        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 4#1
+                                                          query.slog:37        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 4#2
+                                                          query.slog:38        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 34#0
+                                                          query.slog:38        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 34#1
+                                                          query.slog:38        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 34#2
+                                                          query.slog:39        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 16#0
+                                                          query.slog:39        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 16#1
+                                                          query.slog:39        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 16#2
+                                                          query.slog:40        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 28#0
+                                                          query.slog:40        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 28#1
+                                                          query.slog:40        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 28#2
+                                                          query.slog:41        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 10#0
+                                                          query.slog:41        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 10#1
+                                                          query.slog:41        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 10#2
+                                                          query.slog:42        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 19#0
+                                                          query.slog:42        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 19#1
+                                                          query.slog:42        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 19#2
+                                                          query.slog:43        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 1#0
+                                                          query.slog:43        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 1#1
+                                                          query.slog:43        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 1#2
+                                                          query.slog:44        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 31#0
+                                                          query.slog:44        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 31#1
+                                                          query.slog:44        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 31#2
+                                                          query.slog:45        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 13#0
+                                                          query.slog:45        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 13#1
+                                                          query.slog:45        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 13#2
+                                                          query.slog:46        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 25#0
+                                                          query.slog:46        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 25#1
+                                                          query.slog:46        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 25#2
+                                                          query.slog:47        all:edge             edge(b=2) -> ?node(b=1) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> node(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 7#0
+                                                          query.slog:47        all:node             node(b=1) -> edge(b=3) -> ?kg2_norm(b=1) -> edge(b=2) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 7#1
+                                                          query.slog:47        all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> kg2_norm(b=2) -> node(b=2)   <- arm 7#2
+                                                        daemon timeline (ms between emitted lines -- setup work lands here, not in the fixpoint ms):
+                                                          +     475 ms  (+     475 ms)  (pipeline (pos 9) (evaluation "eval-1a0639bd8a1-31359721-25721b89-1a10a33d") (update-epoch 5) (strat
+                                                          +     479 ms  (+       4 ms)  (update-epoch 5 settled)
+                                                          +     481 ms  (+       2 ms)  (boundary-prepared 5 (boundary "b1:layer-1a0639bd8a1-d313843-112536a2-489fb42:6") (program "p1:layer
+                                                          +   97216 ms  (+   96735 ms)  (paused (generation 5) (scc 3) (stratum "f90b30f5") (iteration 0) (phase read) (settled #f) (progress (tuples 0) (exact #f)) (timing (call-ms 12757.126) (total-ms 12757.126)) (cause (budget time)))
+                                                          +  104404 ms  (+    7188 ms)  (arms (g 21 1 0 "query.slog:12") (g 3 1 0 "query.slog:13") (g 33 1 0 "query.slog:14") (g 15 1 0 "que
+                                                          +  104404 ms  (+       0 ms)  (fixpoint 3 "f90b30f5" 2 19943.539)
+                                                          +  104496 ms  (+      92 ms)  (boundary-committed 6 (boundary "b1:layer-1a0639bd8a1-d313843-112536a2-489fb42:6") (position 9) (cre
+                                                          +  104496 ms  (+       0 ms)  (run-complete)
+                                                        runtime arm selection (daemon report; arm 0 is the compiler's own pick, so a non-zero arm means the runtime measurement overrode it):
+                                                          query.slog:12 group 21 -> arm 1  starting from node
+                                                          query.slog:13 group 3 -> arm 1  starting from node
+                                                          query.slog:14 group 33 -> arm 1  starting from node
+                                                          query.slog:15 group 15 -> arm 1  starting from node
+                                                          query.slog:16 group 27 -> arm 1  starting from node
+                                                          query.slog:17 group 9 -> arm 1  starting from node
+                                                          query.slog:18 group 18 -> arm 1  starting from node
+                                                          query.slog:19 group 0 -> arm 1  starting from node
+                                                          query.slog:20 group 30 -> arm 1  starting from node
+                                                          query.slog:21 group 12 -> arm 1  starting from node
+                                                          query.slog:22 group 24 -> arm 1  starting from node
+                                                          query.slog:23 group 6 -> arm 1  starting from node
+                                                          query.slog:24 group 23 -> arm 2  starting from kg2_norm
+                                                          query.slog:25 group 5 -> arm 2  starting from kg2_norm
+                                                          query.slog:26 group 35 -> arm 2  starting from kg2_norm
+                                                          query.slog:27 group 17 -> arm 2  starting from kg2_norm
+                                                          query.slog:28 group 29 -> arm 2  starting from kg2_norm
+                                                          query.slog:29 group 11 -> arm 2  starting from kg2_norm
+                                                          query.slog:30 group 20 -> arm 1  starting from node
+                                                          query.slog:31 group 2 -> arm 1  starting from node
+                                                          query.slog:32 group 32 -> arm 1  starting from node
+                                                          query.slog:33 group 14 -> arm 1  starting from node
+                                                          query.slog:34 group 26 -> arm 1  starting from node
+                                                          query.slog:35 group 8 -> arm 1  starting from node
+                                                          query.slog:36 group 22 -> arm 1  starting from node
+                                                          query.slog:37 group 4 -> arm 1  starting from node
+                                                          query.slog:38 group 34 -> arm 1  starting from node
+                                                          query.slog:39 group 16 -> arm 1  starting from node
+                                                          query.slog:40 group 28 -> arm 1  starting from node
+                                                          query.slog:41 group 10 -> arm 1  starting from node
+                                                          query.slog:42 group 19 -> arm 1  starting from node
+                                                          query.slog:43 group 1 -> arm 1  starting from node
+                                                          query.slog:44 group 31 -> arm 1  starting from node
+                                                          query.slog:45 group 13 -> arm 1  starting from node
+                                                          query.slog:46 group 25 -> arm 1  starting from node
+                                                          query.slog:47 group 7 -> arm 1  starting from node
+2026-09-02 12:51:06.900 | INFO    | server        |   archived as queries/007_run_slog.plan.txt
+2026-09-02 12:51:06.900 | INFO    | server        |   timing: total=1m 44.5s  compile=0ms  setup=1m 24.6s  (strata compiled=1, executed=1)
+2026-09-02 12:51:06.900 | INFO    | server        |   daemon: fixpoint=19943.5ms  iterations=2  rule_fires=31
+2026-09-02 12:51:06.900 | INFO    | server        |   cost model predicted ~22s for this shape
+2026-09-02 12:51:06.901 | INFO    | server        |   result: n_rows=31 returned=31 truncated=False
+2026-09-02 12:51:06.901 | INFO    | server        |   CURIEs out of the answer relation, unnamed at this point:
+2026-09-02 12:51:06.902 | INFO    | server        |   result CURIEs (31):
+2026-09-02 12:51:06.902 | INFO    | server        |     UMLS:C0001648  UMLS:C0003015  UMLS:C0003211  UMLS:C1123457
+2026-09-02 12:51:06.902 | INFO    | server        |     UMLS:C0242889  UMLS:C0987131  UMLS:C0003289  UMLS:C0001641
+2026-09-02 12:51:06.902 | INFO    | server        |     UMLS:C0002932  UMLS:C0003290  UMLS:C3543842  UMLS:C5384547
+2026-09-02 12:51:06.903 | INFO    | server        |     UMLS:C0243192  UMLS:C0003364  UMLS:C0308158  UMLS:C0040614
+2026-09-02 12:51:06.903 | INFO    | server        |     UMLS:C4745728  UMLS:C0031638  UMLS:C0003405  UMLS:C0001046
+2026-09-02 12:51:06.903 | INFO    | server        |     UMLS:C0006684  UMLS:C0003286  UMLS:C0040615  UMLS:C0162758
+2026-09-02 12:51:06.903 | INFO    | server        |     UMLS:C0243042  UMLS:C0162757  UMLS:C0178601  UMLS:C0013227
+2026-09-02 12:51:06.903 | INFO    | server        |     UMLS:C0358591  UMLS:C0599654  UMLS:C1276996
+2026-09-02 12:51:06.903 | INFO    | server        | << TOOL run_slog finished in 1m 44.6s
+2026-09-02 12:51:06.903 | WARNING | server        | !! run_slog took 1m 44.6s -- slow call
+2026-09-02 12:51:06.903 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:51:45.849 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:51:45.850 | INFO    | server        | >> TOOL resolve_entity  term='metformin'  limit=10  biolink_type=None
+2026-09-02 12:51:45.850 | INFO    | kg2_core      |   name-resolution lookup: term='metformin' limit=10 biolink_type=(any)
+2026-09-02 12:51:46.303 | INFO    | kg2_core      |   .. HTTP name-resolution-sri.renci.org replied in 452ms
+2026-09-02 12:51:46.303 | INFO    | kg2_core      |   name-resolution returned 10 candidate(s)
+2026-09-02 12:51:46.303 | INFO    | server        |   candidates for 'metformin':
+2026-09-02 12:51:46.485 | INFO    | server        | id               name                                                  category                  score 
+2026-09-02 12:51:46.486 | INFO    | server        | ---------------  ----------------------------------------------------  ------------------------  ------
+2026-09-02 12:51:46.486 | INFO    | server        | CHEBI:6801       Metformin                                             biolink:SmallMolecule     6310.7
+2026-09-02 12:51:46.486 | INFO    | server        | RXCUI:577093     metformin / pioglitazone Oral Tablet                  biolink:Drug              573.9 
+2026-09-02 12:51:46.487 | INFO    | server        | RXCUI:1043561    metformin / saxagliptin Extended Release Oral Tablet  biolink:Drug              563.1 
+2026-09-02 12:51:46.487 | INFO    | server        | UNII:V9AZJ7GJZ1  Metformin pamoate                                     biolink:MolecularMixture  432.2 
+2026-09-02 12:51:46.487 | INFO    | server        | RXCUI:378729     metformin / rosiglitazone Oral Tablet                 biolink:Drug              379.3 
+2026-09-02 12:51:46.488 | INFO    | server        | RXCUI:802742     metformin / repaglinide Oral Tablet                   biolink:Drug              379.3 
+2026-09-02 12:51:46.488 | INFO    | server        | UNII:KE1D8AP3J5  Metformin orotate                                     biolink:MolecularMixture  372.4 
+2026-09-02 12:51:46.488 | INFO    | server        | UNII:CG73ERQ805  Metformin icosapent                                   biolink:MolecularMixture  372.4 
+2026-09-02 12:51:46.488 | INFO    | server        | UNII:ECS8EBF633  Metformin p-chlorophenoxyacetate                      biolink:MolecularMixture  360.0 
+2026-09-02 12:51:46.489 | INFO    | server        | UNII:YEI21W005Y  Metformin glycinate                                   biolink:MolecularMixture  334.5 
+2026-09-02 12:51:46.489 | INFO    | server        | << TOOL resolve_entity finished in 639ms
+2026-09-02 12:51:46.489 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:51:46.523 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:51:46.523 | INFO    | server        | >> TOOL resolve_entity  term='type 2 diabetes mellitus'  limit=10  biolink_type=None
+2026-09-02 12:51:46.523 | INFO    | kg2_core      |   name-resolution lookup: term='type 2 diabetes mellitus' limit=10 biolink_type=(any)
+2026-09-02 12:52:09.496 | INFO    | kg2_core      |   .. HTTP name-resolution-sri.renci.org replied in 22.97s
+2026-09-02 12:52:09.497 | WARNING | kg2_core      |   !! slow remote call to name-resolution-sri.renci.org (22.97s)
+2026-09-02 12:52:09.497 | INFO    | kg2_core      |   name-resolution returned 10 candidate(s)
+2026-09-02 12:52:09.497 | INFO    | server        |   candidates for 'type 2 diabetes mellitus':
+2026-09-02 12:52:09.497 | INFO    | server        | id             name                                                 category                   score 
+2026-09-02 12:52:09.497 | INFO    | server        | -------------  ---------------------------------------------------  -------------------------  ------
+2026-09-02 12:52:09.497 | INFO    | server        | MONDO:0005148  type 2 diabetes mellitus                             biolink:Disease            4012.7
+2026-09-02 12:52:09.497 | INFO    | server        | UMLS:C0877302  Insulin-requiring type 2 diabetes mellitus           biolink:Disease            640.2 
+2026-09-02 12:52:09.497 | INFO    | server        | UMLS:C0342295  Ketoacidosis due to type 2 diabetes mellitus         biolink:Disease            606.2 
+2026-09-02 12:52:09.497 | INFO    | server        | UMLS:C1279313  Type 2 diabetes mellitus with peripheral angiopathy  biolink:Disease            606.2 
+2026-09-02 12:52:09.497 | INFO    | server        | UMLS:C0342297  Hyperosmolar coma due to type 2 diabetes mellitus    biolink:Disease            575.6 
+2026-09-02 12:52:09.497 | INFO    | server        | UMLS:C2919802  Brittle type 2 diabetes mellitus                     biolink:Disease            537.6 
+2026-09-02 12:52:09.497 | INFO    | server        | UMLS:C2733146  Uncontrolled type 2 diabetes mellitus                biolink:PhenotypicFeature  537.6 
+2026-09-02 12:52:09.497 | INFO    | server        | UMLS:C0579066  Type 2 diabetes mellitus with ulcer                  biolink:Disease            507.4 
+2026-09-02 12:52:09.498 | INFO    | server        | UMLS:C1282951  Type 2 diabetes mellitus in nonobese                 biolink:Disease            507.4 
+2026-09-02 12:52:09.498 | INFO    | server        | UMLS:C0342266  Insulin treated type 2 diabetes mellitus             biolink:Disease            507.4 
+2026-09-02 12:52:09.498 | INFO    | server        | << TOOL resolve_entity finished in 22.98s
+2026-09-02 12:52:09.498 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:52:12.622 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:52:12.622 | INFO    | server        | >> TOOL expand_entity  n_curies=1
+2026-09-02 12:52:12.622 | INFO    | server        |   input CURIEs (1):
+2026-09-02 12:52:12.622 | INFO    | server        |     CHEBI:6801
+2026-09-02 12:52:12.623 | INFO    | server        |   * expand CHEBI:6801 ...
+2026-09-02 12:52:12.623 | INFO    | kg2_core      |   node-normalizer clique for CHEBI:6801
+2026-09-02 12:52:13.364 | INFO    | kg2_core      |   .. HTTP nodenormalization-sri.renci.org replied in 741ms
+2026-09-02 12:52:13.365 | INFO    | kg2_core      |   clique for CHEBI:6801: 341 equivalent id(s) -> CHEBI:6801, UNII:9100L32L2N, PUBCHEM.COMPOUND:4091, PUBCHEM.COMPOUND:152743144, PUBCHEM.COMPOUND:155906370, CHEMBL.COMPOUND:CHEMBL1431, DRUGBANK:DB00331, MESH:D008687, CAS:211-517-8, CAS:657-24-9  ... +331 more
+2026-09-02 12:52:13.368 | INFO    | kg2_core      |   expand CHEBI:6801: 341 clique id(s) -> 120 present in KG2 (221 not in KG2) in 745ms
+2026-09-02 12:52:13.368 | INFO    | kg2_core      |     kept   : CHEBI:6801, CHEMBL.COMPOUND:CHEMBL1431, DRUGBANK:DB00331, MESH:D008687, DrugCentral:1725, HMDB:HMDB0001921, KEGG.COMPOUND:C07151, UMLS:C0025598, CHEBI:6802, CHEBI:90684  ... +110 more
+2026-09-02 12:52:13.368 | INFO    | server        |   + expand CHEBI:6801 done in 745ms
+2026-09-02 12:52:13.369 | INFO    | server        |   1 input CURIE(s) -> 120 distinct KG2 id(s)
+2026-09-02 12:52:13.369 | INFO    | server        |   kg2_ids (120):
+2026-09-02 12:52:13.369 | INFO    | server        |     CHEBI:6801                  CHEMBL.COMPOUND:CHEMBL1431  DRUGBANK:DB00331            MESH:D008687
+2026-09-02 12:52:13.370 | INFO    | server        |     DrugCentral:1725            HMDB:HMDB0001921            KEGG.COMPOUND:C07151        UMLS:C0025598
+2026-09-02 12:52:13.370 | INFO    | server        |     CHEBI:6802                  CHEBI:90684                 CHEMBL.COMPOUND:CHEMBL1703  MESH:C585596
+2026-09-02 12:52:13.370 | INFO    | server        |     UMLS:C3267701               UMLS:C0770893               UMLS:C0591573               UMLS:C1242236
+2026-09-02 12:52:13.370 | INFO    | server        |     UMLS:C1246863               UMLS:C1246864               UMLS:C1330510               UMLS:C1331315
+2026-09-02 12:52:13.371 | INFO    | server        |     UMLS:C1331505               UMLS:C1724447               UMLS:C1739198               UMLS:C1878773
+2026-09-02 12:52:13.371 | INFO    | server        |     UMLS:C2240742               UMLS:C2355883               UMLS:C2719777               UMLS:C0978484
+2026-09-02 12:52:13.371 | INFO    | server        |     UMLS:C2719778               UMLS:C0939052               UMLS:C2719781               UMLS:C1329024
+2026-09-02 12:52:13.372 | INFO    | server        |     UMLS:C2719782               UMLS:C2355884               UMLS:C2719784               UMLS:C0978482
+2026-09-02 12:52:13.372 | INFO    | server        |     UMLS:C2719791               UMLS:C0716527               UMLS:C0978483               UMLS:C0701677
+2026-09-02 12:52:13.372 | INFO    | server        |     UMLS:C2719792               UMLS:C0978485               UMLS:C2719793               UMLS:C0701679
+2026-09-02 12:52:13.373 | INFO    | server        |     UMLS:C2719794               UMLS:C2346234               UMLS:C2719796               UMLS:C1735400
+2026-09-02 12:52:13.373 | INFO    | server        |     UMLS:C2719798               UMLS:C1443753               UMLS:C2719800               UMLS:C1329173
+2026-09-02 12:52:13.373 | INFO    | server        |     UMLS:C2719801               UMLS:C1329932               UMLS:C2720076               UMLS:C3215946
+2026-09-02 12:52:13.373 | INFO    | server        |     UMLS:C3215947               UMLS:C3215948               UMLS:C3221985               UMLS:C3221986
+2026-09-02 12:52:13.373 | INFO    | server        |     UMLS:C3225326               UMLS:C3225327               UMLS:C3225336               UMLS:C3225337
+2026-09-02 12:52:13.374 | INFO    | server        |     UMLS:C3239100               UMLS:C3239101               UMLS:C3265896               UMLS:C3264602
+2026-09-02 12:52:13.374 | INFO    | server        |     UMLS:C3264609               UMLS:C3264616               UMLS:C3264617               UMLS:C3264618
+2026-09-02 12:52:13.374 | INFO    | server        |     UMLS:C3264619               UMLS:C3264969               UMLS:C3264979               UMLS:C1948387
+2026-09-02 12:52:13.374 | INFO    | server        |     UMLS:C3848962               UMLS:C3848671               UMLS:C3848781               UMLS:C3848832
+2026-09-02 12:52:13.374 | INFO    | server        |     UMLS:C3848870               UMLS:C3848869               UMLS:C3848780               UMLS:C3848779
+2026-09-02 12:52:13.375 | INFO    | server        |     UMLS:C3848778               UMLS:C4050747               UMLS:C4050750               UMLS:C4050751
+2026-09-02 12:52:13.375 | INFO    | server        |     UMLS:C4050752               UMLS:C4050753               UMLS:C4050754               UMLS:C4050758
+2026-09-02 12:52:13.375 | INFO    | server        |     UMLS:C4050760               UMLS:C4051105               UMLS:C4257316               UMLS:C4257142
+2026-09-02 12:52:13.375 | INFO    | server        |     UMLS:C4257060               UMLS:C4282270               UMLS:C4282269               UMLS:C4282268
+2026-09-02 12:52:13.375 | INFO    | server        |     UMLS:C4281893               UMLS:C4291600               UMLS:C4291496               UMLS:C4300850
+2026-09-02 12:52:13.376 | INFO    | server        |     UMLS:C4300852               UMLS:C4300853               UMLS:C4300862               UMLS:C5207893
+2026-09-02 12:52:13.376 | INFO    | server        |     UMLS:C5207275               UMLS:C5207803               UMLS:C5207524               UMLS:C5243465
+2026-09-02 12:52:13.376 | INFO    | server        |     UMLS:C5243133               UMLS:C5243275               UMLS:C5243312               UMLS:C5243330
+2026-09-02 12:52:13.376 | INFO    | server        |     UMLS:C5243331               UMLS:C5243276               UMLS:C5243280               UMLS:C5243281
+2026-09-02 12:52:13.377 | INFO    | server        | << TOOL expand_entity finished in 754ms
+2026-09-02 12:52:13.377 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:52:13.406 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:52:13.407 | INFO    | server        | >> TOOL expand_entity  n_curies=1
+2026-09-02 12:52:13.407 | INFO    | server        |   input CURIEs (1):
+2026-09-02 12:52:13.407 | INFO    | server        |     MONDO:0005148
+2026-09-02 12:52:13.407 | INFO    | server        |   * expand MONDO:0005148 ...
+2026-09-02 12:52:13.407 | INFO    | kg2_core      |   node-normalizer clique for MONDO:0005148
+2026-09-02 12:52:13.700 | INFO    | kg2_core      |   .. HTTP nodenormalization-sri.renci.org replied in 293ms
+2026-09-02 12:52:13.700 | INFO    | kg2_core      |   clique for MONDO:0005148: 21 equivalent id(s) -> MONDO:0005148, DOID:9352, OMIM:125853, UMLS:C0011860, UMLS:C1852091, UMLS:C4017238, MESH:D003924, MEDDRA:10012611, MEDDRA:10012613, MEDDRA:10026947  ... +11 more
+2026-09-02 12:52:13.701 | INFO    | kg2_core      |   expand MONDO:0005148: 21 clique id(s) -> 9 present in KG2 (12 not in KG2) in 294ms
+2026-09-02 12:52:13.701 | INFO    | kg2_core      |     kept   : MONDO:0005148, DOID:9352, OMIM:125853, UMLS:C0011860, UMLS:C1852091, UMLS:C4017238, MESH:D003924, NCIT:C26747, HP:0005978
+2026-09-02 12:52:13.702 | INFO    | server        |   + expand MONDO:0005148 done in 295ms
+2026-09-02 12:52:13.702 | INFO    | server        |   1 input CURIE(s) -> 9 distinct KG2 id(s)
+2026-09-02 12:52:13.703 | INFO    | server        |   kg2_ids (9):
+2026-09-02 12:52:13.703 | INFO    | server        |     MONDO:0005148  DOID:9352      OMIM:125853    UMLS:C0011860
+2026-09-02 12:52:13.703 | INFO    | server        |     UMLS:C1852091  UMLS:C4017238  MESH:D003924   NCIT:C26747
+2026-09-02 12:52:13.703 | INFO    | server        |     HP:0005978
+2026-09-02 12:52:13.704 | INFO    | server        | << TOOL expand_entity finished in 297ms
+2026-09-02 12:52:13.704 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:53:16.408 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 12:53:16.408 | INFO    | server        | >> TOOL run_slog  limit=50
+2026-09-02 12:53:16.408 | WARNING | server        |   !! this is run #3 of this session -- if it is a retry of the same question rather than a new question, that is minutes of wall clock the one-run-per-question rule exists to prevent (mcp/instructions/kg2.md)
+2026-09-02 12:53:16.411 | INFO    | server        |   query file /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog (14052 bytes, modified 2026-09-02 12:53:06)
+2026-09-02 12:53:16.411 | INFO    | server        |   archived as queries/012_run_slog.slog
+2026-09-02 12:53:16.411 | INFO    | server        |   shape: 5 table(s) declared, 2 derived relation(s) -- expect ~13s per derived relation
+2026-09-02 12:53:16.411 | INFO    | server        |   program:
+                                                        | ;; Genes metformin interacts with that are also associated with type 2 diabetes
+                                                        | ;; metformin anchors: CHEBI:6801 expansion (~120 ids) -> membership relation `met`
+                                                        | ;; T2D anchors: MONDO:0005148 expansion (9 ids) -> inlined literals
+                                                        | ;; interaction side covers the interacts_with predicate family, both edge directions
+                                                        | ;; drug-side gene ids and T2D-associated gene ids joined on the kg2_norm canonical key
+                                                        | 
+                                                        | table (edge str str str)
+                                                        | table (node str str str)
+                                                        | table (kg2_norm str str)
+                                                        | table (met str)
+                                                        | table (result str str)
+                                                        | 
+                                                        | rule (met "CHEBI:6801")
+                                                        | rule (met "CHEMBL.COMPOUND:CHEMBL1431")
+                                                        | rule (met "DRUGBANK:DB00331")
+                                                        | rule (met "MESH:D008687")
+                                                        | rule (met "DrugCentral:1725")
+                                                        | rule (met "HMDB:HMDB0001921")
+                                                        | rule (met "KEGG.COMPOUND:C07151")
+                                                        | rule (met "UMLS:C0025598")
+                                                        | rule (met "CHEBI:6802")
+                                                        | rule (met "CHEBI:90684")
+                                                        | rule (met "CHEMBL.COMPOUND:CHEMBL1703")
+                                                        | rule (met "MESH:C585596")
+                                                        | rule (met "UMLS:C3267701")
+                                                        | rule (met "UMLS:C0770893")
+                                                        | rule (met "UMLS:C0591573")
+                                                        | rule (met "UMLS:C1242236")
+                                                        | rule (met "UMLS:C1246863")
+                                                        | rule (met "UMLS:C1246864")
+                                                        | rule (met "UMLS:C1330510")
+                                                        | rule (met "UMLS:C1331315")
+                                                        | rule (met "UMLS:C1331505")
+                                                        | rule (met "UMLS:C1724447")
+                                                        | rule (met "UMLS:C1739198")
+                                                        | rule (met "UMLS:C1878773")
+                                                        | rule (met "UMLS:C2240742")
+                                                        | rule (met "UMLS:C2355883")
+                                                        | rule (met "UMLS:C2719777")
+                                                        | rule (met "UMLS:C0978484")
+                                                        | rule (met "UMLS:C2719778")
+                                                        | rule (met "UMLS:C0939052")
+                                                        | rule (met "UMLS:C2719781")
+                                                        | rule (met "UMLS:C1329024")
+                                                        | rule (met "UMLS:C2719782")
+                                                        | rule (met "UMLS:C2355884")
+                                                        | rule (met "UMLS:C2719784")
+                                                        | rule (met "UMLS:C0978482")
+                                                        | rule (met "UMLS:C2719791")
+                                                        | rule (met "UMLS:C0716527")
+                                                        | rule (met "UMLS:C0978483")
+                                                        | rule (met "UMLS:C0701677")
+                                                        | rule (met "UMLS:C2719792")
+                                                        | rule (met "UMLS:C0978485")
+                                                        | rule (met "UMLS:C2719793")
+                                                        | rule (met "UMLS:C0701679")
+                                                        | rule (met "UMLS:C2719794")
+                                                        | rule (met "UMLS:C2346234")
+                                                        | rule (met "UMLS:C2719796")
+                                                        | rule (met "UMLS:C1735400")
+                                                        | rule (met "UMLS:C2719798")
+                                                        | rule (met "UMLS:C1443753")
+                                                        | rule (met "UMLS:C2719800")
+                                                        | rule (met "UMLS:C1329173")
+                                                        | rule (met "UMLS:C2719801")
+                                                        | rule (met "UMLS:C1329932")
+                                                        | rule (met "UMLS:C2720076")
+                                                        | rule (met "UMLS:C3215946")
+                                                        | rule (met "UMLS:C3215947")
+                                                        | rule (met "UMLS:C3215948")
+                                                        | rule (met "UMLS:C3221985")
+                                                        | rule (met "UMLS:C3221986")
+                                                        | rule (met "UMLS:C3225326")
+                                                        | rule (met "UMLS:C3225327")
+                                                        | rule (met "UMLS:C3225336")
+                                                        | rule (met "UMLS:C3225337")
+                                                        | rule (met "UMLS:C3239100")
+                                                        | rule (met "UMLS:C3239101")
+                                                        | rule (met "UMLS:C3265896")
+                                                        | rule (met "UMLS:C3264602")
+                                                        | rule (met "UMLS:C3264609")
+                                                        | rule (met "UMLS:C3264616")
+                                                        | rule (met "UMLS:C3264617")
+                                                        | rule (met "UMLS:C3264618")
+                                                        | rule (met "UMLS:C3264619")
+                                                        | rule (met "UMLS:C3264969")
+                                                        | rule (met "UMLS:C3264979")
+                                                        | rule (met "UMLS:C1948387")
+                                                        | rule (met "UMLS:C3848962")
+                                                        | rule (met "UMLS:C3848671")
+                                                        | rule (met "UMLS:C3848781")
+                                                        | rule (met "UMLS:C3848832")
+                                                        | rule (met "UMLS:C3848870")
+                                                        | rule (met "UMLS:C3848869")
+                                                        | rule (met "UMLS:C3848780")
+                                                        | rule (met "UMLS:C3848779")
+                                                        | rule (met "UMLS:C3848778")
+                                                        | rule (met "UMLS:C4050747")
+                                                        | rule (met "UMLS:C4050750")
+                                                        | rule (met "UMLS:C4050751")
+                                                        | rule (met "UMLS:C4050752")
+                                                        | rule (met "UMLS:C4050753")
+                                                        | rule (met "UMLS:C4050754")
+                                                        | rule (met "UMLS:C4050758")
+                                                        | rule (met "UMLS:C4050760")
+                                                        | rule (met "UMLS:C4051105")
+                                                        | rule (met "UMLS:C4257316")
+                                                        | rule (met "UMLS:C4257142")
+                                                        | rule (met "UMLS:C4257060")
+                                                        | rule (met "UMLS:C4282270")
+                                                        | rule (met "UMLS:C4282269")
+                                                        | rule (met "UMLS:C4282268")
+                                                        | rule (met "UMLS:C4281893")
+                                                        | rule (met "UMLS:C4291600")
+                                                        | rule (met "UMLS:C4291496")
+                                                        | rule (met "UMLS:C4300850")
+                                                        | rule (met "UMLS:C4300852")
+                                                        | rule (met "UMLS:C4300853")
+                                                        | rule (met "UMLS:C4300862")
+                                                        | rule (met "UMLS:C5207893")
+                                                        | rule (met "UMLS:C5207275")
+                                                        | rule (met "UMLS:C5207803")
+                                                        | rule (met "UMLS:C5207524")
+                                                        | rule (met "UMLS:C5243465")
+                                                        | rule (met "UMLS:C5243133")
+                                                        | rule (met "UMLS:C5243275")
+                                                        | rule (met "UMLS:C5243312")
+                                                        | rule (met "UMLS:C5243330")
+                                                        | rule (met "UMLS:C5243331")
+                                                        | rule (met "UMLS:C5243276")
+                                                        | rule (met "UMLS:C5243280")
+                                                        | rule (met "UMLS:C5243281")
+                                                        | 
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "MONDO:0005148")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "MONDO:0005148")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:physically_interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "MONDO:0005148")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:physically_interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "MONDO:0005148")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:directly_physically_interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "MONDO:0005148")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:directly_physically_interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "MONDO:0005148")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "DOID:9352")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "DOID:9352")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:physically_interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "DOID:9352")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:physically_interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "DOID:9352")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:directly_physically_interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "DOID:9352")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:directly_physically_interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "DOID:9352")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "OMIM:125853")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "OMIM:125853")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:physically_interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "OMIM:125853")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:physically_interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "OMIM:125853")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:directly_physically_interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "OMIM:125853")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:directly_physically_interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "OMIM:125853")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "UMLS:C0011860")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "UMLS:C0011860")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:physically_interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "UMLS:C0011860")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:physically_interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "UMLS:C0011860")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:directly_physically_interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "UMLS:C0011860")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:directly_physically_interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "UMLS:C0011860")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "UMLS:C1852091")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "UMLS:C1852091")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:physically_interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "UMLS:C1852091")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:physically_interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "UMLS:C1852091")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:directly_physically_interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "UMLS:C1852091")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:directly_physically_interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "UMLS:C1852091")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "UMLS:C4017238")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "UMLS:C4017238")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:physically_interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "UMLS:C4017238")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:physically_interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "UMLS:C4017238")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:directly_physically_interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "UMLS:C4017238")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:directly_physically_interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "UMLS:C4017238")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "MESH:D003924")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "MESH:D003924")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:physically_interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "MESH:D003924")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:physically_interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "MESH:D003924")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:directly_physically_interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "MESH:D003924")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:directly_physically_interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "MESH:D003924")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "NCIT:C26747")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "NCIT:C26747")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:physically_interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "NCIT:C26747")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:physically_interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "NCIT:C26747")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:directly_physically_interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "NCIT:C26747")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:directly_physically_interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "NCIT:C26747")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "HP:0005978")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "HP:0005978")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:physically_interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "HP:0005978")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:physically_interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "HP:0005978")
+                                                        | rule (result g name) <-- (met m) (edge m "biolink:directly_physically_interacts_with" g) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "HP:0005978")
+                                                        | rule (result g name) <-- (met m) (edge g "biolink:directly_physically_interacts_with" m) (node g name _) (kg2_norm g k) (kg2_norm t k) (edge t "biolink:gene_associated_with_condition" "HP:0005978")
+2026-09-02 12:53:16.412 | INFO    | slog          |   -> slog drop: {"op": "drop", "rel": "result"}
+2026-09-02 12:53:16.426 | INFO    | slog          |   <- slog drop ok in 13ms (12 bytes of response)
+2026-09-02 12:53:16.426 | INFO    | server        |   dropped previous `result` relation
+2026-09-02 12:53:16.426 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-09-02 12:53:16.431 | INFO    | slog          |   <- slog dump ok in 6ms (191 bytes of response)
+2026-09-02 12:53:16.432 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-09-02 12:53:16.436 | INFO    | slog          |   <- slog dump ok in 4ms (351 bytes of response)
+2026-09-02 12:53:16.436 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-09-02 12:53:16.442 | INFO    | slog          |   <- slog dump ok in 6ms (1975 bytes of response)
+2026-09-02 12:53:16.445 | INFO    | server        |   * slog run ...
+2026-09-02 12:53:16.445 | INFO    | slog          |   -> slog run: {"op": "run", "path": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog"}
+2026-09-02 12:56:01.413 | INFO    | slog          |   <- slog run ok in 2m 44.9s (5022 bytes of response)
+2026-09-02 12:56:01.413 | WARNING | slog          |   !! slog run took 2m 44.9s
+2026-09-02 12:56:01.413 | INFO    | server        |   + slog run done in 2m 45.0s
+2026-09-02 12:56:01.414 | INFO    | server        |   * dump `result` (limit 50) ...
+2026-09-02 12:56:01.414 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "result", "limit": 50}
+2026-09-02 12:56:01.423 | INFO    | slog          |   <- slog dump ok in 9ms (1575 bytes of response)
+2026-09-02 12:56:01.423 | INFO    | server        |   + dump `result` (limit 50) done in 10ms
+2026-09-02 12:56:01.426 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-09-02 12:56:01.432 | INFO    | slog          |   <- slog dump ok in 6ms (254 bytes of response)
+2026-09-02 12:56:01.432 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-09-02 12:56:01.440 | INFO    | slog          |   <- slog dump ok in 7ms (3937 bytes of response)
+2026-09-02 12:56:01.440 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-09-02 12:56:01.448 | INFO    | slog          |   <- slog dump ok in 8ms (8212 bytes of response)
+2026-09-02 12:56:01.471 | INFO    | server        |   join plan:
+                                                      stratum 4  6ba66f12  2 iteration(s), 6506.8 ms  (/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/slog/build/6ba66f12.plan, +0 internal error rules)
+                                                          query.slog:13        once                 (no relation steps)
+                                                          query.slog:14        once                 (no relation steps)
+                                                          query.slog:15        once                 (no relation steps)
+                                                          query.slog:16        once                 (no relation steps)
+                                                          query.slog:17        once                 (no relation steps)
+                                                          query.slog:18        once                 (no relation steps)
+                                                          query.slog:19        once                 (no relation steps)
+                                                          query.slog:20        once                 (no relation steps)
+                                                          query.slog:21        once                 (no relation steps)
+                                                          query.slog:22        once                 (no relation steps)
+                                                          query.slog:23        once                 (no relation steps)
+                                                          query.slog:24        once                 (no relation steps)
+                                                          query.slog:25        once                 (no relation steps)
+                                                          query.slog:26        once                 (no relation steps)
+                                                          query.slog:27        once                 (no relation steps)
+                                                          query.slog:28        once                 (no relation steps)
+                                                          query.slog:29        once                 (no relation steps)
+                                                          query.slog:30        once                 (no relation steps)
+                                                          query.slog:31        once                 (no relation steps)
+                                                          query.slog:32        once                 (no relation steps)
+                                                          query.slog:33        once                 (no relation steps)
+                                                          query.slog:34        once                 (no relation steps)
+                                                          query.slog:35        once                 (no relation steps)
+                                                          query.slog:36        once                 (no relation steps)
+                                                          query.slog:37        once                 (no relation steps)
+                                                          query.slog:38        once                 (no relation steps)
+                                                          query.slog:39        once                 (no relation steps)
+                                                          query.slog:40        once                 (no relation steps)
+                                                          query.slog:41        once                 (no relation steps)
+                                                          query.slog:42        once                 (no relation steps)
+                                                          query.slog:43        once                 (no relation steps)
+                                                          query.slog:44        once                 (no relation steps)
+                                                          query.slog:45        once                 (no relation steps)
+                                                          query.slog:46        once                 (no relation steps)
+                                                          query.slog:47        once                 (no relation steps)
+                                                          query.slog:48        once                 (no relation steps)
+                                                          query.slog:49        once                 (no relation steps)
+                                                          query.slog:50        once                 (no relation steps)
+                                                          query.slog:51        once                 (no relation steps)
+                                                          query.slog:52        once                 (no relation steps)
+                                                          query.slog:53        once                 (no relation steps)
+                                                          query.slog:54        once                 (no relation steps)
+                                                          query.slog:55        once                 (no relation steps)
+                                                          query.slog:56        once                 (no relation steps)
+                                                          query.slog:57        once                 (no relation steps)
+                                                          query.slog:58        once                 (no relation steps)
+                                                          query.slog:59        once                 (no relation steps)
+                                                          query.slog:60        once                 (no relation steps)
+                                                          query.slog:61        once                 (no relation steps)
+                                                          query.slog:62        once                 (no relation steps)
+                                                          query.slog:63        once                 (no relation steps)
+                                                          query.slog:64        once                 (no relation steps)
+                                                          query.slog:65        once                 (no relation steps)
+                                                          query.slog:66        once                 (no relation steps)
+                                                          query.slog:67        once                 (no relation steps)
+                                                          query.slog:68        once                 (no relation steps)
+                                                          query.slog:69        once                 (no relation steps)
+                                                          query.slog:70        once                 (no relation steps)
+                                                          query.slog:71        once                 (no relation steps)
+                                                          query.slog:72        once                 (no relation steps)
+                                                          query.slog:73        once                 (no relation steps)
+                                                          query.slog:74        once                 (no relation steps)
+                                                          query.slog:75        once                 (no relation steps)
+                                                          query.slog:76        once                 (no relation steps)
+                                                          query.slog:77        once                 (no relation steps)
+                                                          query.slog:78        once                 (no relation steps)
+                                                          query.slog:79        once                 (no relation steps)
+                                                          query.slog:80        once                 (no relation steps)
+                                                          query.slog:81        once                 (no relation steps)
+                                                          query.slog:82        once                 (no relation steps)
+                                                          query.slog:83        once                 (no relation steps)
+                                                          query.slog:84        once                 (no relation steps)
+                                                          query.slog:85        once                 (no relation steps)
+                                                          query.slog:86        once                 (no relation steps)
+                                                          query.slog:87        once                 (no relation steps)
+                                                          query.slog:88        once                 (no relation steps)
+                                                          query.slog:89        once                 (no relation steps)
+                                                          query.slog:90        once                 (no relation steps)
+                                                          query.slog:91        once                 (no relation steps)
+                                                          query.slog:92        once                 (no relation steps)
+                                                          query.slog:93        once                 (no relation steps)
+                                                          query.slog:94        once                 (no relation steps)
+                                                          query.slog:95        once                 (no relation steps)
+                                                          query.slog:96        once                 (no relation steps)
+                                                          query.slog:97        once                 (no relation steps)
+                                                          query.slog:98        once                 (no relation steps)
+                                                          query.slog:99        once                 (no relation steps)
+                                                          query.slog:100       once                 (no relation steps)
+                                                          query.slog:101       once                 (no relation steps)
+                                                          query.slog:102       once                 (no relation steps)
+                                                          query.slog:103       once                 (no relation steps)
+                                                          query.slog:104       once                 (no relation steps)
+                                                          query.slog:105       once                 (no relation steps)
+                                                          query.slog:106       once                 (no relation steps)
+                                                          query.slog:107       once                 (no relation steps)
+                                                          query.slog:108       once                 (no relation steps)
+                                                          query.slog:109       once                 (no relation steps)
+                                                          query.slog:110       once                 (no relation steps)
+                                                          query.slog:111       once                 (no relation steps)
+                                                          query.slog:112       once                 (no relation steps)
+                                                          query.slog:113       once                 (no relation steps)
+                                                          query.slog:114       once                 (no relation steps)
+                                                          query.slog:115       once                 (no relation steps)
+                                                          query.slog:116       once                 (no relation steps)
+                                                          query.slog:117       once                 (no relation steps)
+                                                          query.slog:118       once                 (no relation steps)
+                                                          query.slog:119       once                 (no relation steps)
+                                                          query.slog:120       once                 (no relation steps)
+                                                          query.slog:121       once                 (no relation steps)
+                                                          query.slog:122       once                 (no relation steps)
+                                                          query.slog:123       once                 (no relation steps)
+                                                          query.slog:124       once                 (no relation steps)
+                                                          query.slog:125       once                 (no relation steps)
+                                                          query.slog:126       once                 (no relation steps)
+                                                          query.slog:127       once                 (no relation steps)
+                                                          query.slog:128       once                 (no relation steps)
+                                                          query.slog:129       once                 (no relation steps)
+                                                          query.slog:130       once                 (no relation steps)
+                                                          query.slog:131       once                 (no relation steps)
+                                                          query.slog:132       once                 (no relation steps)
+                                                      stratum 5  d4951881  2 iteration(s), 15732.9 ms  (/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/slog/build/d4951881.plan, +0 internal error rules)
+                                                          query.slog:134       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 22#0
+                                                          query.slog:134       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 22#1
+                                                          query.slog:134       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 22#2
+                                                          query.slog:134       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 22#3
+                                                          query.slog:135       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 19#0
+                                                          query.slog:135       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 19#1
+                                                          query.slog:135       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 19#2
+                                                          query.slog:135       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 19#3
+                                                          query.slog:136       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 23#0
+                                                          query.slog:136       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 23#1
+                                                          query.slog:136       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 23#2
+                                                          query.slog:136       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 23#3
+                                                          query.slog:137       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 20#0
+                                                          query.slog:137       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 20#1
+                                                          query.slog:137       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 20#2
+                                                          query.slog:137       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 20#3
+                                                          query.slog:138       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 21#0
+                                                          query.slog:138       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 21#1
+                                                          query.slog:138       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 21#2
+                                                          query.slog:138       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 21#3
+                                                          query.slog:139       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 18#0
+                                                          query.slog:139       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 18#1
+                                                          query.slog:139       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 18#2
+                                                          query.slog:139       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 18#3
+                                                          query.slog:140       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 4#0
+                                                          query.slog:140       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 4#1
+                                                          query.slog:140       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 4#2
+                                                          query.slog:140       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 4#3
+                                                          query.slog:141       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 1#0
+                                                          query.slog:141       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 1#1
+                                                          query.slog:141       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 1#2
+                                                          query.slog:141       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 1#3
+                                                          query.slog:142       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 5#0
+                                                          query.slog:142       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 5#1
+                                                          query.slog:142       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 5#2
+                                                          query.slog:142       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 5#3
+                                                          query.slog:143       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 2#0
+                                                          query.slog:143       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 2#1
+                                                          query.slog:143       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 2#2
+                                                          query.slog:143       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 2#3
+                                                          query.slog:144       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 3#0
+                                                          query.slog:144       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 3#1
+                                                          query.slog:144       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 3#2
+                                                          query.slog:144       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 3#3
+                                                          query.slog:145       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 0#0
+                                                          query.slog:145       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 0#1
+                                                          query.slog:145       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 0#2
+                                                          query.slog:145       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 0#3
+                                                          query.slog:146       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 34#0
+                                                          query.slog:146       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 34#1
+                                                          query.slog:146       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 34#2
+                                                          query.slog:146       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 34#3
+                                                          query.slog:147       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 31#0
+                                                          query.slog:147       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 31#1
+                                                          query.slog:147       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 31#2
+                                                          query.slog:147       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 31#3
+                                                          query.slog:148       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 35#0
+                                                          query.slog:148       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 35#1
+                                                          query.slog:148       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 35#2
+                                                          query.slog:148       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 35#3
+                                                          query.slog:149       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 32#0
+                                                          query.slog:149       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 32#1
+                                                          query.slog:149       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 32#2
+                                                          query.slog:149       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 32#3
+                                                          query.slog:150       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 33#0
+                                                          query.slog:150       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 33#1
+                                                          query.slog:150       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 33#2
+                                                          query.slog:150       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 33#3
+                                                          query.slog:151       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 30#0
+                                                          query.slog:151       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 30#1
+                                                          query.slog:151       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 30#2
+                                                          query.slog:151       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 30#3
+                                                          query.slog:152       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 40#0
+                                                          query.slog:152       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 40#1
+                                                          query.slog:152       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 40#2
+                                                          query.slog:152       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 40#3
+                                                          query.slog:153       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 37#0
+                                                          query.slog:153       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 37#1
+                                                          query.slog:153       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 37#2
+                                                          query.slog:153       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 37#3
+                                                          query.slog:154       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 41#0
+                                                          query.slog:154       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 41#1
+                                                          query.slog:154       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 41#2
+                                                          query.slog:154       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 41#3
+                                                          query.slog:155       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 38#0
+                                                          query.slog:155       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 38#1
+                                                          query.slog:155       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 38#2
+                                                          query.slog:155       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 38#3
+                                                          query.slog:156       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 39#0
+                                                          query.slog:156       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 39#1
+                                                          query.slog:156       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 39#2
+                                                          query.slog:156       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 39#3
+                                                          query.slog:157       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 36#0
+                                                          query.slog:157       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 36#1
+                                                          query.slog:157       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 36#2
+                                                          query.slog:157       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 36#3
+                                                          query.slog:158       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 46#0
+                                                          query.slog:158       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 46#1
+                                                          query.slog:158       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 46#2
+                                                          query.slog:158       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 46#3
+                                                          query.slog:159       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 43#0
+                                                          query.slog:159       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 43#1
+                                                          query.slog:159       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 43#2
+                                                          query.slog:159       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 43#3
+                                                          query.slog:160       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 47#0
+                                                          query.slog:160       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 47#1
+                                                          query.slog:160       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 47#2
+                                                          query.slog:160       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 47#3
+                                                          query.slog:161       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 44#0
+                                                          query.slog:161       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 44#1
+                                                          query.slog:161       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 44#2
+                                                          query.slog:161       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 44#3
+                                                          query.slog:162       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 45#0
+                                                          query.slog:162       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 45#1
+                                                          query.slog:162       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 45#2
+                                                          query.slog:162       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 45#3
+                                                          query.slog:163       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 42#0
+                                                          query.slog:163       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 42#1
+                                                          query.slog:163       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 42#2
+                                                          query.slog:163       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 42#3
+                                                          query.slog:164       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 52#0
+                                                          query.slog:164       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 52#1
+                                                          query.slog:164       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 52#2
+                                                          query.slog:164       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 52#3
+                                                          query.slog:165       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 49#0
+                                                          query.slog:165       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 49#1
+                                                          query.slog:165       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 49#2
+                                                          query.slog:165       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 49#3
+                                                          query.slog:166       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 53#0
+                                                          query.slog:166       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 53#1
+                                                          query.slog:166       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 53#2
+                                                          query.slog:166       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 53#3
+                                                          query.slog:167       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 50#0
+                                                          query.slog:167       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 50#1
+                                                          query.slog:167       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 50#2
+                                                          query.slog:167       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 50#3
+                                                          query.slog:168       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 51#0
+                                                          query.slog:168       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 51#1
+                                                          query.slog:168       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 51#2
+                                                          query.slog:168       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 51#3
+                                                          query.slog:169       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 48#0
+                                                          query.slog:169       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 48#1
+                                                          query.slog:169       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 48#2
+                                                          query.slog:169       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 48#3
+                                                          query.slog:170       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 16#0
+                                                          query.slog:170       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 16#1
+                                                          query.slog:170       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 16#2
+                                                          query.slog:170       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 16#3
+                                                          query.slog:171       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 13#0
+                                                          query.slog:171       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 13#1
+                                                          query.slog:171       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 13#2
+                                                          query.slog:171       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 13#3
+                                                          query.slog:172       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 17#0
+                                                          query.slog:172       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 17#1
+                                                          query.slog:172       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 17#2
+                                                          query.slog:172       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 17#3
+                                                          query.slog:173       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 14#0
+                                                          query.slog:173       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 14#1
+                                                          query.slog:173       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 14#2
+                                                          query.slog:173       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 14#3
+                                                          query.slog:174       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 15#0
+                                                          query.slog:174       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 15#1
+                                                          query.slog:174       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 15#2
+                                                          query.slog:174       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 15#3
+                                                          query.slog:175       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 12#0
+                                                          query.slog:175       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 12#1
+                                                          query.slog:175       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 12#2
+                                                          query.slog:175       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 12#3
+                                                          query.slog:176       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 28#0
+                                                          query.slog:176       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 28#1
+                                                          query.slog:176       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 28#2
+                                                          query.slog:176       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 28#3
+                                                          query.slog:177       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 25#0
+                                                          query.slog:177       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 25#1
+                                                          query.slog:177       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 25#2
+                                                          query.slog:177       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 25#3
+                                                          query.slog:178       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 29#0
+                                                          query.slog:178       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 29#1
+                                                          query.slog:178       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 29#2
+                                                          query.slog:178       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 29#3
+                                                          query.slog:179       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 26#0
+                                                          query.slog:179       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 26#1
+                                                          query.slog:179       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 26#2
+                                                          query.slog:179       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 26#3
+                                                          query.slog:180       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 27#0
+                                                          query.slog:180       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 27#1
+                                                          query.slog:180       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 27#2
+                                                          query.slog:180       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 27#3
+                                                          query.slog:181       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 24#0
+                                                          query.slog:181       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 24#1
+                                                          query.slog:181       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 24#2
+                                                          query.slog:181       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 24#3
+                                                          query.slog:182       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 10#0
+                                                          query.slog:182       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 10#1
+                                                          query.slog:182       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 10#2
+                                                          query.slog:182       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 10#3
+                                                          query.slog:183       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 7#0
+                                                          query.slog:183       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 7#1
+                                                          query.slog:183       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 7#2
+                                                          query.slog:183       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 7#3
+                                                          query.slog:184       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 11#0
+                                                          query.slog:184       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 11#1
+                                                          query.slog:184       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 11#2
+                                                          query.slog:184       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 11#3
+                                                          query.slog:185       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 8#0
+                                                          query.slog:185       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 8#1
+                                                          query.slog:185       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 8#2
+                                                          query.slog:185       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 8#3
+                                                          query.slog:186       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 9#0
+                                                          query.slog:186       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 9#1
+                                                          query.slog:186       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 9#2
+                                                          query.slog:186       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 9#3
+                                                          query.slog:187       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 6#0
+                                                          query.slog:187       all:met              met(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 6#1
+                                                          query.slog:187       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met(b=1) -> node(b=1)   <- arm 6#2
+                                                          query.slog:187       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 6#3
+                                                        daemon timeline (ms between emitted lines -- setup work lands here, not in the fixpoint ms):
+                                                          +    1033 ms  (+    1033 ms)  (pipeline (pos 12) (evaluation "eval-1a0639bd8a1-31359721-25721b89-1a10a33d") (update-epoch 7) (stra
+                                                          +    1038 ms  (+       5 ms)  (update-epoch 7 settled)
+                                                          +    1040 ms  (+       2 ms)  (boundary-prepared 7 (boundary "b1:layer-1a0639bd8a1-d313843-112536a2-489fb42:8") (program "p1:layer
+                                                          +   82965 ms  (+   81925 ms)  (arms (g 21 1 0 "query.slog:12") (g 3 1 0 "query.slog:13") (g 33 1 0 "query.slog:14") (g 15 1 0 "que
+                                                          +   82965 ms  (+       0 ms)  (fixpoint 4 "6ba66f12" 2 6506.819)
+                                                          +  157179 ms  (+   74214 ms)  (paused (generation 7) (scc 5) (stratum "d4951881") (iteration 0) (phase read) (settled #f) (progress (tuples 0) (exact #f)) (timing (call-ms 8051.138) (total-ms 8051.138)) (cause (budget time)))
+                                                          +  164865 ms  (+    7686 ms)  (arms (g 21 1 0 "query.slog:12") (g 3 1 0 "query.slog:13") (g 22 1 0 "query.slog:134") (g 19 1 0 "qu
+                                                          +  164865 ms  (+       0 ms)  (fixpoint 5 "d4951881" 2 15732.895)
+                                                          +  164944 ms  (+      79 ms)  (boundary-committed 8 (boundary "b1:layer-1a0639bd8a1-d313843-112536a2-489fb42:8") (position 12) (cr
+                                                          +  164944 ms  (+       0 ms)  (run-complete)
+                                                        runtime arm selection (daemon report; arm 0 is the compiler's own pick, so a non-zero arm means the runtime measurement overrode it):
+                                                          query.slog:12 group 21 -> arm 1  starting from met
+                                                          query.slog:13 group 3 -> arm 1  starting from met
+                                                          query.slog:14 group 33 -> arm 1  starting from met
+                                                          query.slog:15 group 15 -> arm 1  starting from met
+                                                          query.slog:16 group 27 -> arm 1  starting from met
+                                                          query.slog:17 group 9 -> arm 1  starting from met
+                                                          query.slog:18 group 18 -> arm 1  starting from met
+                                                          query.slog:19 group 0 -> arm 1  starting from met
+                                                          query.slog:20 group 30 -> arm 1  starting from met
+                                                          query.slog:21 group 12 -> arm 1  starting from met
+                                                          query.slog:22 group 24 -> arm 1  starting from met
+                                                          query.slog:23 group 6 -> arm 1  starting from met
+                                                          query.slog:24 group 23 -> arm 2  starting from kg2_norm
+                                                          query.slog:25 group 5 -> arm 2  starting from kg2_norm
+                                                          query.slog:26 group 35 -> arm 2  starting from kg2_norm
+                                                          query.slog:27 group 17 -> arm 2  starting from kg2_norm
+                                                          query.slog:28 group 29 -> arm 2  starting from kg2_norm
+                                                          query.slog:29 group 11 -> arm 2  starting from kg2_norm
+                                                          query.slog:30 group 20 -> arm 1  starting from met
+                                                          query.slog:31 group 2 -> arm 1  starting from met
+                                                          query.slog:32 group 32 -> arm 1  starting from met
+                                                          query.slog:33 group 14 -> arm 1  starting from met
+                                                          query.slog:34 group 26 -> arm 1  starting from met
+                                                          query.slog:35 group 8 -> arm 1  starting from met
+                                                          query.slog:36 group 22 -> arm 1  starting from met
+                                                          query.slog:37 group 4 -> arm 1  starting from met
+                                                          query.slog:38 group 34 -> arm 1  starting from met
+                                                          query.slog:39 group 16 -> arm 1  starting from met
+                                                          query.slog:40 group 28 -> arm 1  starting from met
+                                                          query.slog:41 group 10 -> arm 1  starting from met
+                                                          query.slog:42 group 19 -> arm 1  starting from met
+                                                          query.slog:43 group 1 -> arm 1  starting from met
+                                                          query.slog:44 group 31 -> arm 1  starting from met
+                                                          query.slog:45 group 13 -> arm 1  starting from met
+                                                          query.slog:46 group 25 -> arm 1  starting from met
+                                                          query.slog:47 group 7 -> arm 1  starting from met
+                                                          query.slog:12 group 21 -> arm 1  starting from met
+                                                          query.slog:13 group 3 -> arm 1  starting from met
+                                                          query.slog:134 group 22 -> arm 1  starting from met
+                                                          query.slog:135 group 19 -> arm 1  starting from met
+                                                          query.slog:136 group 23 -> arm 1  starting from met
+                                                          query.slog:137 group 20 -> arm 1  starting from met
+                                                          query.slog:138 group 21 -> arm 1  starting from met
+                                                          query.slog:139 group 18 -> arm 1  starting from met
+                                                          query.slog:14 group 33 -> arm 1  starting from met
+                                                          query.slog:140 group 4 -> arm 1  starting from met
+                                                          query.slog:141 group 1 -> arm 1  starting from met
+                                                          query.slog:142 group 5 -> arm 1  starting from met
+                                                          query.slog:143 group 2 -> arm 1  starting from met
+                                                          query.slog:144 group 3 -> arm 1  starting from met
+                                                          query.slog:145 group 0 -> arm 1  starting from met
+                                                          query.slog:146 group 34 -> arm 1  starting from met
+                                                          query.slog:147 group 31 -> arm 1  starting from met
+                                                          query.slog:148 group 35 -> arm 1  starting from met
+                                                          query.slog:149 group 32 -> arm 1  starting from met
+                                                          query.slog:15 group 15 -> arm 1  starting from met
+                                                          query.slog:150 group 33 -> arm 1  starting from met
+                                                          query.slog:151 group 30 -> arm 1  starting from met
+                                                          query.slog:152 group 40 -> arm 1  starting from met
+                                                          query.slog:153 group 37 -> arm 1  starting from met
+                                                          query.slog:154 group 41 -> arm 1  starting from met
+                                                          query.slog:155 group 38 -> arm 1  starting from met
+                                                          query.slog:156 group 39 -> arm 1  starting from met
+                                                          query.slog:157 group 36 -> arm 1  starting from met
+                                                          query.slog:158 group 46 -> arm 1  starting from met
+                                                          query.slog:159 group 43 -> arm 1  starting from met
+                                                          query.slog:16 group 27 -> arm 1  starting from met
+                                                          query.slog:160 group 47 -> arm 1  starting from met
+                                                          query.slog:161 group 44 -> arm 1  starting from met
+                                                          query.slog:162 group 45 -> arm 1  starting from met
+                                                          query.slog:163 group 42 -> arm 1  starting from met
+                                                          query.slog:164 group 52 -> arm 1  starting from met
+                                                          query.slog:165 group 49 -> arm 1  starting from met
+                                                          query.slog:166 group 53 -> arm 1  starting from met
+                                                          query.slog:167 group 50 -> arm 1  starting from met
+                                                          query.slog:168 group 51 -> arm 1  starting from met
+                                                          query.slog:169 group 48 -> arm 1  starting from met
+                                                          query.slog:17 group 9 -> arm 1  starting from met
+                                                          query.slog:170 group 16 -> arm 1  starting from met
+                                                          query.slog:171 group 13 -> arm 1  starting from met
+                                                          query.slog:172 group 17 -> arm 1  starting from met
+                                                          query.slog:173 group 14 -> arm 1  starting from met
+                                                          query.slog:174 group 15 -> arm 1  starting from met
+                                                          query.slog:175 group 12 -> arm 1  starting from met
+                                                          query.slog:176 group 28 -> arm 1  starting from met
+                                                          query.slog:177 group 25 -> arm 1  starting from met
+                                                          query.slog:178 group 29 -> arm 1  starting from met
+                                                          query.slog:179 group 26 -> arm 1  starting from met
+                                                          query.slog:18 group 18 -> arm 1  starting from met
+                                                          query.slog:180 group 27 -> arm 1  starting from met
+                                                          query.slog:181 group 24 -> arm 1  starting from met
+                                                          query.slog:182 group 10 -> arm 1  starting from met
+                                                          query.slog:183 group 7 -> arm 1  starting from met
+                                                          query.slog:184 group 11 -> arm 1  starting from met
+                                                          query.slog:185 group 8 -> arm 1  starting from met
+                                                          query.slog:186 group 9 -> arm 1  starting from met
+                                                          query.slog:187 group 6 -> arm 1  starting from met
+                                                          query.slog:19 group 0 -> arm 1  starting from met
+                                                          query.slog:20 group 30 -> arm 1  starting from met
+                                                          query.slog:21 group 12 -> arm 1  starting from met
+                                                          query.slog:22 group 24 -> arm 1  starting from met
+                                                          query.slog:23 group 6 -> arm 1  starting from met
+                                                          query.slog:24 group 23 -> arm 2  starting from kg2_norm
+                                                          query.slog:25 group 5 -> arm 2  starting from kg2_norm
+                                                          query.slog:26 group 35 -> arm 2  starting from kg2_norm
+                                                          query.slog:27 group 17 -> arm 2  starting from kg2_norm
+                                                          query.slog:28 group 29 -> arm 2  starting from kg2_norm
+                                                          query.slog:29 group 11 -> arm 2  starting from kg2_norm
+                                                          query.slog:30 group 20 -> arm 1  starting from met
+                                                          query.slog:31 group 2 -> arm 1  starting from met
+                                                          query.slog:32 group 32 -> arm 1  starting from met
+                                                          query.slog:33 group 14 -> arm 1  starting from met
+                                                          query.slog:34 group 26 -> arm 1  starting from met
+                                                          query.slog:35 group 8 -> arm 1  starting from met
+                                                          query.slog:36 group 22 -> arm 1  starting from met
+                                                          query.slog:37 group 4 -> arm 1  starting from met
+                                                          query.slog:38 group 34 -> arm 1  starting from met
+                                                          query.slog:39 group 16 -> arm 1  starting from met
+                                                          query.slog:40 group 28 -> arm 1  starting from met
+                                                          query.slog:41 group 10 -> arm 1  starting from met
+                                                          query.slog:42 group 19 -> arm 1  starting from met
+                                                          query.slog:43 group 1 -> arm 1  starting from met
+                                                          query.slog:44 group 31 -> arm 1  starting from met
+                                                          query.slog:45 group 13 -> arm 1  starting from met
+                                                          query.slog:46 group 25 -> arm 1  starting from met
+                                                          query.slog:47 group 7 -> arm 1  starting from met
+2026-09-02 12:56:01.473 | INFO    | server        |   archived as queries/012_run_slog.plan.txt
+2026-09-02 12:56:01.473 | INFO    | server        |   timing: total=2m 45.0s  compile=0ms  setup=2m 22.7s  (strata compiled=2, executed=2)
+2026-09-02 12:56:01.474 | INFO    | server        |   daemon: fixpoint=22239.7ms  iterations=4  rule_fires=342
+2026-09-02 12:56:01.474 | INFO    | server        |   cost model predicted ~35s for this shape
+2026-09-02 12:56:01.474 | INFO    | server        |   result: n_rows=184 returned=50 truncated=True
+2026-09-02 12:56:01.474 | INFO    | server        |   CURIEs out of the answer relation, unnamed at this point:
+2026-09-02 12:56:01.475 | INFO    | server        |   result CURIEs (50):
+2026-09-02 12:56:01.475 | INFO    | server        |     UMLS:C1333664    UMLS:C0694894    UMLS:C3536909    UMLS:C1425225
+2026-09-02 12:56:01.475 | INFO    | server        |     NCBIGene:10891   UMLS:C1335875    NCBIGene:3283    UMLS:C1366489
+2026-09-02 12:56:01.475 | INFO    | server        |     NCBIGene:1576    UMLS:C1414805    NCBIGene:3172    NCBIGene:5291
+2026-09-02 12:56:01.476 | INFO    | server        |     NCBIGene:1756    NCBIGene:8842    UMLS:C1364818    UMLS:C1307407
+2026-09-02 12:56:01.476 | INFO    | server        |     UMLS:C1414603    NCBIGene:8856    UMLS:C1420279    NCBIGene:10533
+2026-09-02 12:56:01.476 | INFO    | server        |     UMLS:C1335214    UMLS:C1420143    NCBIGene:222962  NCBIGene:284424
+2026-09-02 12:56:01.476 | INFO    | server        |     UMLS:C1701790    UMLS:C0879468    UMLS:C1412727    UMLS:C0079419
+2026-09-02 12:56:01.476 | INFO    | server        |     NCBIGene:10413   NCBIGene:1376    NCBIGene:1420    NCBIGene:8878
+2026-09-02 12:56:01.477 | INFO    | server        |     UMLS:C1333906    UMLS:C1530270    UMLS:C1334189    UMLS:C1366439
+2026-09-02 12:56:01.477 | INFO    | server        |     NCBIGene:64798   UMLS:C1332002    UMLS:C1367453    UMLS:C0812242
+2026-09-02 12:56:01.477 | INFO    | server        |     NCBIGene:57761   UMLS:C1415199    NCBIGene:79923   NCBIGene:6580
+2026-09-02 12:56:01.477 | INFO    | server        |     UMLS:C0082420    UMLS:C1367342    NCBIGene:860     NCBIGene:1244
+2026-09-02 12:56:01.478 | INFO    | server        |     NCBIGene:7124    NCBIGene:6583
+2026-09-02 12:56:01.478 | WARNING | server        |   !! truncated: 184 rows exist, only 50 returned (limit 50)
+2026-09-02 12:56:01.478 | INFO    | server        | << TOOL run_slog finished in 2m 45.1s
+2026-09-02 12:56:01.478 | WARNING | server        | !! run_slog took 2m 45.1s -- slow call
+2026-09-02 12:56:01.479 | INFO    | server        | ------------------------------------------------------------------------------

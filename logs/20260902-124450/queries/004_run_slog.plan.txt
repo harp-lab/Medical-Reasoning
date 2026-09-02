@@ -1,0 +1,15 @@
+stratum 2  0601e5a1  2 iteration(s), 11306.7 ms  (/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/slog/build/0601e5a1.plan, +0 internal error rules)
+    query.slog:9         all:edge             edge(b=2) -> node(b=2)
+    query.slog:10        all:edge             edge(b=2) -> node(b=2)
+    query.slog:11        all:edge             edge(b=2) -> node(b=2)
+    query.slog:12        all:edge             edge(b=2) -> node(b=2)
+    query.slog:13        all:edge             edge(b=2) -> node(b=2)
+    query.slog:14        all:edge             edge(b=2) -> node(b=2)
+  daemon timeline (ms between emitted lines -- setup work lands here, not in the fixpoint ms):
+    +     215 ms  (+     215 ms)  (pipeline (pos 6) (evaluation "eval-1a0639bd8a1-31359721-25721b89-1a10a33d") (update-epoch 3) (strat
+    +     219 ms  (+       4 ms)  (update-epoch 3 settled)
+    +     220 ms  (+       1 ms)  (boundary-prepared 3 (boundary "b1:layer-1a0639bd8a1-d313843-112536a2-489fb42:4") (program "p1:layer
+    +   78844 ms  (+   78624 ms)  (paused (generation 3) (scc 2) (stratum "0601e5a1") (iteration 0) (phase read) (settled #f) (progress (tuples 0) (exact #f)) (timing (call-ms 9186.118) (total-ms 9186.118)) (cause (budget time)))
+    +   80967 ms  (+    2123 ms)  (fixpoint 2 "0601e5a1" 2 11306.700)
+    +   80970 ms  (+       3 ms)  (boundary-committed 4 (boundary "b1:layer-1a0639bd8a1-d313843-112536a2-489fb42:4") (position 6) (cre
+    +   80970 ms  (+       0 ms)  (run-complete)
