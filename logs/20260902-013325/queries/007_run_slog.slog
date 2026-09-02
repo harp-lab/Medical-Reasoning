@@ -1,0 +1,51 @@
+;; Medically approved drugs that treat Parkinson disease AND cause low blood pressure.
+;; PD anchors (expand_entity MONDO:0005180): MONDO:0005180 DOID:14330 UMLS:C0030567
+;;   MESH:D010300 NCIT:C26845 ICD9:332
+;; Hypotension anchors (expand_entity MONDO:0005468): MONDO:0005468 EFO:0005251
+;;   UMLS:C0020649 MESH:D007022 NCIT:C3128 HP:0002615
+;; "Medically approved" = node category biolink:Drug.
+;; The treating drug d and the causing drug c are joined on their canonical
+;; CURIE k via kg2_norm, since the two edge sets use different vocabularies.
+;; All rules write one relation, so this is a single stage.
+
+table (edge str str str)
+table (node str str str)
+table (kg2_norm str str)
+table (result str str)
+
+rule (result d name) <-- (edge d "biolink:treats" "MONDO:0005180") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MONDO:0005468")
+rule (result d name) <-- (edge d "biolink:treats" "MONDO:0005180") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "EFO:0005251")
+rule (result d name) <-- (edge d "biolink:treats" "MONDO:0005180") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "UMLS:C0020649")
+rule (result d name) <-- (edge d "biolink:treats" "MONDO:0005180") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MESH:D007022")
+rule (result d name) <-- (edge d "biolink:treats" "MONDO:0005180") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "NCIT:C3128")
+rule (result d name) <-- (edge d "biolink:treats" "MONDO:0005180") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "HP:0002615")
+rule (result d name) <-- (edge d "biolink:treats" "DOID:14330") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MONDO:0005468")
+rule (result d name) <-- (edge d "biolink:treats" "DOID:14330") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "EFO:0005251")
+rule (result d name) <-- (edge d "biolink:treats" "DOID:14330") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "UMLS:C0020649")
+rule (result d name) <-- (edge d "biolink:treats" "DOID:14330") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MESH:D007022")
+rule (result d name) <-- (edge d "biolink:treats" "DOID:14330") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "NCIT:C3128")
+rule (result d name) <-- (edge d "biolink:treats" "DOID:14330") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "HP:0002615")
+rule (result d name) <-- (edge d "biolink:treats" "UMLS:C0030567") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MONDO:0005468")
+rule (result d name) <-- (edge d "biolink:treats" "UMLS:C0030567") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "EFO:0005251")
+rule (result d name) <-- (edge d "biolink:treats" "UMLS:C0030567") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "UMLS:C0020649")
+rule (result d name) <-- (edge d "biolink:treats" "UMLS:C0030567") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MESH:D007022")
+rule (result d name) <-- (edge d "biolink:treats" "UMLS:C0030567") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "NCIT:C3128")
+rule (result d name) <-- (edge d "biolink:treats" "UMLS:C0030567") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "HP:0002615")
+rule (result d name) <-- (edge d "biolink:treats" "MESH:D010300") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MONDO:0005468")
+rule (result d name) <-- (edge d "biolink:treats" "MESH:D010300") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "EFO:0005251")
+rule (result d name) <-- (edge d "biolink:treats" "MESH:D010300") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "UMLS:C0020649")
+rule (result d name) <-- (edge d "biolink:treats" "MESH:D010300") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MESH:D007022")
+rule (result d name) <-- (edge d "biolink:treats" "MESH:D010300") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "NCIT:C3128")
+rule (result d name) <-- (edge d "biolink:treats" "MESH:D010300") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "HP:0002615")
+rule (result d name) <-- (edge d "biolink:treats" "NCIT:C26845") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MONDO:0005468")
+rule (result d name) <-- (edge d "biolink:treats" "NCIT:C26845") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "EFO:0005251")
+rule (result d name) <-- (edge d "biolink:treats" "NCIT:C26845") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "UMLS:C0020649")
+rule (result d name) <-- (edge d "biolink:treats" "NCIT:C26845") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MESH:D007022")
+rule (result d name) <-- (edge d "biolink:treats" "NCIT:C26845") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "NCIT:C3128")
+rule (result d name) <-- (edge d "biolink:treats" "NCIT:C26845") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "HP:0002615")
+rule (result d name) <-- (edge d "biolink:treats" "ICD9:332") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MONDO:0005468")
+rule (result d name) <-- (edge d "biolink:treats" "ICD9:332") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "EFO:0005251")
+rule (result d name) <-- (edge d "biolink:treats" "ICD9:332") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "UMLS:C0020649")
+rule (result d name) <-- (edge d "biolink:treats" "ICD9:332") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "MESH:D007022")
+rule (result d name) <-- (edge d "biolink:treats" "ICD9:332") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "NCIT:C3128")
+rule (result d name) <-- (edge d "biolink:treats" "ICD9:332") (node d name "biolink:Drug") (kg2_norm d k) (kg2_norm c k) (edge c "biolink:causes" "HP:0002615")

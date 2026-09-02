@@ -1,15 +1,32 @@
 #lang racket
 
+;; Paths are derived from this file's own location, not spelled absolutely: the
+;; tree moved once already (both checkouts now live under MR/) and every
+;; hardcoded path broke at once.  The only assumption left is that the slog and
+;; MedicalReasoning checkouts stay SIBLINGS.
+;;
+;; A plain-string require resolves relative to THIS module's directory, so it
+;; survives the move for free; `(file "...")` would not.
 (require racket/tcp
+         racket/runtime-path
          json
-         (file "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/slog/compiler/session.rkt"))
+         "../../slog/compiler/session.rkt")
 
-(define SLOG-ROOT "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/slog")
-(define MR-ROOT "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning")
-(define SETUP (build-path MR-ROOT "slog" "setup.slog"))
+(define-runtime-path HERE ".")                       ; MedicalReasoning/slog/
+(define MR-ROOT (simplify-path (build-path HERE 'up)))
+(define SLOG-ROOT
+  (or (getenv "SLOG_ROOT")
+      (path->string (simplify-path (build-path MR-ROOT 'up "slog")))))
+(define SETUP (build-path HERE "setup.slog"))
 (define DB (or (getenv "KG2_SLOG_DB") "rtx_kg2_281"))
 (define PORT (string->number (or (getenv "SLOG_SERVER_PORT") "8642")))
 
+;; slog resolves build/, data/ and the plan cache relative to the cwd.
+(unless (directory-exists? SLOG-ROOT)
+  (error 'slog-server
+         (string-append "no slog checkout at ~a -- expected it beside "
+                        "MedicalReasoning/, or set SLOG_ROOT")
+         SLOG-ROOT))
 (current-directory SLOG-ROOT)
 
 (define (note fmt . args)
@@ -19,11 +36,62 @@
 (define lock (make-semaphore 1))
 (define sess #f)
 
+;; The session driver echoes every line the daemon emits while a stratum runs
+;; -- including the two we care about for join-plan provenance:
+;;
+;;   (fixpoint SCC "HASH" ITERS MS)   HASH names build/HASH.plan, the compiled
+;;                                    join order this stratum actually ran
+;;   (arms (g GID ARM CONVERGED "LOC") ...)
+;;                                    which arm of each SLOG_MULTIPLAN choice
+;;                                    group the daemon's runtime selection picked
+;;
+;; make-session's default echo is displayln and this server used `void` (silent,
+;; dropped).  Collect instead, and hand the lines back on the `run` reply so the
+;; Python side can resolve the plans.  Capped so a pathological run (many
+;; memory pauses, many strata) cannot grow the reply without bound.
+(define EVENT-CAP 5000)
+;; The lines above are kept whole; everything else is trimmed to a stub.  A
+;; `(pipeline ...)` line alone is several KB of version-ids -- diagnostic in
+;; principle, but it would dominate every reply, so keep its head and drop the
+;; body rather than dropping the line and pretending nothing was said.
+(define KEEP-WHOLE #px"^\\((fixpoint|arms|tier|paused|refused|error|recount|activated) ")
+(define STUB-AT 160)
+(define events (box '()))
+(define event-count (box 0))
+;; Each line is stamped with milliseconds since the run began.  The daemon does
+;; substantial work BETWEEN these lines -- the whole-DB reload that
+;; `reloadInsertBatches` arms after every fixpoint re-stages every relation as
+;; delta and clears every index, and the next stratum re-interns it -- and none
+;; of that shows up in `(fixpoint ...)`'s own ms.  Without the stamps a run that
+;; spends 30s in the fixpoint and 136s around it looks identical to one that
+;; spends 166s joining.
+(define run-t0 (box (current-inexact-monotonic-milliseconds)))
+(define (elapsed-ms)
+  (inexact->exact
+   (round (- (current-inexact-monotonic-milliseconds) (unbox run-t0)))))
+(define (note-event! line)
+  (when (< (unbox event-count) EVENT-CAP)
+    (define kept
+      (cond
+        [(regexp-match? KEEP-WHOLE line) line]
+        [(<= (string-length line) STUB-AT) line]
+        [else (string-append (substring line 0 STUB-AT) " ...)")]))
+    (set-box! events (cons (format "+~a ~a" (elapsed-ms) kept) (unbox events))))
+  (set-box! event-count (add1 (unbox event-count))))
+(define (take-events!)
+  (define out (reverse (unbox events)))
+  (define n (unbox event-count))
+  (set-box! events '())
+  (set-box! event-count 0)
+  (if (> n EVENT-CAP)
+      (append out (list (format "(events-truncated ~a ~a)" EVENT-CAP n)))
+      out))
+
 (define (ensure-session!)
   (unless sess
     (note "opening ~a" DB)
     (define t0 (current-inexact-monotonic-milliseconds))
-    (define s (make-session #:echo void))
+    (define s (make-session #:echo note-event!))
     (session-open! s DB)
     (note "defining views from setup.slog")
     (session-run! s (path->string SETUP))
@@ -68,8 +136,30 @@
      (define path (hash-ref req 'path #f))
      (unless path (error 'run "no path given"))
      (unless (file-exists? path) (error 'run "no such file: ~a" path))
+     ;; Drop anything queued by session startup / a previous op so `events`
+     ;; describes THIS run only, and zero the clock the stamps count from.
+     (void (take-events!))
+     (set-box! run-t0 (current-inexact-monotonic-milliseconds))
      (session-run! s path)
-     (hasheq 'ok #t)]
+     (note-event! "(run-complete)")
+     ;; `tiers` is (scc hash rung cached-rungs policy) per resident stratum --
+     ;; the authoritative stratum-hash -> build/HASH.plan mapping, including
+     ;; strata that were cached and so emitted no fixpoint line this run.
+     (hasheq 'ok #t
+             'events (take-events!)
+             'tiers (for/list ([t (in-list (session-tiers s))])
+                      (hasheq 'scc (first t)
+                              'hash (format "~a" (second t))
+                              'rung (format "~a" (third t))
+                              'cached (for/list ([r (in-list (fourth t))])
+                                        (format "~a" r))))
+             ;; The planner knobs as THIS process has them.  The MCP server is a
+             ;; separate process that never sees kg2-server.sh's environment, so
+             ;; without this it cannot tell an empty arm set ("multiplan off")
+             ;; from a real one ("on, but nothing was eligible").
+             'env (hasheq 'multiplan (or (getenv "SLOG_MULTIPLAN") "")
+                          'multiplan_index (or (getenv "SLOG_MULTIPLAN_INDEX") "")
+                          'opt (or (getenv "SLOG_OPT") "")))]
     [("dump")
      (define s (ensure-session!))
      (define rel (hash-ref req 'rel #f))

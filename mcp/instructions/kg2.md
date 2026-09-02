@@ -33,9 +33,41 @@ the views omit.
 3. **`expand_entity([chosen CURIEs])`** → the exact KG2 CURIE set to match in the query.
 4. **Write your Slog program to `slog/query.slog`** using Write or Edit (conventions
    below). This file is the program that runs — there is no other place to put it.
-5. **`run_slog()`** to execute it. It takes no program argument; it runs whatever is
-   currently in `slog/query.slog`. To change the query, edit the file and call it again.
+   **Write it once.** Read "One question, one run" below before you write it.
+5. **`run_slog()`** — call it directly, in the same turn as the write. It takes no program
+   argument; it runs whatever is currently in `slog/query.slog`. The tool is gated by a
+   permission prompt, and approving that prompt *is* the user's go-ahead, so do not also
+   ask in prose beforehand.
 6. **`name_curies([result CURIEs])`** → human-readable labels.
+
+## One question, one run -- read this
+
+**One question gets one `query.slog` and one `run_slog()`.** A query costs minutes of
+wall clock and tens of GB of memory on a shared machine. Silent retries are the single
+most expensive thing you can do here, and they are never authorized in advance.
+
+The rules, without exception:
+
+- **Never call `run_slog()` twice for the same question.** Not to narrow it, not to add
+  names, not to fix a typo, not "to check something".
+- **Never ask in prose whether to run it.** `run_slog` sits behind a tool-use permission
+  prompt; that prompt is where the user says yes or no. Asking first makes them answer the
+  same question twice. Write the program, then call `run_slog()` and let the prompt ask.
+- **If it fails, say so and stop.** Report `query failed` and the error verbatim, in one
+  or two lines. Do not diagnose, do not rewrite the program, do not try a variation. The
+  user will tell you what to do next.
+- **If the answer is truncated, say so and stop.** Report `N rows, showing 50` and give
+  the rows you got. A truncated answer is a complete result -- it is not a signal to
+  re-run with a narrower query.
+- **If it returns 0 rows, say so and stop.** Report `0 rows`. Do not re-run to test a
+  theory about why. (If a vocabulary mismatch looks likely, say that in one line and let
+  the user decide -- see "Joining derived entity sets".)
+- **If you notice a mistake in the program after running, say so and stop.** Name the
+  mistake in one line. Do not fix and re-run on your own initiative.
+
+If the user explicitly asks for a second run, that is a new question -- write the new
+program and call `run_slog()` again. Getting the program right on the first attempt is the
+whole job; there is no cheap second attempt.
 
 ## What a query costs
 
@@ -95,9 +127,9 @@ rule (result name) <-- (edge drug "biolink:treats" "DOID:14330")    (node drug n
 Above roughly ten CURIEs the repetition stops paying -- keep the membership relation and
 accept the one stage rather than emitting a hundred rules.
 
-**Decide on names before you run, not after.** Running a query that returns bare CURIEs
-and then editing it to add `node` costs a second full compile and execution -- ~30s for
-nothing. Choose up front:
+**Decide on names before you run, not after.** There is no second run to add them (see
+"One question, one run") -- and even if there were, it costs a full compile and execution
+for nothing. Choose up front:
 
 - want readable output? declare `table (node str str str)` in the first version and join
   `(node x name _)` in the rule. `node` is a base view, so this adds no stage.
@@ -107,7 +139,8 @@ nothing. Choose up front:
 Either is fine. Re-running the query purely to add naming is the mistake.
 
 Because every edit recompiles, getting the program right on the first attempt is worth
-more than iterating quickly. Re-read the rules below before running.
+more than iterating quickly -- and iterating quickly is not on offer. Re-read the rules
+below, and the whole program you wrote, before you call `run_slog()`.
 
 ## Writing the Slog
 
@@ -226,17 +259,24 @@ Do **not** write:
 - caveats about knowledge-graph coverage, or suggested follow-up questions
 - the Slog program itself (it is already saved in the log)
 
-Two terse exceptions, because omitting them would misrepresent the result. Give them as a
-single line above the table, not as prose:
+Three terse exceptions, because omitting them would misrepresent the result. Give them as
+a single line above the table, not as prose, and then stop:
 
-- truncated: `1627 rows, showing 500`
+- truncated: `1627 rows, showing 50`
 - empty: `0 rows`
+- failed: `query failed: <the error, verbatim>` — and no table
+
+None of the three is a reason to run again. Report the line and end your turn.
 
 If the user asks for an explanation, give one then. Unasked, the table is the whole answer.
 
 ## Practical notes
 
-- Results are capped at 500 rows; `n_rows` tells you the true count.
+- **Results are capped at 50 rows and the cap is enforced server-side.** `run_slog`'s
+  `limit` can only ask for fewer; asking for more still returns 50. `n_rows` tells you
+  the true count, so a big answer reports as `1627 rows, showing 50`. Display the rows
+  you were given and no more — never re-run to page through the rest, and never rewrite
+  the query to make the answer fit under the cap.
 - Prefer `edge` over `kg2_edges` for readability, not for speed — scan size does not
   affect runtime here.
 - The session is loaded before it accepts connections, so no query pays the load. If

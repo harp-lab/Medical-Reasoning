@@ -1,0 +1,31 @@
+;; Approved drugs (biolink:Drug nodes) that treat Parkinson disease.
+;; Anchor CURIEs from expand_entity(MONDO:0005180), inlined as literals
+;; so the program is a single derived relation.
+
+table (edge str str str)
+table (node str str str)
+table (result str str)
+
+rule (result d name) <--
+  (edge d "biolink:treats" "MONDO:0005180")
+  (node d name "biolink:Drug")
+
+rule (result d name) <--
+  (edge d "biolink:treats" "DOID:14330")
+  (node d name "biolink:Drug")
+
+rule (result d name) <--
+  (edge d "biolink:treats" "UMLS:C0030567")
+  (node d name "biolink:Drug")
+
+rule (result d name) <--
+  (edge d "biolink:treats" "MESH:D010300")
+  (node d name "biolink:Drug")
+
+rule (result d name) <--
+  (edge d "biolink:treats" "NCIT:C26845")
+  (node d name "biolink:Drug")
+
+rule (result d name) <--
+  (edge d "biolink:treats" "ICD9:332")
+  (node d name "biolink:Drug")

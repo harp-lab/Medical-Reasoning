@@ -36,6 +36,15 @@ def predict(n_derived_rels, compiled):
     return (COMPILE_S if compiled else 0.0) + PER_STRATUM_S * n_derived_rels
 
 
+def _dump_rows(rel):
+    """The relation's rows, or None if it does not exist yet.  $stat_work is
+    only created once some rule has published work, so its absence is normal."""
+    try:
+        return slog.dump(rel, limit=100000)["rows"]
+    except Exception:
+        return None
+
+
 def stat_snapshot():
     try:
         fx = slog.dump("$stat_fixpoint", limit=100000)
@@ -47,10 +56,49 @@ def stat_snapshot():
         for r in fx["rows"]:
             max_pos = max(max_pos, int(r[0]))
         fires = {(r[0], r[1]): int(r[2]) for r in fr["rows"]}
-        return {"max_pos": max_pos, "fires": fires}
+        # $stat_work(loc, tag, ticks, driver_rows) publishes a fresh row per
+        # stratum fixpoint carrying the DELTA since the last publication, so the
+        # per-run delta is the set of rows that were not there before.
+        return {"max_pos": max_pos, "fires": fires,
+                "work": {tuple(r) for r in (_dump_rows("$stat_work") or [])}}
     except Exception as e:
         log.warning(f"could not read stat snapshot: {e!r}")
         return None
+
+
+WORK_TOP_N = 6
+
+
+def work_delta(before):
+    """Where this run's join work went: $stat_work(loc, tag, ticks, driver_rows).
+
+    This -- not $stat_fires -- is the blowup observable: a probe that scans
+    millions of rows and never fires is invisible to the fire counters and
+    visible here.  The tag keeps the `#N` suffix that $stat_fires strips, so a
+    dynamic tail arm is attributed exactly; closed-rule whole-order arms carry
+    driver-named `all:<rel>` tags instead, which say which driver ran just as
+    plainly.
+
+    Caveat worth knowing before reading a zero: only INTERPRETED rules (and
+    native arm tasks) meter.  Under SLOG_OPT=0 the strata run natively, so a
+    plain non-arm rule contributes nothing here -- 0 ticks means "nothing
+    interpreted", not "no work"."""
+    empty = {"work_ticks": None, "work_rows": None, "work_top": None}
+    if not before:
+        return empty
+    rows = _dump_rows("$stat_work")
+    if rows is None:
+        return empty
+    try:
+        fresh = [r for r in rows if tuple(r) not in before["work"]]
+        top = sorted(fresh, key=lambda r: -int(r[2]))[:WORK_TOP_N]
+        return {"work_ticks": sum(int(r[2]) for r in fresh),
+                "work_rows": sum(int(r[3]) for r in fresh),
+                "work_top": ";".join(f"{r[0]}|{r[1]}={r[2]}" for r in top)[:900]
+                            or None}
+    except Exception as e:
+        log.warning(f"could not read work delta: {e!r}")
+        return empty
 
 
 def stat_delta(before):
@@ -92,14 +140,23 @@ def build_delta(before, t_start):
     try:
         now = glob.glob(os.path.join(BUILD_DIR, "*"))
         fresh = [p for p in now if os.path.basename(p) not in before]
-        n_cpp = sum(1 for p in fresh if p.endswith(".cpp"))
+        # One .plan per compiled stratum.  Counting .cpp instead double-counts:
+        # a stratum emits <hash>.cpp AND <hash>.p1.cpp (and .p2.cpp ...), so a
+        # single fresh stratum used to report as 2-3 "strata compiled".
+        n_strata = sum(1 for p in fresh if p.endswith(".plan"))
         blocking_o2 = (os.environ.get("SLOG_OPT") == "2")
+        # `action-<id>.so` plugins are built for every dump/drop and are not
+        # stratum code; letting them into `waited` made compile_s report the
+        # action build instead of the stratum's.
         o0 = [p for p in fresh if p.endswith(".O0.so")]
-        o2 = [p for p in fresh if p.endswith(".so") and not p.endswith(".O0.so")]
+        o2 = [p for p in fresh
+              if p.endswith(".so") and not p.endswith(".O0.so")
+              and not os.path.basename(p).startswith("action-")]
         waited = o2 if (blocking_o2 or not o0) else o0
         if not waited:
-            return n_cpp, 0.0
-        return n_cpp, max(0.0, max(os.path.getmtime(p) for p in waited) - t_start)
+            return n_strata, 0.0
+        return n_strata, max(0.0,
+                             max(os.path.getmtime(p) for p in waited) - t_start)
     except Exception as e:
         log.warning(f"could not read build delta: {e!r}")
         return None, None

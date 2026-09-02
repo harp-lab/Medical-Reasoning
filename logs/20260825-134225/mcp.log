@@ -1,0 +1,186 @@
+2026-08-25 13:42:58.747 | INFO    | mr            | ==============================================================================
+2026-08-25 13:42:58.749 | INFO    | mr            | KG2 MCP session 20260825-134225 starting
+2026-08-25 13:42:58.749 | INFO    | mr            | pid=1220418  python=3.11.15
+2026-08-25 13:42:58.749 | INFO    | mr            | session dir : /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/logs/20260825-134225
+2026-08-25 13:42:58.750 | INFO    | server        | query file: /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog
+2026-08-25 13:42:58.750 | INFO    | server        | slog server: 127.0.0.1:8642 (client timeout 3600s)
+2026-08-25 13:42:58.751 | INFO    | server        | node DB: /tmp/kg2_nodes_aayush.shrestha@ad.wsu.edu.sqlite
+2026-08-25 13:42:58.751 | INFO    | server        | ==============================================================================
+2026-08-25 13:42:58.751 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-25 13:42:58.751 | INFO    | server        | >> TOOL run_slog  limit=500
+2026-08-25 13:42:58.754 | INFO    | server        |   query file /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog (735 bytes, modified 2026-08-25 13:42:30)
+2026-08-25 13:42:58.754 | INFO    | server        |   archived as queries/001_run_slog.slog
+2026-08-25 13:42:58.754 | INFO    | server        |   shape: 3 table(s) declared, 1 derived relation(s) -- expect ~13s per derived relation
+2026-08-25 13:42:58.755 | INFO    | server        |   program:
+                                                        | ;; What drugs treat Parkinson disease?
+                                                        | ;; Anchor: MONDO:0005180 expanded to its KG2 id set (6 ids, inlined as one stage).
+                                                        | 
+                                                        | table (edge str str str)
+                                                        | table (node str str str)
+                                                        | table (result str str str)
+                                                        | 
+                                                        | rule (result d name cat) <-- (edge d "biolink:treats" "MONDO:0005180") (node d name cat)
+                                                        | rule (result d name cat) <-- (edge d "biolink:treats" "DOID:14330")    (node d name cat)
+                                                        | rule (result d name cat) <-- (edge d "biolink:treats" "UMLS:C0030567") (node d name cat)
+                                                        | rule (result d name cat) <-- (edge d "biolink:treats" "MESH:D010300")  (node d name cat)
+                                                        | rule (result d name cat) <-- (edge d "biolink:treats" "NCIT:C26845")   (node d name cat)
+                                                        | rule (result d name cat) <-- (edge d "biolink:treats" "ICD9:332")      (node d name cat)
+2026-08-25 13:42:58.755 | INFO    | slog          |   -> slog drop: {"op": "drop", "rel": "result"}
+2026-08-25 13:44:36.000 | INFO    | slog          |   <- slog drop ok in 1m 37.2s (12 bytes of response)
+2026-08-25 13:44:36.000 | WARNING | slog          |   !! slog drop took 1m 37.2s
+2026-08-25 13:44:36.000 | INFO    | server        |   dropped previous `result` relation
+2026-08-25 13:44:36.000 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-25 13:44:36.006 | INFO    | slog          |   <- slog dump ok in 6ms (253 bytes of response)
+2026-08-25 13:44:36.006 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-25 13:44:36.012 | INFO    | slog          |   <- slog dump ok in 5ms (589 bytes of response)
+2026-08-25 13:44:36.014 | INFO    | server        |   * slog run ...
+2026-08-25 13:44:36.015 | INFO    | slog          |   -> slog run: {"op": "run", "path": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning/slog/query.slog"}
+2026-08-25 13:45:58.776 | INFO    | slog          |   <- slog run ok in 1m 22.8s (12 bytes of response)
+2026-08-25 13:45:58.777 | WARNING | slog          |   !! slog run took 1m 22.8s
+2026-08-25 13:45:58.777 | INFO    | server        |   + slog run done in 1m 22.8s
+2026-08-25 13:45:58.777 | INFO    | server        |   * dump `result` (limit 500) ...
+2026-08-25 13:45:58.777 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "result", "limit": 500}
+2026-08-25 13:45:58.805 | INFO    | slog          |   <- slog dump ok in 28ms (29591 bytes of response)
+2026-08-25 13:45:58.805 | INFO    | server        |   + dump `result` (limit 500) done in 29ms
+2026-08-25 13:45:58.808 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-25 13:45:58.812 | INFO    | slog          |   <- slog dump ok in 4ms (284 bytes of response)
+2026-08-25 13:45:58.812 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-25 13:45:58.817 | INFO    | slog          |   <- slog dump ok in 4ms (589 bytes of response)
+2026-08-25 13:45:58.817 | INFO    | server        |   timing: total=3m 00.1s  compile=13.30s  exec=1m 09.5s  (strata compiled=2, executed=1)
+2026-08-25 13:45:58.817 | INFO    | server        |   daemon: fixpoint=8469.7ms  iterations=2  rule_fires=0
+2026-08-25 13:45:58.818 | INFO    | server        |   cost model predicted ~22s for this shape
+2026-08-25 13:45:58.818 | INFO    | server        |   result: n_rows=1627 returned=500 truncated=True
+2026-08-25 13:45:58.819 | INFO    | server        |   CURIEs out of the answer relation, unnamed at this point:
+2026-08-25 13:45:58.819 | INFO    | server        |   result CURIEs (512):
+2026-08-25 13:45:58.819 | INFO    | server        |     UMLS:C0142469                            biolink:ChemicalEntity                   UMLS:C0225326                            UMLS:C0729338
+2026-08-25 13:45:58.820 | INFO    | server        |     biolink:Activity                         UMLS:C0454512                            biolink:Procedure                        UMLS:C0664589
+2026-08-25 13:45:58.820 | INFO    | server        |     UMLS:C0021083                            UMLS:C0917964                            UMLS:C0068899                            UMLS:C0042209
+2026-08-25 13:45:58.820 | INFO    | server        |     UMLS:C1527378                            biolink:Device                           UMLS:C0006462                            UMLS:C0073561
+2026-08-25 13:45:58.820 | INFO    | server        |     UMLS:C0870721                            UMLS:C0011816                            UMLS:C1706912                            UMLS:C5238484
+2026-08-25 13:45:58.821 | INFO    | server        |     UMLS:C0024730                            UMLS:C0245561                            UMLS:C0003297                            biolink:Drug
+2026-08-25 13:45:58.821 | INFO    | server        |     UMLS:C0558024                            UMLS:C0166552                            UMLS:C0027930                            biolink:NamedThing
+2026-08-25 13:45:58.821 | INFO    | server        |     UMLS:C0086583                            UMLS:C4277545                            UMLS:C0014935                            UMLS:C0679750
+2026-08-25 13:45:58.821 | INFO    | server        |     UMLS:C0283703                            UMLS:C0243072                            UMLS:C0037659                            UMLS:C0033497
+2026-08-25 13:45:58.822 | INFO    | server        |     UMLS:C0016365                            UMLS:C0041290                            UMLS:C0128329                            UMLS:C0038317
+2026-08-25 13:45:59.052 | INFO    | server        |     UMLS:C0600015                            UMLS:C0175637                            UMLS:C0040732                            UMLS:C0007876
+2026-08-25 13:45:59.052 | INFO    | server        |     UMLS:C0047611                            UMLS:C0011501                            UMLS:C0016642                            UMLS:C0031008
+2026-08-25 13:45:59.052 | INFO    | server        |     UMLS:C0026457                            UMLS:C0020852                            UMLS:C0042210                            UMLS:C0019590
+2026-08-25 13:45:59.053 | INFO    | server        |     UMLS:C0472699                            UMLS:C0076147                            UMLS:C0597834                            UMLS:C1434556
+2026-08-25 13:45:59.053 | INFO    | server        |     UMLS:C0040771                            UMLS:C1171257                            UMLS:C0020740                            UMLS:C0870913
+2026-08-25 13:45:59.053 | INFO    | server        |     UMLS:C0936072                            UMLS:C0001443                            UMLS:C0195775                            UMLS:C0006949
+2026-08-25 13:45:59.054 | INFO    | server        |     UMLS:C1516735                            UMLS:C0023570                            UMLS:C1562292                            DrugCentral:333
+2026-08-25 13:45:59.054 | INFO    | server        |     UMLS:C0046983                            UMLS:C0006982                            UMLS:C0017986                            UMLS:C1101411
+2026-08-25 13:45:59.054 | INFO    | server        |     UMLS:C0014939                            UMLS:C0026055                            UMLS:C0055633                            UMLS:C0056650
+2026-08-25 13:45:59.055 | INFO    | server        |     UMLS:C0935576                            UMLS:C0127649                            UMLS:C0419189                            UMLS:C0000477
+2026-08-25 13:45:59.055 | INFO    | server        |     UMLS:C0026606                            UMLS:C1532411                            UMLS:C0005527                            UMLS:C0524861
+2026-08-25 13:45:59.055 | INFO    | server        |     UMLS:C0039845                            UMLS:C0545084                            UMLS:C0162589                            UMLS:C0073096
+2026-08-25 13:45:59.055 | INFO    | server        |     UMLS:C0966149                            UMLS:C0140801                            UMLS:C0038803                            UMLS:C0304411
+2026-08-25 13:45:59.056 | INFO    | server        |     UMLS:C0002712                            UMLS:C4475891                            UMLS:C0013786                            UMLS:C0008952
+2026-08-25 13:45:59.056 | INFO    | server        |     UMLS:C0084178                            UMLS:C0003295                            UMLS:C0220780                            UMLS:C2922974
+2026-08-25 13:45:59.056 | INFO    | server        |     UMLS:C1138408                            UMLS:C0520484                            UMLS:C0150593                            UMLS:C0206788
+2026-08-25 13:45:59.056 | INFO    | server        |     UMLS:C1883583                            UMLS:C0068994                            UMLS:C1454234                            DrugCentral:144
+2026-08-25 13:45:59.057 | INFO    | server        |     UMLS:C0556033                            UMLS:C0036753                            UMLS:C0087162                            NCBIGene:1312
+2026-08-25 13:45:59.057 | INFO    | server        |     biolink:Gene                             UMLS:C0949266                            UMLS:C0056501                            UMLS:C0048297
+2026-08-25 13:45:59.057 | INFO    | server        |     UMLS:C0075083                            UMLS:C0042291                            UMLS:C0023776                            UMLS:C0002844
+2026-08-25 13:45:59.057 | INFO    | server        |     UMLS:C0007975                            UMLS:C0184617                            UMLS:C0035762                            UMLS:C0001648
+2026-08-25 13:45:59.058 | INFO    | server        |     UMLS:C0031935                            UMLS:C0740218                            UMLS:C0279328                            UMLS:C0080331
+2026-08-25 13:45:59.058 | INFO    | server        |     UMLS:C0034927                            UMLS:C0003015                            UMLS:C0013015                            UMLS:C0024977
+2026-08-25 13:45:59.058 | INFO    | server        |     UMLS:C0150184                            UMLS:C0076252                            UMLS:C0001047                            UMLS:C0353697
+2026-08-25 13:45:59.058 | INFO    | server        |     UMLS:C0078489                            UMLS:C0343138                            UMLS:C0870222                            UMLS:C0017118
+2026-08-25 13:45:59.059 | INFO    | server        |     UMLS:C0061851                            UMLS:C1514967                            UMLS:C0237934                            UMLS:C0073590
+2026-08-25 13:45:59.059 | INFO    | server        |     UMLS:C0207661                            UMLS:C0107994                            UMLS:C0598695                            UMLS:C0146876
+2026-08-25 13:45:59.059 | INFO    | server        |     UMLS:C0181741                            UMLS:C0021079                            UMLS:C0012290                            UMLS:C0242708
+2026-08-25 13:45:59.059 | INFO    | server        |     UMLS:C0020974                            UMLS:C0036720                            UMLS:C0600364                            UMLS:C0023870
+2026-08-25 13:45:59.060 | INFO    | server        |     UMLS:C0064774                            UMLS:C0059932                            UMLS:C0034754                            UMLS:C0587591
+2026-08-25 13:45:59.060 | INFO    | server        |     UMLS:C0058698                            biolink:Polypeptide                      UMLS:C0024911                            UMLS:C0056633
+2026-08-25 13:45:59.060 | INFO    | server        |     UMLS:C0055729                            UMLS:C0003211                            UMLS:C0031184                            UMLS:C0031916
+2026-08-25 13:45:59.060 | INFO    | server        |     DrugCentral:2276                         UMLS:C0078844                            UMLS:C1273869                            UMLS:C0683474
+2026-08-25 13:45:59.061 | INFO    | server        |     UMLS:C0051318                            UMLS:C0023369                            UMLS:C0699936                            UMLS:C0021528
+2026-08-25 13:45:59.061 | INFO    | server        |     UMLS:C0242897                            UMLS:C0030040                            UMLS:C0344211                            UMLS:C0969677
+2026-08-25 13:45:59.061 | INFO    | server        |     UMLS:C0752189                            UMLS:C1123457                            UMLS:C0010137                            UMLS:C0071649
+2026-08-25 13:45:59.061 | INFO    | server        |     UMLS:C0074710                            UMLS:C1550600                            UMLS:C0006657                            DrugCentral:4921
+2026-08-25 13:45:59.062 | INFO    | server        |     UMLS:C0700899                            UMLS:C0068168                            UMLS:C0041056                            DRUGBANK:DB00494
+2026-08-25 13:45:59.062 | INFO    | server        |     UMLS:C0005117                            UMLS:C4704697                            UMLS:C0010637                            UMLS:C0125606
+2026-08-25 13:45:59.062 | INFO    | server        |     UMLS:C0012963                            UMLS:C0080232                            UMLS:C2717877                            UMLS:C0242889
+2026-08-25 13:45:59.062 | INFO    | server        |     UMLS:C0030054                            UMLS:C0086225                            UMLS:C0696628                            biolink:PopulationOfIndividualOrganisms
+2026-08-25 13:45:59.063 | INFO    | server        |     UMLS:C0813141                            UMLS:C0388812                            UMLS:C0871707                            UMLS:C0179038
+2026-08-25 13:45:59.063 | INFO    | server        |     biolink:PhysicalEntity                   UMLS:C0871198                            UMLS:C0378018                            UMLS:C0182934
+2026-08-25 13:45:59.063 | INFO    | server        |     UMLS:C1138603                            biolink:InformationContentEntity         DRUGBANK:DB00376                         UMLS:C0496675
+2026-08-25 13:45:59.063 | INFO    | server        |     UMLS:C0058218                            UMLS:C0751429                            UMLS:C0842093                            UMLS:C0066801
+2026-08-25 13:45:59.064 | INFO    | server        |     UMLS:C0031007                            UMLS:C0025746                            UMLS:C1527386                            UMLS:C0142805
+2026-08-25 13:45:59.064 | INFO    | server        |     UMLS:C0285984                            UMLS:C0911014                            UMLS:C0729377                            UMLS:C0025242
+2026-08-25 13:45:59.064 | INFO    | server        |     UMLS:C0012132                            UMLS:C0012265                            UMLS:C0057163                            UMLS:C0014708
+2026-08-25 13:45:59.064 | INFO    | server        |     UMLS:C0740287                            UMLS:C0024027                            UMLS:C0184338                            UMLS:C0528561
+2026-08-25 13:45:59.065 | INFO    | server        |     UMLS:C0987131                            UMLS:C0381061                            UMLS:C0540511                            UMLS:C0034272
+2026-08-25 13:45:59.065 | INFO    | server        |     UMLS:C0062127                            UMLS:C0053508                            UMLS:C0176751                            UMLS:C0011684
+2026-08-25 13:45:59.065 | INFO    | server        |     UMLS:C0439775                            UMLS:C0163159                            UMLS:C0040613                            UMLS:C1722267
+2026-08-25 13:45:59.065 | INFO    | server        |     UMLS:C0140182                            UMLS:C2981820                            UMLS:C0242297                            UMLS:C0289884
+2026-08-25 13:45:59.066 | INFO    | server        |     UMLS:C0085203                            UMLS:C0032207                            biolink:SmallMolecule                    UMLS:C0040736
+2026-08-25 13:45:59.066 | INFO    | server        |     UMLS:C0028908                            UMLS:C0017797                            UMLS:C0358430                            UMLS:C0025228
+2026-08-25 13:45:59.066 | INFO    | server        |     UMLS:C0150764                            UMLS:C1312149                            UMLS:C0003289                            UMLS:C0175723
+2026-08-25 13:45:59.066 | INFO    | server        |     UMLS:C1138412                            UMLS:C0392535                            UMLS:C0037494                            UMLS:C0650235
+2026-08-25 13:45:59.067 | INFO    | server        |     UMLS:C0181209                            UMLS:C4706197                            UMLS:C0023863                            UMLS:C0052946
+2026-08-25 13:45:59.067 | INFO    | server        |     UMLS:C2353951                            UMLS:C0242913                            UMLS:C0011331                            UMLS:C0003385
+2026-08-25 13:45:59.067 | INFO    | server        |     UMLS:C0813618                            UMLS:C0729168                            UMLS:C1098261                            UMLS:C0184069
+2026-08-25 13:45:59.067 | INFO    | server        |     UMLS:C0017887                            UMLS:C0009818                            UMLS:C0006931                            UMLS:C0376626
+2026-08-25 13:45:59.068 | INFO    | server        |     UMLS:C0037533                            UMLS:C0001164                            UMLS:C3852966                            UMLS:C0078032
+2026-08-25 13:45:59.068 | INFO    | server        |     UMLS:C0003009                            UMLS:C0873188                            UMLS:C0010976                            UMLS:C0059438
+2026-08-25 13:45:59.068 | INFO    | server        |     UMLS:C0012968                            UMLS:C0086930                            UMLS:C0018546                            UMLS:C0021587
+2026-08-25 13:45:59.068 | INFO    | server        |     UMLS:C0042890                            DrugCentral:3521                         UMLS:C0206080                            UMLS:C0893636
+2026-08-25 13:45:59.069 | INFO    | server        |     UMLS:C0024808                            UMLS:C0149684                            UMLS:C0377892                            UMLS:C0010963
+2026-08-25 13:45:59.069 | INFO    | server        |     UMLS:C0000378                            UMLS:C0022471                            UMLS:C0489525                            UMLS:C0019993
+2026-08-25 13:45:59.069 | INFO    | server        |     UMLS:C0040808                            UMLS:C0756261                            UMLS:C0034261                            UMLS:C0007258
+2026-08-25 13:45:59.069 | INFO    | server        |     UMLS:C1611640                            UMLS:C0142340                            UMLS:C0546852                            UMLS:C1615645
+2026-08-25 13:45:59.070 | INFO    | server        |     UMLS:C0006669                            UMLS:C0015827                            UMLS:C0007974                            UMLS:C0033228
+2026-08-25 13:45:59.070 | INFO    | server        |     UMLS:C0772054                            UMLS:C0086511                            UMLS:C0018738                            UMLS:C0039245
+2026-08-25 13:45:59.070 | INFO    | server        |     UMLS:C0017313                            UMLS:C0008287                            DRUGBANK:DB00190                         UMLS:C0007044
+2026-08-25 13:45:59.070 | INFO    | server        |     UMLS:C1321564                            UMLS:C0556030                            UMLS:C2945704                            UMLS:C0053947
+2026-08-25 13:45:59.071 | INFO    | server        |     UMLS:C0171023                            UMLS:C0185026                            UMLS:C0700876                            UMLS:C0001644
+2026-08-25 13:45:59.071 | INFO    | server        |     UMLS:C0196911                            UMLS:C0012030                            UMLS:C0082384                            UMLS:C0000578
+2026-08-25 13:45:59.071 | INFO    | server        |     UMLS:C0257343                            UMLS:C0304229                            UMLS:C1136250                            UMLS:C0255998
+2026-08-25 13:45:59.071 | INFO    | server        |     UMLS:C0180665                            UMLS:C0194810                            UMLS:C0376211                            UMLS:C0595267
+2026-08-25 13:45:59.071 | INFO    | server        |     UMLS:C0068366                            UMLS:C0025741                            UMLS:C0028040                            UMLS:C0019930
+2026-08-25 13:45:59.072 | INFO    | server        |     UMLS:C0040805                            UMLS:C0074460                            UMLS:C0180860                            UMLS:C0056060
+2026-08-25 13:45:59.072 | INFO    | server        |     UMLS:C1139855                            UMLS:C0045724                            UMLS:C0026642                            UMLS:C0070559
+2026-08-25 13:45:59.072 | INFO    | server        |     DRUGBANK:DB00245                         UMLS:C1553667                            UMLS:C0022024                            UMLS:C0056506
+2026-08-25 13:45:59.072 | INFO    | server        |     UMLS:C0183185                            UMLS:C0220821                            UMLS:C0242896                            UMLS:C0003209
+2026-08-25 13:45:59.073 | INFO    | server        |     UMLS:C0633056                            UMLS:C0009011                            UMLS:C0185115                            UMLS:C0279492
+2026-08-25 13:45:59.073 | INFO    | server        |     DrugCentral:2697                         UMLS:C0021461                            UMLS:C0020431                            UMLS:C0381385
+2026-08-25 13:45:59.073 | INFO    | server        |     UMLS:C0013216                            UMLS:C0069939                            UMLS:C0012159                            UMLS:C0966897
+2026-08-25 13:45:59.073 | INFO    | server        |     UMLS:C0813036                            UMLS:C0075857                            UMLS:C0304926                            UMLS:C0003729
+2026-08-25 13:45:59.074 | INFO    | server        |     UMLS:C0935989                            UMLS:C0008845                            UMLS:C0529793                            UMLS:C0012497
+2026-08-25 13:45:59.074 | INFO    | server        |     UMLS:C0097797                            UMLS:C0006353                            UMLS:C5392103                            UMLS:C0441509
+2026-08-25 13:45:59.074 | INFO    | server        |     UMLS:C0336660                            UMLS:C0199451                            UMLS:C0042878                            UMLS:C0000975
+2026-08-25 13:45:59.074 | INFO    | server        |     UMLS:C0206056                            UMLS:C0006213                            UMLS:C1311105                            UMLS:C0208881
+2026-08-25 13:45:59.075 | INFO    | server        |     UMLS:C1513403                            UMLS:C0060926                            UMLS:C0181904                            UMLS:C0068485
+2026-08-25 13:45:59.075 | INFO    | server        |     UMLS:C0085155                            UMLS:C0019392                            UMLS:C0199171                            DRUGBANK:DB00323
+2026-08-25 13:45:59.075 | INFO    | server        |     UMLS:C0196913                            UMLS:C0068788                            UMLS:C0150162                            UMLS:C0682880
+2026-08-25 13:45:59.075 | INFO    | server        |     UMLS:C1119918                            UMLS:C0013231                            UMLS:C1530072                            UMLS:C0037125
+2026-08-25 13:45:59.076 | INFO    | server        |     UMLS:C0595265                            UMLS:C0023749                            UMLS:C1100626                            UMLS:C0242701
+2026-08-25 13:45:59.076 | INFO    | server        |     UMLS:C0377265                            UMLS:C0392806                            UMLS:C0184666                            UMLS:C0770932
+2026-08-25 13:45:59.076 | INFO    | server        |     UMLS:C1277078                            UMLS:C0032015                            UMLS:C0454527                            UMLS:C0394374
+2026-08-25 13:45:59.076 | INFO    | server        |     UMLS:C0376518                            UMLS:C0015952                            UMLS:C1293132                            UMLS:C1883350
+2026-08-25 13:45:59.077 | INFO    | server        |     UMLS:C0079083                            UMLS:C0026549                            UMLS:C0002423                            UMLS:C0023828
+2026-08-25 13:45:59.077 | INFO    | server        |     UMLS:C0063327                            UMLS:C0038039                            UMLS:C0237406                            UMLS:C0312452
+2026-08-25 13:45:59.077 | INFO    | server        |     UMLS:C0205991                            UMLS:C0008425                            UMLS:C0001641                            UMLS:C0034392
+2026-08-25 13:45:59.077 | INFO    | server        |     UMLS:C0071097                            UMLS:C0028008                            DrugCentral:1567                         UMLS:C4255216
+2026-08-25 13:45:59.078 | INFO    | server        |     UMLS:C0002641                            UMLS:C0028678                            UMLS:C0013900                            UMLS:C0242402
+2026-08-25 13:45:59.078 | INFO    | server        |     UMLS:C0186010                            UMLS:C0279033                            UMLS:C1364955                            UMLS:C0003232
+2026-08-25 13:45:59.078 | INFO    | server        |     UMLS:C0007447                            UMLS:C0015506                            UMLS:C0026056                            UMLS:C0058516
+2026-08-25 13:45:59.078 | INFO    | server        |     UMLS:C0031436                            UMLS:C0002911                            UMLS:C0281603                            UMLS:C0006507
+2026-08-25 13:45:59.079 | INFO    | server        |     UMLS:C0683465                            UMLS:C0013794                            UMLS:C0071304                            UMLS:C3539957
+2026-08-25 13:45:59.079 | INFO    | server        |     UMLS:C0144576                            UMLS:C0769581                            UMLS:C0011134                            UMLS:C0074554
+2026-08-25 13:45:59.079 | INFO    | server        |     UMLS:C3858690                            UMLS:C0076316                            UMLS:C0071538                            UMLS:C0036079
+2026-08-25 13:45:59.079 | INFO    | server        |     UMLS:C0039043                            UMLS:C0679543                            UMLS:C0237429                            UMLS:C1171350
+2026-08-25 13:45:59.080 | INFO    | server        |     UMLS:C0021753                            UMLS:C0085208                            UMLS:C1504389                            UMLS:C1274136
+2026-08-25 13:45:59.080 | INFO    | server        |     UMLS:C0278347                            UMLS:C0086969                            UMLS:C0043031                            UMLS:C0012228
+2026-08-25 13:45:59.080 | INFO    | server        |     UMLS:C0003893                            UMLS:C0287163                            UMLS:C1963758                            UMLS:C0085143
+2026-08-25 13:45:59.080 | INFO    | server        |     UMLS:C0167117                            UMLS:C0339897                            UMLS:C3242284                            UMLS:C0870507
+2026-08-25 13:45:59.081 | INFO    | server        |     UMLS:C0010467                            UMLS:C0042105                            DRUGBANK:DB00942                         UMLS:C0419144
+2026-08-25 13:45:59.081 | INFO    | server        |     UMLS:C0041249                            UMLS:C0060794                            UMLS:C0011211                            UMLS:C0065936
+2026-08-25 13:45:59.081 | INFO    | server        |     UMLS:C0579118                            UMLS:C0065331                            UMLS:C0949288                            UMLS:C0041536
+2026-08-25 13:45:59.081 | INFO    | server        |     UMLS:C1514821                            UMLS:C0279493                            UMLS:C0278329                            UMLS:C0864243
+2026-08-25 13:45:59.081 | WARNING | server        |   !! truncated: 1627 rows exist, only 500 returned (limit 500)
+2026-08-25 13:45:59.082 | INFO    | server        | << TOOL run_slog finished in 3m 00.3s
+2026-08-25 13:45:59.082 | WARNING | server        | !! run_slog took 3m 00.3s -- slow call
+2026-08-25 13:45:59.082 | INFO    | server        | ------------------------------------------------------------------------------

@@ -1,0 +1,16 @@
+stratum 2  2f10d222  2 iteration(s), 19741.8 ms  (/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/slog/build/2f10d222.plan, +0 internal error rules)
+    query.slog:11        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+    query.slog:15        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+    query.slog:19        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+    query.slog:23        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+    query.slog:27        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+    query.slog:31        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+  daemon timeline (ms between emitted lines -- setup work lands here, not in the fixpoint ms):
+    +     282 ms  (+     282 ms)  (pipeline (pos 6) (evaluation "eval-1a060e3966a-fd876b8-371bb269-f4bfa9f") (update-epoch 3) (strata 
+    +     288 ms  (+       6 ms)  (update-epoch 3 settled)
+    +     289 ms  (+       1 ms)  (boundary-prepared 3 (boundary "b1:layer-1a060e3966a-2e960f77-39131d72-fd11de9:4") (program "p1:laye
+    +   90442 ms  (+   90153 ms)  (paused (generation 3) (scc 2) (stratum "2f10d222") (iteration 0) (phase read) (settled #f) (progress (tuples 0) (exact #f)) (timing (call-ms 18410.806) (total-ms 18410.806)) (cause (budget time)))
+    +   91766 ms  (+    1324 ms)  (paused (generation 3) (scc 2) (stratum "2f10d222") (iteration 1) (phase iter) (settled #t) (progress (tuples 68307932) (exact #t)) (timing (call-ms 1322.985) (total-ms 19733.791)) (cause (budget memory)))
+    +   91774 ms  (+       8 ms)  (fixpoint 2 "2f10d222" 2 19741.767)
+    +   91779 ms  (+       5 ms)  (boundary-committed 4 (boundary "b1:layer-1a060e3966a-2e960f77-39131d72-fd11de9:4") (position 6) (cr
+    +   91779 ms  (+       0 ms)  (run-complete)

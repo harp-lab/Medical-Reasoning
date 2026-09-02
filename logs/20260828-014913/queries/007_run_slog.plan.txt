@@ -1,0 +1,258 @@
+stratum 4  6a26b38f  2 iteration(s), 10372.8 ms  (/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/slog/build/6a26b38f.plan, +0 internal error rules)
+    query.slog:18        once                 (no relation steps)
+    query.slog:19        once                 (no relation steps)
+    query.slog:20        once                 (no relation steps)
+    query.slog:21        once                 (no relation steps)
+    query.slog:22        once                 (no relation steps)
+    query.slog:23        once                 (no relation steps)
+    query.slog:24        once                 (no relation steps)
+    query.slog:25        once                 (no relation steps)
+    query.slog:26        once                 (no relation steps)
+    query.slog:27        once                 (no relation steps)
+    query.slog:28        once                 (no relation steps)
+    query.slog:29        once                 (no relation steps)
+    query.slog:30        once                 (no relation steps)
+    query.slog:31        once                 (no relation steps)
+    query.slog:32        once                 (no relation steps)
+    query.slog:33        once                 (no relation steps)
+    query.slog:34        once                 (no relation steps)
+    query.slog:35        once                 (no relation steps)
+    query.slog:36        once                 (no relation steps)
+    query.slog:37        once                 (no relation steps)
+    query.slog:38        once                 (no relation steps)
+    query.slog:39        once                 (no relation steps)
+    query.slog:40        once                 (no relation steps)
+    query.slog:41        once                 (no relation steps)
+    query.slog:42        once                 (no relation steps)
+    query.slog:43        once                 (no relation steps)
+    query.slog:44        once                 (no relation steps)
+    query.slog:45        once                 (no relation steps)
+    query.slog:46        once                 (no relation steps)
+    query.slog:47        once                 (no relation steps)
+    query.slog:48        once                 (no relation steps)
+    query.slog:49        once                 (no relation steps)
+    query.slog:50        once                 (no relation steps)
+    query.slog:51        once                 (no relation steps)
+    query.slog:52        once                 (no relation steps)
+    query.slog:53        once                 (no relation steps)
+    query.slog:54        once                 (no relation steps)
+    query.slog:55        once                 (no relation steps)
+    query.slog:56        once                 (no relation steps)
+    query.slog:57        once                 (no relation steps)
+    query.slog:58        once                 (no relation steps)
+    query.slog:59        once                 (no relation steps)
+    query.slog:60        once                 (no relation steps)
+    query.slog:61        once                 (no relation steps)
+    query.slog:62        once                 (no relation steps)
+    query.slog:63        once                 (no relation steps)
+    query.slog:64        once                 (no relation steps)
+    query.slog:65        once                 (no relation steps)
+    query.slog:66        once                 (no relation steps)
+    query.slog:67        once                 (no relation steps)
+    query.slog:68        once                 (no relation steps)
+    query.slog:69        once                 (no relation steps)
+    query.slog:70        once                 (no relation steps)
+    query.slog:71        once                 (no relation steps)
+    query.slog:72        once                 (no relation steps)
+    query.slog:73        once                 (no relation steps)
+    query.slog:74        once                 (no relation steps)
+    query.slog:75        once                 (no relation steps)
+    query.slog:76        once                 (no relation steps)
+    query.slog:77        once                 (no relation steps)
+    query.slog:78        once                 (no relation steps)
+    query.slog:79        once                 (no relation steps)
+    query.slog:80        once                 (no relation steps)
+    query.slog:81        once                 (no relation steps)
+    query.slog:82        once                 (no relation steps)
+    query.slog:83        once                 (no relation steps)
+    query.slog:84        once                 (no relation steps)
+    query.slog:85        once                 (no relation steps)
+    query.slog:86        once                 (no relation steps)
+    query.slog:87        once                 (no relation steps)
+    query.slog:88        once                 (no relation steps)
+    query.slog:89        once                 (no relation steps)
+    query.slog:90        once                 (no relation steps)
+    query.slog:91        once                 (no relation steps)
+    query.slog:92        once                 (no relation steps)
+    query.slog:93        once                 (no relation steps)
+    query.slog:94        once                 (no relation steps)
+    query.slog:95        once                 (no relation steps)
+    query.slog:96        once                 (no relation steps)
+    query.slog:97        once                 (no relation steps)
+    query.slog:98        once                 (no relation steps)
+    query.slog:99        once                 (no relation steps)
+    query.slog:100       once                 (no relation steps)
+    query.slog:101       once                 (no relation steps)
+    query.slog:102       once                 (no relation steps)
+    query.slog:103       once                 (no relation steps)
+    query.slog:104       once                 (no relation steps)
+    query.slog:105       once                 (no relation steps)
+    query.slog:106       once                 (no relation steps)
+    query.slog:107       once                 (no relation steps)
+    query.slog:108       once                 (no relation steps)
+    query.slog:109       once                 (no relation steps)
+    query.slog:110       once                 (no relation steps)
+    query.slog:111       once                 (no relation steps)
+    query.slog:112       once                 (no relation steps)
+    query.slog:113       once                 (no relation steps)
+    query.slog:114       once                 (no relation steps)
+    query.slog:115       once                 (no relation steps)
+    query.slog:116       once                 (no relation steps)
+    query.slog:117       once                 (no relation steps)
+    query.slog:118       once                 (no relation steps)
+    query.slog:119       once                 (no relation steps)
+    query.slog:120       once                 (no relation steps)
+    query.slog:121       once                 (no relation steps)
+    query.slog:122       once                 (no relation steps)
+    query.slog:123       once                 (no relation steps)
+    query.slog:124       once                 (no relation steps)
+    query.slog:125       once                 (no relation steps)
+    query.slog:126       once                 (no relation steps)
+    query.slog:127       once                 (no relation steps)
+    query.slog:128       once                 (no relation steps)
+    query.slog:129       once                 (no relation steps)
+    query.slog:130       once                 (no relation steps)
+    query.slog:131       once                 (no relation steps)
+    query.slog:132       once                 (no relation steps)
+    query.slog:133       once                 (no relation steps)
+    query.slog:134       once                 (no relation steps)
+    query.slog:135       once                 (no relation steps)
+    query.slog:136       once                 (no relation steps)
+    query.slog:137       once                 (no relation steps)
+stratum 5  de7dcc43  2 iteration(s), 27513.0 ms  (/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/slog/build/de7dcc43.plan, +0 internal error rules)
+    query.slog:139       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 10#0
+    query.slog:139       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 10#1
+    query.slog:139       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 10#2
+    query.slog:139       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 10#3
+    query.slog:145       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 11#0
+    query.slog:145       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 11#1
+    query.slog:145       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 11#2
+    query.slog:145       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 11#3
+    query.slog:151       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 9#0
+    query.slog:151       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 9#1
+    query.slog:151       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 9#2
+    query.slog:151       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 9#3
+    query.slog:157       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 1#0
+    query.slog:157       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 1#1
+    query.slog:157       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 1#2
+    query.slog:157       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 1#3
+    query.slog:163       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 2#0
+    query.slog:163       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 2#1
+    query.slog:163       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 2#2
+    query.slog:163       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 2#3
+    query.slog:169       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 0#0
+    query.slog:169       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 0#1
+    query.slog:169       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 0#2
+    query.slog:169       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 0#3
+    query.slog:175       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 16#0
+    query.slog:175       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 16#1
+    query.slog:175       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 16#2
+    query.slog:175       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 16#3
+    query.slog:181       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 17#0
+    query.slog:181       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 17#1
+    query.slog:181       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 17#2
+    query.slog:181       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 17#3
+    query.slog:187       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 15#0
+    query.slog:187       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 15#1
+    query.slog:187       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 15#2
+    query.slog:187       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 15#3
+    query.slog:193       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 19#0
+    query.slog:193       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 19#1
+    query.slog:193       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 19#2
+    query.slog:193       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 19#3
+    query.slog:199       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 20#0
+    query.slog:199       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 20#1
+    query.slog:199       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 20#2
+    query.slog:199       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 20#3
+    query.slog:205       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 18#0
+    query.slog:205       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 18#1
+    query.slog:205       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 18#2
+    query.slog:205       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 18#3
+    query.slog:211       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 22#0
+    query.slog:211       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 22#1
+    query.slog:211       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 22#2
+    query.slog:211       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 22#3
+    query.slog:217       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 23#0
+    query.slog:217       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 23#1
+    query.slog:217       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 23#2
+    query.slog:217       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 23#3
+    query.slog:223       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 21#0
+    query.slog:223       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 21#1
+    query.slog:223       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 21#2
+    query.slog:223       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 21#3
+    query.slog:229       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 25#0
+    query.slog:229       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 25#1
+    query.slog:229       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 25#2
+    query.slog:229       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 25#3
+    query.slog:235       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 26#0
+    query.slog:235       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 26#1
+    query.slog:235       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 26#2
+    query.slog:235       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 26#3
+    query.slog:241       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 24#0
+    query.slog:241       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 24#1
+    query.slog:241       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 24#2
+    query.slog:241       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 24#3
+    query.slog:247       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 7#0
+    query.slog:247       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 7#1
+    query.slog:247       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 7#2
+    query.slog:247       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 7#3
+    query.slog:253       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 8#0
+    query.slog:253       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 8#1
+    query.slog:253       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 8#2
+    query.slog:253       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 8#3
+    query.slog:259       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 6#0
+    query.slog:259       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 6#1
+    query.slog:259       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 6#2
+    query.slog:259       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 6#3
+    query.slog:265       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 13#0
+    query.slog:265       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 13#1
+    query.slog:265       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 13#2
+    query.slog:265       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 13#3
+    query.slog:271       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 14#0
+    query.slog:271       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 14#1
+    query.slog:271       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 14#2
+    query.slog:271       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 14#3
+    query.slog:277       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 12#0
+    query.slog:277       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 12#1
+    query.slog:277       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 12#2
+    query.slog:277       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 12#3
+    query.slog:283       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 4#0
+    query.slog:283       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 4#1
+    query.slog:283       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 4#2
+    query.slog:283       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 4#3
+    query.slog:289       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 5#0
+    query.slog:289       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 5#1
+    query.slog:289       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 5#2
+    query.slog:289       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 5#3
+    query.slog:295       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 3#0
+    query.slog:295       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 3#1
+    query.slog:295       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 3#2
+    query.slog:295       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 3#3
+  runtime arm selection (daemon report):
+    query.slog:139 group 10 -> arm 1
+    query.slog:145 group 11 -> arm 1
+    query.slog:151 group 9 -> arm 1
+    query.slog:157 group 1 -> arm 1
+    query.slog:163 group 2 -> arm 1
+    query.slog:169 group 0 -> arm 1
+    query.slog:175 group 16 -> arm 1
+    query.slog:181 group 17 -> arm 1
+    query.slog:187 group 15 -> arm 1
+    query.slog:193 group 19 -> arm 1
+    query.slog:199 group 20 -> arm 1
+    query.slog:205 group 18 -> arm 1
+    query.slog:211 group 22 -> arm 1
+    query.slog:217 group 23 -> arm 1
+    query.slog:223 group 21 -> arm 1
+    query.slog:229 group 25 -> arm 1
+    query.slog:235 group 26 -> arm 1
+    query.slog:241 group 24 -> arm 1
+    query.slog:247 group 7 -> arm 1
+    query.slog:253 group 8 -> arm 1
+    query.slog:259 group 6 -> arm 1
+    query.slog:265 group 13 -> arm 1
+    query.slog:271 group 14 -> arm 1
+    query.slog:277 group 12 -> arm 1
+    query.slog:283 group 4 -> arm 1
+    query.slog:289 group 5 -> arm 1
+    query.slog:295 group 3 -> arm 1

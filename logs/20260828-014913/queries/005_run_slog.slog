@@ -1,0 +1,13 @@
+;; Which knowledge sources assert `biolink:treats` -> Parkinson disease?
+;; Anchor: MONDO:0005180 expanded to its 6-id KG2 set, inlined as one stage.
+;; kg2_edges cols: 1 core_predicate 2 knowledge_source 3 negated ... 14 subject 15 object
+
+table (kg2_edges str str str str str str str str str str str str str str str)
+table (result str)
+
+rule (result ks) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ _ "MONDO:0005180")
+rule (result ks) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ _ "DOID:14330")
+rule (result ks) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ _ "UMLS:C0030567")
+rule (result ks) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ _ "MESH:D010300")
+rule (result ks) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ _ "NCIT:C26845")
+rule (result ks) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ _ "ICD9:332")

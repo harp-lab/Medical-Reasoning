@@ -1,0 +1,33 @@
+;; Which medically approved drugs treat Parkinson disease?
+;; Anchor: MONDO:0005180 -> its 6-id KG2 set from expand_entity, inlined as literals
+;; (6 rules, one head -> still a single derived relation / one stage).
+;; "Medically approved" = DrugCentral treats edges, i.e. approved drug indications.
+;; kg2_edges cols: 1 core_predicate 2 knowledge_source 3 negated ... 14 subject 15 object
+
+table (kg2_edges str str str str str str str str str str str str str str str)
+table (node str str str)
+table (result str str)
+
+rule (result d nm) <--
+  (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "MONDO:0005180")
+  (node d nm _)
+
+rule (result d nm) <--
+  (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "DOID:14330")
+  (node d nm _)
+
+rule (result d nm) <--
+  (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "UMLS:C0030567")
+  (node d nm _)
+
+rule (result d nm) <--
+  (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "MESH:D010300")
+  (node d nm _)
+
+rule (result d nm) <--
+  (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "NCIT:C26845")
+  (node d nm _)
+
+rule (result d nm) <--
+  (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "ICD9:332")
+  (node d nm _)

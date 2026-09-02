@@ -1,0 +1,10 @@
+;; Which knowledge sources assert biolink:treats edges into Parkinson disease?
+table (kg2_edges str str str str str str str str str str str str str str str)
+table (result str)
+
+rule (result ks) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ _ "MONDO:0005180")
+rule (result ks) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ _ "DOID:14330")
+rule (result ks) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ _ "UMLS:C0030567")
+rule (result ks) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ _ "MESH:D010300")
+rule (result ks) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ _ "NCIT:C26845")
+rule (result ks) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ _ "ICD9:332")

@@ -1,0 +1,18 @@
+;; Drugs that treat Parkinson disease, from the CURATED sources only
+;; (drugcentral = approved indications, repodb = repurposing/trial records).
+;; semmeddb is excluded: its treats-edges are literature co-occurrence and
+;; return ~1600 rows of procedures, activities and assay reagents.
+table (kg2_edges str str str str str str str str str str str str str str str)
+table (node str str str)
+table (pd_treat str str)
+table (result str str str str)
+
+rule (pd_treat ks s) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ s "MONDO:0005180")
+rule (pd_treat ks s) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ s "DOID:14330")
+rule (pd_treat ks s) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ s "UMLS:C0030567")
+rule (pd_treat ks s) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ s "MESH:D010300")
+rule (pd_treat ks s) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ s "NCIT:C26845")
+rule (pd_treat ks s) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ s "ICD9:332")
+
+rule (result "drugcentral" s nm cat) <-- (pd_treat "infores:drugcentral" s) (node s nm cat)
+rule (result "repodb" s nm cat)     <-- (pd_treat "infores:repodb" s)     (node s nm cat)

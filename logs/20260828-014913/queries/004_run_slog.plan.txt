@@ -1,0 +1,7 @@
+stratum 1  6c7a74ae  2 iteration(s), 30383.2 ms  (/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/slog/build/6c7a74ae.plan, +0 internal error rules)
+    query.slog:8         all:edge             edge(b=2) -> node(b=1)
+    query.slog:9         all:edge             edge(b=2) -> node(b=1)
+    query.slog:10        all:edge             edge(b=2) -> node(b=1)
+    query.slog:11        all:edge             edge(b=2) -> node(b=1)
+    query.slog:12        all:edge             edge(b=2) -> node(b=1)
+    query.slog:13        all:edge             edge(b=2) -> node(b=1)

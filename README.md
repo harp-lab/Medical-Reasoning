@@ -81,7 +81,8 @@ mcp/
   instructions/       kg2.md -- query conventions, sent to the model
 slog/
   slog_server.rkt     the resident session; holds the KG
-  kg2-server.sh       launcher (toolchain env, memory pre-flight, SLOG_OPT=0)
+  kg2-server.sh       launcher (toolchain env, memory pre-flight, SLOG_OPT=0,
+                      SLOG_MULTIPLAN=1)
   kg2-stop.sh         stops the server and its slogd
   setup.slog          views over the raw relations
   query.slog          the program run_slog executes; overwritten per query
@@ -95,6 +96,16 @@ docs/NOTES.md         measurements, the cost model, and open questions
 Roughly `9s compile + 13s per derived relation`.
 
 Compilation is pinned to `-O0` via `SLOG_OPT=0` in `kg2-server.sh`
+
+Join-plan selection is on via `SLOG_MULTIPLAN=1` (also `kg2-server.sh`): eligible
+rules carry an alternative tail order that the daemon meters interpreted, on real
+data, before the stratum runs, and the cheaper one runs. `SLOG_MULTIPLAN_INDEX`
+is `budget:1`, capping each relation at one new FULL ordering — `eager` unions
+every arm's needs onto the giant EDB rules, and `free` was measured to attach no
+arms at all (feature on, selecting nothing). Turn the whole thing off with an
+empty value:
+`SLOG_MULTIPLAN= slog/kg2-server.sh`. The flag is part of slog's job hash, so
+changing it recompiles every stratum once.
 
 ## Logs
 

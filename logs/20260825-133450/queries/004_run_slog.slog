@@ -1,0 +1,15 @@
+;; What treats Parkinson disease?
+;; MONDO:0005180 expanded to its equivalent KG2 ids.
+table (edge str str str)
+table (node str str str)
+table (treats_pd str)
+table (result str str str)
+
+rule (treats_pd d) <-- (edge d "biolink:treats" "MONDO:0005180")
+rule (treats_pd d) <-- (edge d "biolink:treats" "DOID:14330")
+rule (treats_pd d) <-- (edge d "biolink:treats" "UMLS:C0030567")
+rule (treats_pd d) <-- (edge d "biolink:treats" "MESH:D010300")
+rule (treats_pd d) <-- (edge d "biolink:treats" "NCIT:C26845")
+rule (treats_pd d) <-- (edge d "biolink:treats" "ICD9:332")
+
+rule (result d name cat) <-- (treats_pd d) (node d name cat)

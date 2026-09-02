@@ -1,0 +1,7 @@
+stratum 2  69fefe80  2 iteration(s), 42285.1 ms  (/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/slog/build/69fefe80.plan, +0 internal error rules)
+    query.slog:8         all:kg2_edges        kg2_edges(b=3)
+    query.slog:9         all:kg2_edges        kg2_edges(b=3)
+    query.slog:10        all:kg2_edges        kg2_edges(b=3)
+    query.slog:11        all:kg2_edges        kg2_edges(b=3)
+    query.slog:12        all:kg2_edges        kg2_edges(b=3)
+    query.slog:13        all:kg2_edges        kg2_edges(b=3)

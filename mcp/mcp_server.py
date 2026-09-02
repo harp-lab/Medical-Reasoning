@@ -8,14 +8,18 @@ from pathlib import Path
 from mcp.server.fastmcp import FastMCP
 
 import kg2_core as core
+import mr_plan as plan
 import mr_stats as stats
 import slog_client as slog
 from mr_logging import (RULE, SESSION_DIR, banner, csv_row, fmt_dur, full_list,
-                        get_logger, next_seq, preview, save_query, step, table,
-                        tool_call)
+                        get_logger, next_seq, preview, save_plan, save_query,
+                        step, table, tool_call)
 
 INSTRUCTIONS = (Path(__file__).resolve().parent / "instructions" / "kg2.md").read_text()
-MAX_ROWS = 500
+# Hard ceiling on rows handed back, whatever `limit` the caller asks for -- both dump
+# sites clamp with min(limit, MAX_ROWS), so this is the enforcement and not a default.
+# `n_rows` still reports the true count, so a truncated answer stays honest.
+MAX_ROWS = int(os.environ.get("KG2_MAX_ROWS", "50"))
 OUTPUT_REL = "result"
 QUERY_FILE = Path(os.environ.get(
     "KG2_QUERY_FILE",
@@ -26,6 +30,10 @@ log = get_logger("server")
 mcp = FastMCP("kg2", instructions=INSTRUCTIONS)
 
 _last_slog_curies = []
+# One question is meant to cost one run (mcp/instructions/kg2.md, "One question, one
+# run").  Counting them does not block a second run -- the permission prompt is the
+# gate -- but it puts every repeat in summary.csv where it can be seen after the fact.
+_slog_runs = 0
 
 
 @contextmanager
@@ -119,21 +127,39 @@ def expand_entity(curies: list[str]) -> dict:
 
 @mcp.tool()
 def run_slog(limit: int = MAX_ROWS) -> dict:
-    """Run the Slog program you have written to slog/query.slog.
+    """Run the Slog program you have written to slog/query.slog. ONE RUN PER QUESTION.
 
-    Write your program to that file first (with Write or Edit), then call this. It takes
-    no program argument -- it always runs whatever is currently in the file, so the file
-    is the record of what ran.
+    Write your program to that file first (with Write or Edit), then call this in the same
+    turn. Do NOT ask the user in prose whether to run it -- this tool is gated by a
+    permission prompt, and that prompt is where they say yes or no; asking first makes them
+    answer twice. This takes no program argument; it always runs whatever is currently in
+    the file, so the file is the record of what ran.
+
+    This call costs minutes of wall clock and tens of GB on a shared machine. Do not call
+    it twice for the same question. If it fails, report `query failed` with the error and
+    stop. If the answer is truncated or empty, report that and stop. A failure, a
+    truncation, and a zero-row answer are all final results, not prompts to rewrite the
+    program and try again -- only the user decides that.
 
     The answer relation must be declared and named `result`. It is dropped before the
     program runs, so each query starts from an empty answer relation.
 
-    The session is already warm, so a query costs a compile plus evaluation. Returns
-    {n_rows, returned, truncated, rows, query_file}.
+    At most 50 rows come back, whatever `limit` you pass -- `limit` can only ask for
+    FEWER. `n_rows` is the true count, so report `n_rows rows, showing 50` and display
+    the 50. Never display more rows than you were given, and never re-run to see the rest.
+
+    Returns {n_rows, returned, truncated, rows, query_file}.
     """
-    global _last_slog_curies
+    global _last_slog_curies, _slog_runs
+    _slog_runs += 1
     with _record("run_slog", limit=limit) as row:
         row["query_file"] = str(QUERY_FILE)
+        row["slog_run_n"] = _slog_runs
+        if _slog_runs > 1:
+            log.warning(f"  !! this is run #{_slog_runs} of this session -- if it is a "
+                        f"retry of the same question rather than a new question, that is "
+                        f"minutes of wall clock the one-run-per-question rule exists to "
+                        f"prevent (mcp/instructions/kg2.md)")
         if not QUERY_FILE.exists():
             log.error(f"  x query file {QUERY_FILE} does not exist")
             row["status"] = "error"
@@ -176,8 +202,8 @@ def run_slog(limit: int = MAX_ROWS) -> dict:
 
             t0 = time.perf_counter()
             with step(log, "slog run"):
-                slog.run_file(QUERY_FILE)
-            row["run_s"] = time.perf_counter() - t0
+                resp = slog.run_file(QUERY_FILE)
+            row["run_wall_s"] = time.perf_counter() - t0
 
             t0 = time.perf_counter()
             with step(log, f"dump `{OUTPUT_REL}` (limit {min(limit, MAX_ROWS)})"):
@@ -198,17 +224,63 @@ def run_slog(limit: int = MAX_ROWS) -> dict:
         n_compiled, compile_s = stats.build_delta(before_build, t_start)
         row["n_strata_compiled"] = n_compiled
         row["compile_s"] = compile_s
-        if compile_s is not None:
-            row["exec_s"] = max(0.0, row.get("run_s", 0.0) - compile_s)
         row.update(stats.stat_delta(before_stats))
+        row.update(stats.work_delta(before_stats))
+        # Everything the daemon spent OUTSIDE its read loop:
+        #   setup_s = run_wall_s - fixpoint_ms/1000
+        # fixpoint_ms is the daemon's own read-loop accounting -- the only part of
+        # the run it reports.  The remainder is stratum attach plus, dominant on
+        # this KG, the whole-DB reload armed after every fixpoint (daemon.h:609 ->
+        # database.h reloadInsertBatches): it re-stages every relation as delta and
+        # clears every index for the incoming stratum to re-intern.  That runs as
+        # its own internal stratum, so it emits no pause line and lands in no ms.
+        #
+        # compile_s is deliberately NOT subtracted.  It measures elapsed time until
+        # the freshly built .so appeared, and the daemon is already working by then
+        # (the stratum reaches it in ~0.3s while clang runs on), so clang overlaps
+        # setup rather than adding to it -- wall time here is max(), not sum().
+        if row.get("fixpoint_ms") is not None:
+            row["setup_s"] = max(0.0, row.get("run_wall_s", 0.0)
+                                 - row["fixpoint_ms"] / 1000.0)
         row["predicted_s"] = stats.predict(n_derived, bool(n_compiled))
 
         notes = []
         if n_compiled == 0:
             notes.append("compile-cached")
+
+        # The join plan this query actually ran under: which relation drove each
+        # rule and in what order the tail joined.  summary.csv gets the digest;
+        # the full per-rule listing is archived beside the query.
+        try:
+            pinfo = plan.collect(resp)
+        except Exception as e:
+            log.warning(f"  !! could not recover the join plan: {e!r}")
+            pinfo = None
+        if pinfo:
+            row.update(pinfo["csv"])
+            log.info("  join plan:\n" + "\n".join(
+                f"  {ln}" for ln in plan.render(pinfo).splitlines()))
+            archived_plan = save_plan(row["seq"], plan.render(pinfo))
+            if archived_plan:
+                log.info(f"  archived as {archived_plan.relative_to(SESSION_DIR)}")
+            if not pinfo["plans"]:
+                notes.append("no-plan")
+                log.warning("  !! no (fixpoint ...) events came back -- either the "
+                            "slog server predates the plan-reporting change or "
+                            "every stratum was already resident")
+            elif pinfo["csv"]["n_arms"] == 0 and pinfo["env"].get("multiplan"):
+                notes.append("no-arms")
+                log.warning(
+                    f"  !! SLOG_MULTIPLAN is on "
+                    f"(index={pinfo['env'].get('multiplan_index') or '?'}) but not "
+                    f"one rule-def in these plans carries an arm mark, so runtime "
+                    f"plan selection had nothing to choose between and cannot be "
+                    f"what moved the timing.  slog's arm-eligibility gate "
+                    f"(join-planning.rkt arm-flavor-ok?) needs >= 3 body join "
+                    f"clauses in a rule; the orders above show how many each has")
         log.info(f"  timing: total={fmt_dur(total)}  "
                  f"compile={fmt_dur(compile_s) if compile_s is not None else '?'}  "
-                 f"exec={fmt_dur(row['exec_s']) if row.get('exec_s') is not None else '?'}  "
+                 f"setup={fmt_dur(row['setup_s']) if row.get('setup_s') is not None else '?'}  "
                  f"(strata compiled={n_compiled}, executed={row.get('n_strata_executed')})")
         if row.get("fixpoint_ms") is not None:
             log.info(f"  daemon: fixpoint={row['fixpoint_ms']}ms  "
@@ -236,7 +308,7 @@ def run_slog(limit: int = MAX_ROWS) -> dict:
             notes.append("truncated")
             log.warning(f"  !! truncated: {d['n_rows']} rows exist, only "
                         f"{d['returned']} returned (limit {min(limit, MAX_ROWS)})")
-        if row.get("run_s", 0) > 120:
+        if row.get("run_wall_s", 0) > 120:
             notes.append("slow-run")
         row["notes"] = " ".join(notes)
 

@@ -15,8 +15,12 @@
 set -euo pipefail
 
 TC=/home.na1/ad.wsu.edu/aayush.shrestha/pvt/miniconda3/envs/slogtc
-MR=/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MedicalReasoning
 RACKET=/home.na1/ad.wsu.edu/aayush.shrestha/pvt/racket/bin
+
+# Derived, not spelled absolutely -- the tree moved once (both checkouts now sit
+# under MR/) and every hardcoded path broke together.  slog_server.rkt locates
+# the slog checkout the same way, as MedicalReasoning's sibling.
+MR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 export PATH="$TC/bin:$RACKET:$PATH"
 export CPATH="$TC/include"
@@ -32,7 +36,37 @@ export KG2_SLOG_DB="${KG2_SLOG_DB:-rtx_kg2_281}"
 # (12.6s vs 12.4s fixpoint on the same query) because runtime is dominated by
 # fixed per-stratum overhead rather than generated-code quality.  The background
 # builds only cost disk.
-export SLOG_OPT="${SLOG_OPT:-0}"
+export SLOG_OPT=interp #"${SLOG_OPT:-0}"
+
+# Multi-plan join selection (slog docs/join-planning-assessment.md).  Off by
+# default in slog, so without this the planner emits only its static argmax
+# order and the daemon's interp-measured arm selection has nothing to choose
+# between.  With it on, eligible dynamic rules get one alternative tail order as
+# an interpreted sibling, the daemon meters both on real data before the stratum
+# runs, and the cheaper arm wins.  Unset here means "on"; pass an EMPTY value
+# (SLOG_MULTIPLAN= ./kg2-server.sh) to turn it back off, which is why this uses
+# ${VAR-default} and not ${VAR:-default}.
+#
+# The flag changes plan bytes, so it joins slog's job hash: the first start after
+# this lands recompiles every stratum cold.
+#
+# index=budget:1 caps each relation at ONE new FULL ordering.  This is not the
+# `eager` default because an extra FULL ordering is 32 btrees of complete
+# permuted tuple copies, and eager's union lands that on the giant EDB rules
+# first (slog's notes record a silent 4G OOM on a far smaller relation than
+# kg2_edges).  It is not `free` either: measured on tests/multiplan/flip_mini,
+# `free` attached ZERO arms (0 arm-trace lines vs 89 under both eager and
+# budget:1), i.e. `free` leaves the flag on while selecting nothing.  budget:1
+# was the cheapest policy that actually attaches arms.
+#
+# Residual risk: one extra ordering on kg2_edges is still large in absolute
+# terms.  SLOG_MEM_MAX above is the backstop -- an overrun stops cleanly.  If it
+# does overrun, `free` is the retreat (feature effectively off) rather than a fix.
+export SLOG_MULTIPLAN="${SLOG_MULTIPLAN-1}"
+export SLOG_MULTIPLAN_INDEX="${SLOG_MULTIPLAN_INDEX:-budget:1}"
+
+# Set SLOG_ARM_DEBUG=1 for the attach/pick/UNPIN trace on stderr -- the way to
+# confirm arms are actually being metered and picked.
 
 # Refuse rather than start a load that will thrash.  No reservation is possible
 # here (cgroups are root-only, memlock is 8 MB, no systemd user session), so a

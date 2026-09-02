@@ -1,0 +1,1105 @@
+2026-08-28 01:50:03.398 | INFO    | mr            | ==============================================================================
+2026-08-28 01:50:03.402 | INFO    | mr            | KG2 MCP session 20260828-014913 starting
+2026-08-28 01:50:03.403 | INFO    | mr            | pid=593720  python=3.11.15
+2026-08-28 01:50:03.403 | INFO    | mr            | session dir : /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/logs/20260828-014913
+2026-08-28 01:50:03.404 | INFO    | server        | query file: /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog
+2026-08-28 01:50:03.404 | INFO    | server        | slog server: 127.0.0.1:8642 (client timeout 3600s)
+2026-08-28 01:50:03.404 | INFO    | server        | node DB: /tmp/kg2_nodes_aayush.shrestha@ad.wsu.edu.sqlite
+2026-08-28 01:50:03.405 | INFO    | server        | ==============================================================================
+2026-08-28 01:50:03.405 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-28 01:50:03.405 | INFO    | server        | >> TOOL list_predicates
+2026-08-28 01:50:03.408 | INFO    | kg2_core      |   loaded 61 predicates from /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/data/reference/distinct_core_predicate.tsv in 2ms
+2026-08-28 01:50:03.408 | INFO    | server        |   top predicates: biolink:has_participant, biolink:subclass_of, biolink:occurs_in, biolink:affects, biolink:related_to  ... +56 more
+2026-08-28 01:50:03.409 | INFO    | server        | << TOOL list_predicates finished in 3ms
+2026-08-28 01:50:03.409 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-28 01:50:03.484 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-28 01:50:03.484 | INFO    | server        | >> TOOL resolve_entity  term='Parkinson disease'  limit=10  biolink_type=None
+2026-08-28 01:50:03.484 | INFO    | kg2_core      |   name-resolution lookup: term='Parkinson disease' limit=10 biolink_type=(any)
+2026-08-28 01:50:04.804 | INFO    | kg2_core      |   .. HTTP name-resolution-sri.renci.org replied in 1.32s
+2026-08-28 01:50:04.809 | INFO    | kg2_core      |   name-resolution returned 10 candidate(s)
+2026-08-28 01:50:04.821 | INFO    | server        |   candidates for 'Parkinson disease':
+2026-08-28 01:50:04.821 | INFO    | server        | id                      name                                      category         score 
+2026-08-28 01:50:04.821 | INFO    | server        | ----------------------  ----------------------------------------  ---------------  ------
+2026-08-28 01:50:04.822 | INFO    | server        | MONDO:0005180           Parkinson disease                         biolink:Disease  3588.5
+2026-08-28 01:50:04.822 | INFO    | server        | MONDO:0006966           secondary Parkinson disease               biolink:Disease  1090.9
+2026-08-28 01:50:04.822 | INFO    | server        | MONDO:0001945           postencephalitic Parkinson disease        biolink:Disease  1056.8
+2026-08-28 01:50:04.822 | INFO    | server        | MONDO:0008199           late-onset Parkinson disease              biolink:Disease  875.2 
+2026-08-28 01:50:04.822 | INFO    | server        | MONDO:0008200           autosomal dominant Parkinson disease 1    biolink:Disease  862.6 
+2026-08-28 01:50:04.822 | INFO    | server        | MONDO:0013060           autosomal recessive Parkinson disease 14  biolink:Disease  862.6 
+2026-08-28 01:50:04.822 | INFO    | server        | PANTHER.PATHWAY:P00049  Parkinson disease                         biolink:Pathway  855.3 
+2026-08-28 01:50:04.822 | INFO    | server        | MONDO:0013625           Parkinson disease 17                      biolink:Disease  827.6 
+2026-08-28 01:50:04.822 | INFO    | server        | MONDO:0011562           autosomal dominant Parkinson disease 4    biolink:Disease  779.0 
+2026-08-28 01:50:04.822 | INFO    | server        | MONDO:0014231           juvenile onset Parkinson disease 19A      biolink:Disease  779.0 
+2026-08-28 01:50:04.822 | INFO    | server        | << TOOL resolve_entity finished in 1.34s
+2026-08-28 01:50:04.822 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-28 01:50:08.172 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-28 01:50:08.175 | INFO    | server        | >> TOOL expand_entity  n_curies=1
+2026-08-28 01:50:08.176 | INFO    | server        |   input CURIEs (1):
+2026-08-28 01:50:08.176 | INFO    | server        |     MONDO:0005180
+2026-08-28 01:50:08.176 | INFO    | server        |   * expand MONDO:0005180 ...
+2026-08-28 01:50:08.176 | INFO    | kg2_core      |   node-normalizer clique for MONDO:0005180
+2026-08-28 01:50:08.741 | INFO    | kg2_core      |   .. HTTP nodenormalization-sri.renci.org replied in 565ms
+2026-08-28 01:50:08.741 | INFO    | kg2_core      |   clique for MONDO:0005180: 16 equivalent id(s) -> MONDO:0005180, DOID:14330, OMIM.PS:168600, UMLS:C0030567, MESH:D010300, MEDDRA:10013113, MEDDRA:10033801, MEDDRA:10034007, MEDDRA:10034008, MEDDRA:10061536  ... +6 more
+2026-08-28 01:50:08.745 | INFO    | kg2_core      |   opening existing node DB /tmp/kg2_nodes_aayush.shrestha@ad.wsu.edu.sqlite (2225 MB)
+2026-08-28 01:50:08.746 | INFO    | kg2_core      |   expand MONDO:0005180: 16 clique id(s) -> 6 present in KG2 (10 not in KG2) in 570ms
+2026-08-28 01:50:08.746 | INFO    | kg2_core      |     kept   : MONDO:0005180, DOID:14330, UMLS:C0030567, MESH:D010300, NCIT:C26845, ICD9:332
+2026-08-28 01:50:08.748 | INFO    | server        |   + expand MONDO:0005180 done in 572ms
+2026-08-28 01:50:08.749 | INFO    | server        |   1 input CURIE(s) -> 6 distinct KG2 id(s)
+2026-08-28 01:50:08.749 | INFO    | server        |   kg2_ids (6):
+2026-08-28 01:50:08.749 | INFO    | server        |     MONDO:0005180  DOID:14330     UMLS:C0030567  MESH:D010300
+2026-08-28 01:50:08.749 | INFO    | server        |     NCIT:C26845    ICD9:332
+2026-08-28 01:50:08.750 | INFO    | server        | << TOOL expand_entity finished in 574ms
+2026-08-28 01:50:08.750 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-28 01:50:11.994 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-28 01:50:11.995 | INFO    | server        | >> TOOL run_slog  limit=500
+2026-08-28 01:50:11.999 | INFO    | server        |   query file /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog (735 bytes, modified 2026-08-25 13:42:30)
+2026-08-28 01:50:11.999 | INFO    | server        |   archived as queries/004_run_slog.slog
+2026-08-28 01:50:11.999 | INFO    | server        |   shape: 3 table(s) declared, 1 derived relation(s) -- expect ~13s per derived relation
+2026-08-28 01:50:12.000 | INFO    | server        |   program:
+                                                        | ;; What drugs treat Parkinson disease?
+                                                        | ;; Anchor: MONDO:0005180 expanded to its KG2 id set (6 ids, inlined as one stage).
+                                                        | 
+                                                        | table (edge str str str)
+                                                        | table (node str str str)
+                                                        | table (result str str str)
+                                                        | 
+                                                        | rule (result d name cat) <-- (edge d "biolink:treats" "MONDO:0005180") (node d name cat)
+                                                        | rule (result d name cat) <-- (edge d "biolink:treats" "DOID:14330")    (node d name cat)
+                                                        | rule (result d name cat) <-- (edge d "biolink:treats" "UMLS:C0030567") (node d name cat)
+                                                        | rule (result d name cat) <-- (edge d "biolink:treats" "MESH:D010300")  (node d name cat)
+                                                        | rule (result d name cat) <-- (edge d "biolink:treats" "NCIT:C26845")   (node d name cat)
+                                                        | rule (result d name cat) <-- (edge d "biolink:treats" "ICD9:332")      (node d name cat)
+2026-08-28 01:50:12.000 | INFO    | slog          |   -> slog drop: {"op": "drop", "rel": "result"}
+2026-08-28 01:50:12.027 | ERROR   | slog          |   x slog drop failed after 27ms: transform path is unbound: result
+2026-08-28 01:50:12.027 | INFO    | server        |   no previous `result` to drop (transform path is unbound: result)
+2026-08-28 01:50:12.028 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-28 01:50:12.069 | INFO    | slog          |   <- slog dump ok in 41ms (96 bytes of response)
+2026-08-28 01:50:12.069 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-28 01:50:12.084 | INFO    | slog          |   <- slog dump ok in 14ms (243 bytes of response)
+2026-08-28 01:50:12.084 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-08-28 01:50:12.102 | INFO    | slog          |   <- slog dump ok in 18ms (64 bytes of response)
+2026-08-28 01:50:12.105 | INFO    | server        |   * slog run ...
+2026-08-28 01:50:12.111 | INFO    | slog          |   -> slog run: {"op": "run", "path": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog"}
+2026-08-28 01:53:00.612 | INFO    | slog          |   <- slog run ok in 2m 48.5s (950 bytes of response)
+2026-08-28 01:53:00.614 | WARNING | slog          |   !! slog run took 2m 48.5s
+2026-08-28 01:53:00.614 | INFO    | server        |   + slog run done in 2m 48.5s
+2026-08-28 01:53:00.614 | INFO    | server        |   * dump `result` (limit 500) ...
+2026-08-28 01:53:00.614 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "result", "limit": 500}
+2026-08-28 01:53:00.696 | INFO    | slog          |   <- slog dump ok in 82ms (29591 bytes of response)
+2026-08-28 01:53:00.696 | INFO    | server        |   + dump `result` (limit 500) done in 82ms
+2026-08-28 01:53:00.701 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-28 01:53:00.748 | INFO    | slog          |   <- slog dump ok in 47ms (128 bytes of response)
+2026-08-28 01:53:00.748 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-28 01:53:00.771 | INFO    | slog          |   <- slog dump ok in 23ms (312 bytes of response)
+2026-08-28 01:53:00.771 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-08-28 01:53:00.805 | INFO    | slog          |   <- slog dump ok in 34ms (64 bytes of response)
+2026-08-28 01:53:00.807 | INFO    | server        |   join plan:
+                                                      stratum 1  6c7a74ae  2 iteration(s), 30383.2 ms  (/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/slog/build/6c7a74ae.plan, +0 internal error rules)
+                                                          query.slog:8         all:edge             edge(b=2) -> node(b=1)
+                                                          query.slog:9         all:edge             edge(b=2) -> node(b=1)
+                                                          query.slog:10        all:edge             edge(b=2) -> node(b=1)
+                                                          query.slog:11        all:edge             edge(b=2) -> node(b=1)
+                                                          query.slog:12        all:edge             edge(b=2) -> node(b=1)
+                                                          query.slog:13        all:edge             edge(b=2) -> node(b=1)
+2026-08-28 01:53:00.812 | INFO    | server        |   archived as queries/004_run_slog.plan.txt
+2026-08-28 01:53:00.812 | WARNING | server        |   !! SLOG_MULTIPLAN is on (index=budget:1) but not one rule-def in these plans carries an arm mark, so runtime plan selection had nothing to choose between and cannot be what moved the timing.  slog's arm-eligibility gate (join-planning.rkt arm-flavor-ok?) needs >= 3 body join clauses in a rule; the orders above show how many each has
+2026-08-28 01:53:00.812 | INFO    | server        |   timing: total=2m 48.7s  compile=1.53s  exec=2m 47.0s  (strata compiled=2, executed=1)
+2026-08-28 01:53:00.812 | INFO    | server        |   daemon: fixpoint=30383.2ms  iterations=2  rule_fires=1627
+2026-08-28 01:53:00.812 | INFO    | server        |   cost model predicted ~22s for this shape
+2026-08-28 01:53:00.812 | INFO    | server        |   result: n_rows=1627 returned=500 truncated=True
+2026-08-28 01:53:00.813 | INFO    | server        |   CURIEs out of the answer relation, unnamed at this point:
+2026-08-28 01:53:00.813 | INFO    | server        |   result CURIEs (512):
+2026-08-28 01:53:00.820 | INFO    | server        |     UMLS:C0142469                            biolink:ChemicalEntity                   UMLS:C0225326                            UMLS:C0729338
+2026-08-28 01:53:00.820 | INFO    | server        |     biolink:Activity                         UMLS:C0454512                            biolink:Procedure                        UMLS:C0664589
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0021083                            UMLS:C0917964                            UMLS:C0068899                            UMLS:C0042209
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C1527378                            biolink:Device                           UMLS:C0006462                            UMLS:C0073561
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0870721                            UMLS:C0011816                            UMLS:C1706912                            UMLS:C5238484
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0024730                            UMLS:C0245561                            UMLS:C0003297                            biolink:Drug
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0558024                            UMLS:C0166552                            UMLS:C0027930                            biolink:NamedThing
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0086583                            UMLS:C4277545                            UMLS:C0014935                            UMLS:C0679750
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0283703                            UMLS:C0243072                            UMLS:C0037659                            UMLS:C0033497
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0016365                            UMLS:C0041290                            UMLS:C0128329                            UMLS:C0038317
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0600015                            UMLS:C0175637                            UMLS:C0040732                            UMLS:C0007876
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0047611                            UMLS:C0011501                            UMLS:C0016642                            UMLS:C0031008
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0026457                            UMLS:C0020852                            UMLS:C0042210                            UMLS:C0019590
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0472699                            UMLS:C0076147                            UMLS:C0597834                            UMLS:C1434556
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0040771                            UMLS:C1171257                            UMLS:C0020740                            UMLS:C0870913
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0936072                            UMLS:C0001443                            UMLS:C0195775                            UMLS:C0006949
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C1516735                            UMLS:C0023570                            UMLS:C1562292                            DrugCentral:333
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0046983                            UMLS:C0006982                            UMLS:C0017986                            UMLS:C1101411
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0014939                            UMLS:C0026055                            UMLS:C0055633                            UMLS:C0056650
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0935576                            UMLS:C0127649                            UMLS:C0419189                            UMLS:C0000477
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0026606                            UMLS:C1532411                            UMLS:C0005527                            UMLS:C0524861
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0039845                            UMLS:C0545084                            UMLS:C0162589                            UMLS:C0073096
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0966149                            UMLS:C0140801                            UMLS:C0038803                            UMLS:C0304411
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0002712                            UMLS:C4475891                            UMLS:C0013786                            UMLS:C0008952
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0084178                            UMLS:C0003295                            UMLS:C0220780                            UMLS:C2922974
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C1138408                            UMLS:C0520484                            UMLS:C0150593                            UMLS:C0206788
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C1883583                            UMLS:C0068994                            UMLS:C1454234                            DrugCentral:144
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0556033                            UMLS:C0036753                            UMLS:C0087162                            NCBIGene:1312
+2026-08-28 01:53:00.821 | INFO    | server        |     biolink:Gene                             UMLS:C0949266                            UMLS:C0056501                            UMLS:C0048297
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0075083                            UMLS:C0042291                            UMLS:C0023776                            UMLS:C0002844
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0007975                            UMLS:C0184617                            UMLS:C0035762                            UMLS:C0001648
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0031935                            UMLS:C0740218                            UMLS:C0279328                            UMLS:C0080331
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0034927                            UMLS:C0003015                            UMLS:C0013015                            UMLS:C0024977
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0150184                            UMLS:C0076252                            UMLS:C0001047                            UMLS:C0353697
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0078489                            UMLS:C0343138                            UMLS:C0870222                            UMLS:C0017118
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0061851                            UMLS:C1514967                            UMLS:C0237934                            UMLS:C0073590
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0207661                            UMLS:C0107994                            UMLS:C0598695                            UMLS:C0146876
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0181741                            UMLS:C0021079                            UMLS:C0012290                            UMLS:C0242708
+2026-08-28 01:53:00.821 | INFO    | server        |     UMLS:C0020974                            UMLS:C0036720                            UMLS:C0600364                            UMLS:C0023870
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0064774                            UMLS:C0059932                            UMLS:C0034754                            UMLS:C0587591
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0058698                            biolink:Polypeptide                      UMLS:C0024911                            UMLS:C0056633
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0055729                            UMLS:C0003211                            UMLS:C0031184                            UMLS:C0031916
+2026-08-28 01:53:00.822 | INFO    | server        |     DrugCentral:2276                         UMLS:C0078844                            UMLS:C1273869                            UMLS:C0683474
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0051318                            UMLS:C0023369                            UMLS:C0699936                            UMLS:C0021528
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0242897                            UMLS:C0030040                            UMLS:C0344211                            UMLS:C0969677
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0752189                            UMLS:C1123457                            UMLS:C0010137                            UMLS:C0071649
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0074710                            UMLS:C1550600                            UMLS:C0006657                            DrugCentral:4921
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0700899                            UMLS:C0068168                            UMLS:C0041056                            DRUGBANK:DB00494
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0005117                            UMLS:C4704697                            UMLS:C0010637                            UMLS:C0125606
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0012963                            UMLS:C0080232                            UMLS:C2717877                            UMLS:C0242889
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0030054                            UMLS:C0086225                            UMLS:C0696628                            biolink:PopulationOfIndividualOrganisms
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0813141                            UMLS:C0388812                            UMLS:C0871707                            UMLS:C0179038
+2026-08-28 01:53:00.822 | INFO    | server        |     biolink:PhysicalEntity                   UMLS:C0871198                            UMLS:C0378018                            UMLS:C0182934
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C1138603                            biolink:InformationContentEntity         DRUGBANK:DB00376                         UMLS:C0496675
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0058218                            UMLS:C0751429                            UMLS:C0842093                            UMLS:C0066801
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0031007                            UMLS:C0025746                            UMLS:C1527386                            UMLS:C0142805
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0285984                            UMLS:C0911014                            UMLS:C0729377                            UMLS:C0025242
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0012132                            UMLS:C0012265                            UMLS:C0057163                            UMLS:C0014708
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0740287                            UMLS:C0024027                            UMLS:C0184338                            UMLS:C0528561
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0987131                            UMLS:C0381061                            UMLS:C0540511                            UMLS:C0034272
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0062127                            UMLS:C0053508                            UMLS:C0176751                            UMLS:C0011684
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0439775                            UMLS:C0163159                            UMLS:C0040613                            UMLS:C1722267
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0140182                            UMLS:C2981820                            UMLS:C0242297                            UMLS:C0289884
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0085203                            UMLS:C0032207                            biolink:SmallMolecule                    UMLS:C0040736
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0028908                            UMLS:C0017797                            UMLS:C0358430                            UMLS:C0025228
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0150764                            UMLS:C1312149                            UMLS:C0003289                            UMLS:C0175723
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C1138412                            UMLS:C0392535                            UMLS:C0037494                            UMLS:C0650235
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0181209                            UMLS:C4706197                            UMLS:C0023863                            UMLS:C0052946
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C2353951                            UMLS:C0242913                            UMLS:C0011331                            UMLS:C0003385
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0813618                            UMLS:C0729168                            UMLS:C1098261                            UMLS:C0184069
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0017887                            UMLS:C0009818                            UMLS:C0006931                            UMLS:C0376626
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0037533                            UMLS:C0001164                            UMLS:C3852966                            UMLS:C0078032
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0003009                            UMLS:C0873188                            UMLS:C0010976                            UMLS:C0059438
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0012968                            UMLS:C0086930                            UMLS:C0018546                            UMLS:C0021587
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0042890                            DrugCentral:3521                         UMLS:C0206080                            UMLS:C0893636
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0024808                            UMLS:C0149684                            UMLS:C0377892                            UMLS:C0010963
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0000378                            UMLS:C0022471                            UMLS:C0489525                            UMLS:C0019993
+2026-08-28 01:53:00.822 | INFO    | server        |     UMLS:C0040808                            UMLS:C0756261                            UMLS:C0034261                            UMLS:C0007258
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C1611640                            UMLS:C0142340                            UMLS:C0546852                            UMLS:C1615645
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0006669                            UMLS:C0015827                            UMLS:C0007974                            UMLS:C0033228
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0772054                            UMLS:C0086511                            UMLS:C0018738                            UMLS:C0039245
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0017313                            UMLS:C0008287                            DRUGBANK:DB00190                         UMLS:C0007044
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C1321564                            UMLS:C0556030                            UMLS:C2945704                            UMLS:C0053947
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0171023                            UMLS:C0185026                            UMLS:C0700876                            UMLS:C0001644
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0196911                            UMLS:C0012030                            UMLS:C0082384                            UMLS:C0000578
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0257343                            UMLS:C0304229                            UMLS:C1136250                            UMLS:C0255998
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0180665                            UMLS:C0194810                            UMLS:C0376211                            UMLS:C0595267
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0068366                            UMLS:C0025741                            UMLS:C0028040                            UMLS:C0019930
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0040805                            UMLS:C0074460                            UMLS:C0180860                            UMLS:C0056060
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C1139855                            UMLS:C0045724                            UMLS:C0026642                            UMLS:C0070559
+2026-08-28 01:53:00.823 | INFO    | server        |     DRUGBANK:DB00245                         UMLS:C1553667                            UMLS:C0022024                            UMLS:C0056506
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0183185                            UMLS:C0220821                            UMLS:C0242896                            UMLS:C0003209
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0633056                            UMLS:C0009011                            UMLS:C0185115                            UMLS:C0279492
+2026-08-28 01:53:00.823 | INFO    | server        |     DrugCentral:2697                         UMLS:C0021461                            UMLS:C0020431                            UMLS:C0381385
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0013216                            UMLS:C0069939                            UMLS:C0012159                            UMLS:C0966897
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0813036                            UMLS:C0075857                            UMLS:C0304926                            UMLS:C0003729
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0935989                            UMLS:C0008845                            UMLS:C0529793                            UMLS:C0012497
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0097797                            UMLS:C0006353                            UMLS:C5392103                            UMLS:C0441509
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0336660                            UMLS:C0199451                            UMLS:C0042878                            UMLS:C0000975
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0206056                            UMLS:C0006213                            UMLS:C1311105                            UMLS:C0208881
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C1513403                            UMLS:C0060926                            UMLS:C0181904                            UMLS:C0068485
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0085155                            UMLS:C0019392                            UMLS:C0199171                            DRUGBANK:DB00323
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0196913                            UMLS:C0068788                            UMLS:C0150162                            UMLS:C0682880
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C1119918                            UMLS:C0013231                            UMLS:C1530072                            UMLS:C0037125
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0595265                            UMLS:C0023749                            UMLS:C1100626                            UMLS:C0242701
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0377265                            UMLS:C0392806                            UMLS:C0184666                            UMLS:C0770932
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C1277078                            UMLS:C0032015                            UMLS:C0454527                            UMLS:C0394374
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0376518                            UMLS:C0015952                            UMLS:C1293132                            UMLS:C1883350
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0079083                            UMLS:C0026549                            UMLS:C0002423                            UMLS:C0023828
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0063327                            UMLS:C0038039                            UMLS:C0237406                            UMLS:C0312452
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0205991                            UMLS:C0008425                            UMLS:C0001641                            UMLS:C0034392
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0071097                            UMLS:C0028008                            DrugCentral:1567                         UMLS:C4255216
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0002641                            UMLS:C0028678                            UMLS:C0013900                            UMLS:C0242402
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0186010                            UMLS:C0279033                            UMLS:C1364955                            UMLS:C0003232
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0007447                            UMLS:C0015506                            UMLS:C0026056                            UMLS:C0058516
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0031436                            UMLS:C0002911                            UMLS:C0281603                            UMLS:C0006507
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0683465                            UMLS:C0013794                            UMLS:C0071304                            UMLS:C3539957
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0144576                            UMLS:C0769581                            UMLS:C0011134                            UMLS:C0074554
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C3858690                            UMLS:C0076316                            UMLS:C0071538                            UMLS:C0036079
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0039043                            UMLS:C0679543                            UMLS:C0237429                            UMLS:C1171350
+2026-08-28 01:53:00.823 | INFO    | server        |     UMLS:C0021753                            UMLS:C0085208                            UMLS:C1504389                            UMLS:C1274136
+2026-08-28 01:53:00.824 | INFO    | server        |     UMLS:C0278347                            UMLS:C0086969                            UMLS:C0043031                            UMLS:C0012228
+2026-08-28 01:53:00.824 | INFO    | server        |     UMLS:C0003893                            UMLS:C0287163                            UMLS:C1963758                            UMLS:C0085143
+2026-08-28 01:53:00.824 | INFO    | server        |     UMLS:C0167117                            UMLS:C0339897                            UMLS:C3242284                            UMLS:C0870507
+2026-08-28 01:53:00.824 | INFO    | server        |     UMLS:C0010467                            UMLS:C0042105                            DRUGBANK:DB00942                         UMLS:C0419144
+2026-08-28 01:53:00.824 | INFO    | server        |     UMLS:C0041249                            UMLS:C0060794                            UMLS:C0011211                            UMLS:C0065936
+2026-08-28 01:53:00.824 | INFO    | server        |     UMLS:C0579118                            UMLS:C0065331                            UMLS:C0949288                            UMLS:C0041536
+2026-08-28 01:53:00.824 | INFO    | server        |     UMLS:C1514821                            UMLS:C0279493                            UMLS:C0278329                            UMLS:C0864243
+2026-08-28 01:53:00.824 | WARNING | server        |   !! truncated: 1627 rows exist, only 500 returned (limit 500)
+2026-08-28 01:53:00.824 | INFO    | server        | << TOOL run_slog finished in 2m 48.8s
+2026-08-28 01:53:00.824 | WARNING | server        | !! run_slog took 2m 48.8s -- slow call
+2026-08-28 01:53:00.824 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-28 01:54:10.536 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-28 01:54:10.538 | INFO    | server        | >> TOOL run_slog  limit=200
+2026-08-28 01:54:10.541 | INFO    | server        |   query file /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog (922 bytes, modified 2026-08-28 01:54:08)
+2026-08-28 01:54:10.541 | INFO    | server        |   archived as queries/005_run_slog.slog
+2026-08-28 01:54:10.541 | INFO    | server        |   shape: 2 table(s) declared, 1 derived relation(s) -- expect ~13s per derived relation
+2026-08-28 01:54:10.542 | INFO    | server        |   program:
+                                                        | ;; Which knowledge sources assert `biolink:treats` -> Parkinson disease?
+                                                        | ;; Anchor: MONDO:0005180 expanded to its 6-id KG2 set, inlined as one stage.
+                                                        | ;; kg2_edges cols: 1 core_predicate 2 knowledge_source 3 negated ... 14 subject 15 object
+                                                        | 
+                                                        | table (kg2_edges str str str str str str str str str str str str str str str)
+                                                        | table (result str)
+                                                        | 
+                                                        | rule (result ks) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ _ "MONDO:0005180")
+                                                        | rule (result ks) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ _ "DOID:14330")
+                                                        | rule (result ks) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ _ "UMLS:C0030567")
+                                                        | rule (result ks) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ _ "MESH:D010300")
+                                                        | rule (result ks) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ _ "NCIT:C26845")
+                                                        | rule (result ks) <-- (kg2_edges "biolink:treats" ks "False" _ _ _ _ _ _ _ _ _ _ _ "ICD9:332")
+2026-08-28 01:54:10.542 | INFO    | slog          |   -> slog drop: {"op": "drop", "rel": "result"}
+2026-08-28 01:54:10.603 | INFO    | slog          |   <- slog drop ok in 61ms (12 bytes of response)
+2026-08-28 01:54:10.603 | INFO    | server        |   dropped previous `result` relation
+2026-08-28 01:54:10.604 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-28 01:54:10.621 | INFO    | slog          |   <- slog dump ok in 17ms (128 bytes of response)
+2026-08-28 01:54:10.621 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-28 01:54:10.645 | INFO    | slog          |   <- slog dump ok in 24ms (312 bytes of response)
+2026-08-28 01:54:10.645 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-08-28 01:54:10.661 | INFO    | slog          |   <- slog dump ok in 16ms (64 bytes of response)
+2026-08-28 01:54:10.664 | INFO    | server        |   * slog run ...
+2026-08-28 01:54:10.670 | INFO    | slog          |   -> slog run: {"op": "run", "path": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog"}
+2026-08-28 01:56:18.231 | INFO    | slog          |   <- slog run ok in 2m 07.6s (1223 bytes of response)
+2026-08-28 01:56:18.232 | WARNING | slog          |   !! slog run took 2m 07.6s
+2026-08-28 01:56:18.233 | INFO    | server        |   + slog run done in 2m 07.6s
+2026-08-28 01:56:18.233 | INFO    | server        |   * dump `result` (limit 200) ...
+2026-08-28 01:56:18.234 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "result", "limit": 200}
+2026-08-28 01:56:18.254 | INFO    | slog          |   <- slog dump ok in 20ms (127 bytes of response)
+2026-08-28 01:56:18.254 | INFO    | server        |   + dump `result` (limit 200) done in 21ms
+2026-08-28 01:56:18.258 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-28 01:56:18.273 | INFO    | slog          |   <- slog dump ok in 15ms (160 bytes of response)
+2026-08-28 01:56:18.273 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-28 01:56:18.291 | INFO    | slog          |   <- slog dump ok in 17ms (391 bytes of response)
+2026-08-28 01:56:18.292 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-08-28 01:56:18.307 | INFO    | slog          |   <- slog dump ok in 13ms (64 bytes of response)
+2026-08-28 01:56:18.311 | INFO    | server        |   join plan:
+                                                      stratum 2  69fefe80  2 iteration(s), 42285.1 ms  (/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/slog/build/69fefe80.plan, +0 internal error rules)
+                                                          query.slog:8         all:kg2_edges        kg2_edges(b=3)
+                                                          query.slog:9         all:kg2_edges        kg2_edges(b=3)
+                                                          query.slog:10        all:kg2_edges        kg2_edges(b=3)
+                                                          query.slog:11        all:kg2_edges        kg2_edges(b=3)
+                                                          query.slog:12        all:kg2_edges        kg2_edges(b=3)
+                                                          query.slog:13        all:kg2_edges        kg2_edges(b=3)
+2026-08-28 01:56:18.316 | INFO    | server        |   archived as queries/005_run_slog.plan.txt
+2026-08-28 01:56:18.317 | WARNING | server        |   !! SLOG_MULTIPLAN is on (index=budget:1) but not one rule-def in these plans carries an arm mark, so runtime plan selection had nothing to choose between and cannot be what moved the timing.  slog's arm-eligibility gate (join-planning.rkt arm-flavor-ok?) needs >= 3 body join clauses in a rule; the orders above show how many each has
+2026-08-28 01:56:18.317 | INFO    | server        |   timing: total=2m 07.7s  compile=1.58s  exec=2m 06.0s  (strata compiled=2, executed=1)
+2026-08-28 01:56:18.317 | INFO    | server        |   daemon: fixpoint=42285.1ms  iterations=2  rule_fires=1627
+2026-08-28 01:56:18.317 | INFO    | server        |   cost model predicted ~22s for this shape
+2026-08-28 01:56:18.317 | INFO    | server        |   result: n_rows=3 returned=3 truncated=False
+2026-08-28 01:56:18.318 | INFO    | server        |   CURIEs out of the answer relation, unnamed at this point:
+2026-08-28 01:56:18.319 | INFO    | server        |   result CURIEs (3):
+2026-08-28 01:56:18.319 | INFO    | server        |     infores:drugcentral  infores:semmeddb     infores:repodb
+2026-08-28 01:56:18.319 | INFO    | server        | << TOOL run_slog finished in 2m 07.8s
+2026-08-28 01:56:18.319 | WARNING | server        | !! run_slog took 2m 07.8s -- slow call
+2026-08-28 01:56:18.326 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-28 01:56:53.107 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-28 01:56:53.107 | INFO    | server        | >> TOOL run_slog  limit=400
+2026-08-28 01:56:53.110 | INFO    | server        |   query file /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog (2463 bytes, modified 2026-08-28 01:56:51)
+2026-08-28 01:56:53.110 | INFO    | server        |   archived as queries/006_run_slog.slog
+2026-08-28 01:56:53.111 | INFO    | server        |   shape: 3 table(s) declared, 1 derived relation(s) -- expect ~13s per derived relation
+2026-08-28 01:56:53.111 | INFO    | server        |   program:
+                                                        | ;; Which drugs treat Parkinson disease, per the CURATED sources only?
+                                                        | ;; Anchor: MONDO:0005180 -> its 6-id KG2 set, inlined (one stage).
+                                                        | ;; treats -> PD comes from 3 sources: drugcentral + repodb (curated) and semmeddb
+                                                        | ;; (literature text-mining -- 1627 noisy subjects incl. procedures/devices). Keep the first two.
+                                                        | ;; kg2_edges cols: 1 core_predicate 2 knowledge_source 3 negated ... 14 subject 15 object
+                                                        | 
+                                                        | table (kg2_edges str str str str str str str str str str str str str str str)
+                                                        | table (node str str str)
+                                                        | table (result str str str str)
+                                                        | 
+                                                        | rule (result "infores:drugcentral" d nm cat) <--
+                                                        |   (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "MONDO:0005180")
+                                                        |   (node d nm cat)
+                                                        | 
+                                                        | rule (result "infores:drugcentral" d nm cat) <--
+                                                        |   (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "DOID:14330")
+                                                        |   (node d nm cat)
+                                                        | 
+                                                        | rule (result "infores:drugcentral" d nm cat) <--
+                                                        |   (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "UMLS:C0030567")
+                                                        |   (node d nm cat)
+                                                        | 
+                                                        | rule (result "infores:drugcentral" d nm cat) <--
+                                                        |   (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "MESH:D010300")
+                                                        |   (node d nm cat)
+                                                        | 
+                                                        | rule (result "infores:drugcentral" d nm cat) <--
+                                                        |   (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "NCIT:C26845")
+                                                        |   (node d nm cat)
+                                                        | 
+                                                        | rule (result "infores:drugcentral" d nm cat) <--
+                                                        |   (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "ICD9:332")
+                                                        |   (node d nm cat)
+                                                        | 
+                                                        | rule (result "infores:repodb" d nm cat) <--
+                                                        |   (kg2_edges "biolink:treats" "infores:repodb" "False" _ _ _ _ _ _ _ _ _ _ d "MONDO:0005180")
+                                                        |   (node d nm cat)
+                                                        | 
+                                                        | rule (result "infores:repodb" d nm cat) <--
+                                                        |   (kg2_edges "biolink:treats" "infores:repodb" "False" _ _ _ _ _ _ _ _ _ _ d "DOID:14330")
+                                                        |   (node d nm cat)
+                                                        | 
+                                                        | rule (result "infores:repodb" d nm cat) <--
+                                                        |   (kg2_edges "biolink:treats" "infores:repodb" "False" _ _ _ _ _ _ _ _ _ _ d "UMLS:C0030567")
+                                                        |   (node d nm cat)
+                                                        | 
+                                                        | rule (result "infores:repodb" d nm cat) <--
+                                                        |   (kg2_edges "biolink:treats" "infores:repodb" "False" _ _ _ _ _ _ _ _ _ _ d "MESH:D010300")
+                                                        |   (node d nm cat)
+                                                        | 
+                                                        | rule (result "infores:repodb" d nm cat) <--
+                                                        |   (kg2_edges "biolink:treats" "infores:repodb" "False" _ _ _ _ _ _ _ _ _ _ d "NCIT:C26845")
+                                                        |   (node d nm cat)
+                                                        | 
+                                                        | rule (result "infores:repodb" d nm cat) <--
+                                                        |   (kg2_edges "biolink:treats" "infores:repodb" "False" _ _ _ _ _ _ _ _ _ _ d "ICD9:332")
+                                                        |   (node d nm cat)
+2026-08-28 01:56:53.111 | INFO    | slog          |   -> slog drop: {"op": "drop", "rel": "result"}
+2026-08-28 01:56:53.148 | INFO    | slog          |   <- slog drop ok in 37ms (12 bytes of response)
+2026-08-28 01:56:53.149 | INFO    | server        |   dropped previous `result` relation
+2026-08-28 01:56:53.149 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-28 01:56:53.170 | INFO    | slog          |   <- slog dump ok in 21ms (160 bytes of response)
+2026-08-28 01:56:53.171 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-28 01:56:53.183 | INFO    | slog          |   <- slog dump ok in 12ms (391 bytes of response)
+2026-08-28 01:56:53.184 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-08-28 01:56:53.199 | INFO    | slog          |   <- slog dump ok in 15ms (64 bytes of response)
+2026-08-28 01:56:53.203 | INFO    | server        |   * slog run ...
+2026-08-28 01:56:53.208 | INFO    | slog          |   -> slog run: {"op": "run", "path": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog"}
+2026-08-28 01:59:07.803 | INFO    | slog          |   <- slog run ok in 2m 14.6s (1286 bytes of response)
+2026-08-28 01:59:07.804 | WARNING | slog          |   !! slog run took 2m 14.6s
+2026-08-28 01:59:07.804 | INFO    | server        |   + slog run done in 2m 14.6s
+2026-08-28 01:59:07.804 | INFO    | server        |   * dump `result` (limit 400) ...
+2026-08-28 01:59:07.804 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "result", "limit": 400}
+2026-08-28 01:59:07.824 | INFO    | slog          |   <- slog dump ok in 20ms (3530 bytes of response)
+2026-08-28 01:59:07.824 | INFO    | server        |   + dump `result` (limit 400) done in 20ms
+2026-08-28 01:59:07.829 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-28 01:59:07.842 | INFO    | slog          |   <- slog dump ok in 9ms (192 bytes of response)
+2026-08-28 01:59:07.843 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-28 01:59:07.854 | INFO    | slog          |   <- slog dump ok in 11ms (471 bytes of response)
+2026-08-28 01:59:07.855 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-08-28 01:59:07.864 | INFO    | slog          |   <- slog dump ok in 8ms (64 bytes of response)
+2026-08-28 01:59:07.866 | INFO    | server        |   join plan:
+                                                      stratum 3  b09811c9  2 iteration(s), 37374.0 ms  (/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/slog/build/b09811c9.plan, +0 internal error rules)
+                                                          query.slog:11        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+                                                          query.slog:15        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+                                                          query.slog:19        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+                                                          query.slog:23        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+                                                          query.slog:27        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+                                                          query.slog:31        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+                                                          query.slog:35        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+                                                          query.slog:39        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+                                                          query.slog:43        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+                                                          query.slog:47        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+                                                          query.slog:51        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+                                                          query.slog:55        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+2026-08-28 01:59:07.869 | INFO    | server        |   archived as queries/006_run_slog.plan.txt
+2026-08-28 01:59:07.869 | WARNING | server        |   !! SLOG_MULTIPLAN is on (index=budget:1) but not one rule-def in these plans carries an arm mark, so runtime plan selection had nothing to choose between and cannot be what moved the timing.  slog's arm-eligibility gate (join-planning.rkt arm-flavor-ok?) needs >= 3 body join clauses in a rule; the orders above show how many each has
+2026-08-28 01:59:07.870 | INFO    | server        |   timing: total=2m 14.7s  compile=27.81s  exec=1m 46.8s  (strata compiled=2, executed=1)
+2026-08-28 01:59:07.870 | INFO    | server        |   daemon: fixpoint=37374.0ms  iterations=2  rule_fires=43
+2026-08-28 01:59:07.870 | INFO    | server        |   cost model predicted ~22s for this shape
+2026-08-28 01:59:07.870 | INFO    | server        |   result: n_rows=43 returned=43 truncated=False
+2026-08-28 01:59:07.870 | INFO    | server        |   CURIEs out of the answer relation, unnamed at this point:
+2026-08-28 01:59:07.870 | INFO    | server        |   result CURIEs (47):
+2026-08-28 01:59:07.870 | INFO    | server        |     infores:drugcentral     DrugCentral:1018        biolink:ChemicalEntity  DrugCentral:228
+2026-08-28 01:59:07.870 | INFO    | server        |     DrugCentral:763         DrugCentral:2745        DrugCentral:2558        DrugCentral:403
+2026-08-28 01:59:07.870 | INFO    | server        |     DrugCentral:5142        DrugCentral:333         DrugCentral:2233        DrugCentral:4921
+2026-08-28 01:59:07.870 | INFO    | server        |     DrugCentral:2429        DrugCentral:971         DrugCentral:3521        DrugCentral:1567
+2026-08-28 01:59:07.870 | INFO    | server        |     DrugCentral:496         DrugCentral:5143        DrugCentral:374         DrugCentral:2402
+2026-08-28 01:59:07.870 | INFO    | server        |     DrugCentral:2407        DrugCentral:144         DrugCentral:2697        DrugCentral:4882
+2026-08-28 01:59:07.870 | INFO    | server        |     DrugCentral:2276        infores:repodb          DRUGBANK:DB00190        DRUGBANK:DB00915
+2026-08-28 01:59:07.870 | INFO    | server        |     DRUGBANK:DB05271        DRUGBANK:DB01037        DRUGBANK:DB01235        biolink:SmallMolecule
+2026-08-28 01:59:07.870 | INFO    | server        |     DRUGBANK:DB00413        DRUGBANK:DB00942        DRUGBANK:DB00494        DRUGBANK:DB00714
+2026-08-28 01:59:07.870 | INFO    | server        |     DRUGBANK:DB06262        DRUGBANK:DB00245        DRUGBANK:DB00387        DRUGBANK:DB00323
+2026-08-28 01:59:07.870 | INFO    | server        |     DRUGBANK:DB01367        DRUGBANK:DB00988        DRUGBANK:DB00268        DRUGBANK:DB00368
+2026-08-28 01:59:07.870 | INFO    | server        |     DRUGBANK:DB00376        DRUGBANK:DB01200        DRUGBANK:DB00810
+2026-08-28 01:59:07.870 | INFO    | server        | << TOOL run_slog finished in 2m 14.8s
+2026-08-28 01:59:07.870 | WARNING | server        | !! run_slog took 2m 14.8s -- slow call
+2026-08-28 01:59:07.870 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-28 02:00:52.740 | INFO    | server        | ------------------------------------------------------------------------------
+2026-08-28 02:00:52.742 | INFO    | server        | >> TOOL run_slog  limit=500
+2026-08-28 02:00:52.745 | INFO    | server        |   query file /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog (10429 bytes, modified 2026-08-28 02:00:43)
+2026-08-28 02:00:52.745 | INFO    | server        |   archived as queries/007_run_slog.slog
+2026-08-28 02:00:52.746 | INFO    | server        |   shape: 5 table(s) declared, 2 derived relation(s) -- expect ~13s per derived relation
+2026-08-28 02:00:52.746 | INFO    | server        |   program:
+                                                        | ;; Genes metformin interacts with that are ALSO associated with type 2 diabetes.
+                                                        | ;;
+                                                        | ;; Metformin expands to 120 KG2 ids -> too many to inline, so it gets one membership
+                                                        | ;; relation (one stage).  T2D expands to 9 ids -> inlined as literals across many rules
+                                                        | ;; sharing the head `result`, which stays a single stage.
+                                                        | ;;
+                                                        | ;; CRITICAL: the metformin-side gene (g) and the T2D-side gene (g2) are derived
+                                                        | ;; independently and land in different vocabularies (NCBIGene vs UniProtKB vs HGNC vs
+                                                        | ;; UMLS).  Joining them on the raw id returns 0 rows.  They are joined on the canonical
+                                                        | ;; key k from kg2_norm, and a real KG2 id is returned alongside k so it can be named.
+                                                        | 
+                                                        | table (edge str str str)
+                                                        | table (node str str str)
+                                                        | table (kg2_norm str str)
+                                                        | table (met_set str)
+                                                        | table (result str str str str str)
+                                                        | 
+                                                        | rule (met_set "CHEBI:6801")
+                                                        | rule (met_set "CHEMBL.COMPOUND:CHEMBL1431")
+                                                        | rule (met_set "DRUGBANK:DB00331")
+                                                        | rule (met_set "MESH:D008687")
+                                                        | rule (met_set "DrugCentral:1725")
+                                                        | rule (met_set "HMDB:HMDB0001921")
+                                                        | rule (met_set "KEGG.COMPOUND:C07151")
+                                                        | rule (met_set "UMLS:C0025598")
+                                                        | rule (met_set "CHEBI:6802")
+                                                        | rule (met_set "CHEBI:90684")
+                                                        | rule (met_set "CHEMBL.COMPOUND:CHEMBL1703")
+                                                        | rule (met_set "MESH:C585596")
+                                                        | rule (met_set "UMLS:C3267701")
+                                                        | rule (met_set "UMLS:C0770893")
+                                                        | rule (met_set "UMLS:C0591573")
+                                                        | rule (met_set "UMLS:C1242236")
+                                                        | rule (met_set "UMLS:C1246863")
+                                                        | rule (met_set "UMLS:C1246864")
+                                                        | rule (met_set "UMLS:C1330510")
+                                                        | rule (met_set "UMLS:C1331315")
+                                                        | rule (met_set "UMLS:C1331505")
+                                                        | rule (met_set "UMLS:C1724447")
+                                                        | rule (met_set "UMLS:C1739198")
+                                                        | rule (met_set "UMLS:C1878773")
+                                                        | rule (met_set "UMLS:C2240742")
+                                                        | rule (met_set "UMLS:C2355883")
+                                                        | rule (met_set "UMLS:C2719777")
+                                                        | rule (met_set "UMLS:C0978484")
+                                                        | rule (met_set "UMLS:C2719778")
+                                                        | rule (met_set "UMLS:C0939052")
+                                                        | rule (met_set "UMLS:C2719781")
+                                                        | rule (met_set "UMLS:C1329024")
+                                                        | rule (met_set "UMLS:C2719782")
+                                                        | rule (met_set "UMLS:C2355884")
+                                                        | rule (met_set "UMLS:C2719784")
+                                                        | rule (met_set "UMLS:C0978482")
+                                                        | rule (met_set "UMLS:C2719791")
+                                                        | rule (met_set "UMLS:C0716527")
+                                                        | rule (met_set "UMLS:C0978483")
+                                                        | rule (met_set "UMLS:C0701677")
+                                                        | rule (met_set "UMLS:C2719792")
+                                                        | rule (met_set "UMLS:C0978485")
+                                                        | rule (met_set "UMLS:C2719793")
+                                                        | rule (met_set "UMLS:C0701679")
+                                                        | rule (met_set "UMLS:C2719794")
+                                                        | rule (met_set "UMLS:C2346234")
+                                                        | rule (met_set "UMLS:C2719796")
+                                                        | rule (met_set "UMLS:C1735400")
+                                                        | rule (met_set "UMLS:C2719798")
+                                                        | rule (met_set "UMLS:C1443753")
+                                                        | rule (met_set "UMLS:C2719800")
+                                                        | rule (met_set "UMLS:C1329173")
+                                                        | rule (met_set "UMLS:C2719801")
+                                                        | rule (met_set "UMLS:C1329932")
+                                                        | rule (met_set "UMLS:C2720076")
+                                                        | rule (met_set "UMLS:C3215946")
+                                                        | rule (met_set "UMLS:C3215947")
+                                                        | rule (met_set "UMLS:C3215948")
+                                                        | rule (met_set "UMLS:C3221985")
+                                                        | rule (met_set "UMLS:C3221986")
+                                                        | rule (met_set "UMLS:C3225326")
+                                                        | rule (met_set "UMLS:C3225327")
+                                                        | rule (met_set "UMLS:C3225336")
+                                                        | rule (met_set "UMLS:C3225337")
+                                                        | rule (met_set "UMLS:C3239100")
+                                                        | rule (met_set "UMLS:C3239101")
+                                                        | rule (met_set "UMLS:C3265896")
+                                                        | rule (met_set "UMLS:C3264602")
+                                                        | rule (met_set "UMLS:C3264609")
+                                                        | rule (met_set "UMLS:C3264616")
+                                                        | rule (met_set "UMLS:C3264617")
+                                                        | rule (met_set "UMLS:C3264618")
+                                                        | rule (met_set "UMLS:C3264619")
+                                                        | rule (met_set "UMLS:C3264969")
+                                                        | rule (met_set "UMLS:C3264979")
+                                                        | rule (met_set "UMLS:C1948387")
+                                                        | rule (met_set "UMLS:C3848962")
+                                                        | rule (met_set "UMLS:C3848671")
+                                                        | rule (met_set "UMLS:C3848781")
+                                                        | rule (met_set "UMLS:C3848832")
+                                                        | rule (met_set "UMLS:C3848870")
+                                                        | rule (met_set "UMLS:C3848869")
+                                                        | rule (met_set "UMLS:C3848780")
+                                                        | rule (met_set "UMLS:C3848779")
+                                                        | rule (met_set "UMLS:C3848778")
+                                                        | rule (met_set "UMLS:C4050747")
+                                                        | rule (met_set "UMLS:C4050750")
+                                                        | rule (met_set "UMLS:C4050751")
+                                                        | rule (met_set "UMLS:C4050752")
+                                                        | rule (met_set "UMLS:C4050753")
+                                                        | rule (met_set "UMLS:C4050754")
+                                                        | rule (met_set "UMLS:C4050758")
+                                                        | rule (met_set "UMLS:C4050760")
+                                                        | rule (met_set "UMLS:C4051105")
+                                                        | rule (met_set "UMLS:C4257316")
+                                                        | rule (met_set "UMLS:C4257142")
+                                                        | rule (met_set "UMLS:C4257060")
+                                                        | rule (met_set "UMLS:C4282270")
+                                                        | rule (met_set "UMLS:C4282269")
+                                                        | rule (met_set "UMLS:C4282268")
+                                                        | rule (met_set "UMLS:C4281893")
+                                                        | rule (met_set "UMLS:C4291600")
+                                                        | rule (met_set "UMLS:C4291496")
+                                                        | rule (met_set "UMLS:C4300850")
+                                                        | rule (met_set "UMLS:C4300852")
+                                                        | rule (met_set "UMLS:C4300853")
+                                                        | rule (met_set "UMLS:C4300862")
+                                                        | rule (met_set "UMLS:C5207893")
+                                                        | rule (met_set "UMLS:C5207275")
+                                                        | rule (met_set "UMLS:C5207803")
+                                                        | rule (met_set "UMLS:C5207524")
+                                                        | rule (met_set "UMLS:C5243465")
+                                                        | rule (met_set "UMLS:C5243133")
+                                                        | rule (met_set "UMLS:C5243275")
+                                                        | rule (met_set "UMLS:C5243312")
+                                                        | rule (met_set "UMLS:C5243330")
+                                                        | rule (met_set "UMLS:C5243331")
+                                                        | rule (met_set "UMLS:C5243276")
+                                                        | rule (met_set "UMLS:C5243280")
+                                                        | rule (met_set "UMLS:C5243281")
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "MONDO:0005148")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:physically_interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "MONDO:0005148")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:directly_physically_interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "MONDO:0005148")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "DOID:9352")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:physically_interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "DOID:9352")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:directly_physically_interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "DOID:9352")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "OMIM:125853")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:physically_interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "OMIM:125853")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:directly_physically_interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "OMIM:125853")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "UMLS:C0011860")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:physically_interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "UMLS:C0011860")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:directly_physically_interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "UMLS:C0011860")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "UMLS:C1852091")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:physically_interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "UMLS:C1852091")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:directly_physically_interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "UMLS:C1852091")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "UMLS:C4017238")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:physically_interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "UMLS:C4017238")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:directly_physically_interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "UMLS:C4017238")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "MESH:D003924")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:physically_interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "MESH:D003924")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:directly_physically_interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "MESH:D003924")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "NCIT:C26747")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:physically_interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "NCIT:C26747")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:directly_physically_interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "NCIT:C26747")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "HP:0005978")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:physically_interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "HP:0005978")
+                                                        |   (node g gname cat)
+                                                        | 
+                                                        | rule (result gname cat g g2 k) <--
+                                                        |   (met_set m) (edge m "biolink:directly_physically_interacts_with" g)
+                                                        |   (kg2_norm g k) (kg2_norm g2 k)
+                                                        |   (edge g2 "biolink:gene_associated_with_condition" "HP:0005978")
+                                                        |   (node g gname cat)
+                                                        | 
+2026-08-28 02:00:52.746 | INFO    | slog          |   -> slog drop: {"op": "drop", "rel": "result"}
+2026-08-28 02:00:52.788 | INFO    | slog          |   <- slog drop ok in 40ms (12 bytes of response)
+2026-08-28 02:00:52.788 | INFO    | server        |   dropped previous `result` relation
+2026-08-28 02:00:52.792 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-28 02:00:52.803 | INFO    | slog          |   <- slog dump ok in 11ms (192 bytes of response)
+2026-08-28 02:00:52.803 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-28 02:00:52.812 | INFO    | slog          |   <- slog dump ok in 8ms (471 bytes of response)
+2026-08-28 02:00:52.812 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-08-28 02:00:52.823 | INFO    | slog          |   <- slog dump ok in 11ms (64 bytes of response)
+2026-08-28 02:00:52.826 | INFO    | server        |   * slog run ...
+2026-08-28 02:00:52.826 | INFO    | slog          |   -> slog run: {"op": "run", "path": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog"}
+2026-08-28 02:05:36.047 | INFO    | slog          |   <- slog run ok in 4m 43.2s (2875 bytes of response)
+2026-08-28 02:05:36.048 | WARNING | slog          |   !! slog run took 4m 43.2s
+2026-08-28 02:05:36.048 | INFO    | server        |   + slog run done in 4m 43.2s
+2026-08-28 02:05:36.048 | INFO    | server        |   * dump `result` (limit 500) ...
+2026-08-28 02:05:36.048 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "result", "limit": 500}
+2026-08-28 02:05:36.066 | INFO    | slog          |   <- slog dump ok in 18ms (9963 bytes of response)
+2026-08-28 02:05:36.066 | INFO    | server        |   + dump `result` (limit 500) done in 18ms
+2026-08-28 02:05:36.071 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-08-28 02:05:36.081 | INFO    | slog          |   <- slog dump ok in 8ms (256 bytes of response)
+2026-08-28 02:05:36.082 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-08-28 02:05:36.095 | INFO    | slog          |   <- slog dump ok in 13ms (4030 bytes of response)
+2026-08-28 02:05:36.095 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-08-28 02:05:36.103 | INFO    | slog          |   <- slog dump ok in 8ms (1294 bytes of response)
+2026-08-28 02:05:36.133 | INFO    | server        |   join plan:
+                                                      stratum 4  6a26b38f  2 iteration(s), 10372.8 ms  (/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/slog/build/6a26b38f.plan, +0 internal error rules)
+                                                          query.slog:18        once                 (no relation steps)
+                                                          query.slog:19        once                 (no relation steps)
+                                                          query.slog:20        once                 (no relation steps)
+                                                          query.slog:21        once                 (no relation steps)
+                                                          query.slog:22        once                 (no relation steps)
+                                                          query.slog:23        once                 (no relation steps)
+                                                          query.slog:24        once                 (no relation steps)
+                                                          query.slog:25        once                 (no relation steps)
+                                                          query.slog:26        once                 (no relation steps)
+                                                          query.slog:27        once                 (no relation steps)
+                                                          query.slog:28        once                 (no relation steps)
+                                                          query.slog:29        once                 (no relation steps)
+                                                          query.slog:30        once                 (no relation steps)
+                                                          query.slog:31        once                 (no relation steps)
+                                                          query.slog:32        once                 (no relation steps)
+                                                          query.slog:33        once                 (no relation steps)
+                                                          query.slog:34        once                 (no relation steps)
+                                                          query.slog:35        once                 (no relation steps)
+                                                          query.slog:36        once                 (no relation steps)
+                                                          query.slog:37        once                 (no relation steps)
+                                                          query.slog:38        once                 (no relation steps)
+                                                          query.slog:39        once                 (no relation steps)
+                                                          query.slog:40        once                 (no relation steps)
+                                                          query.slog:41        once                 (no relation steps)
+                                                          query.slog:42        once                 (no relation steps)
+                                                          query.slog:43        once                 (no relation steps)
+                                                          query.slog:44        once                 (no relation steps)
+                                                          query.slog:45        once                 (no relation steps)
+                                                          query.slog:46        once                 (no relation steps)
+                                                          query.slog:47        once                 (no relation steps)
+                                                          query.slog:48        once                 (no relation steps)
+                                                          query.slog:49        once                 (no relation steps)
+                                                          query.slog:50        once                 (no relation steps)
+                                                          query.slog:51        once                 (no relation steps)
+                                                          query.slog:52        once                 (no relation steps)
+                                                          query.slog:53        once                 (no relation steps)
+                                                          query.slog:54        once                 (no relation steps)
+                                                          query.slog:55        once                 (no relation steps)
+                                                          query.slog:56        once                 (no relation steps)
+                                                          query.slog:57        once                 (no relation steps)
+                                                          query.slog:58        once                 (no relation steps)
+                                                          query.slog:59        once                 (no relation steps)
+                                                          query.slog:60        once                 (no relation steps)
+                                                          query.slog:61        once                 (no relation steps)
+                                                          query.slog:62        once                 (no relation steps)
+                                                          query.slog:63        once                 (no relation steps)
+                                                          query.slog:64        once                 (no relation steps)
+                                                          query.slog:65        once                 (no relation steps)
+                                                          query.slog:66        once                 (no relation steps)
+                                                          query.slog:67        once                 (no relation steps)
+                                                          query.slog:68        once                 (no relation steps)
+                                                          query.slog:69        once                 (no relation steps)
+                                                          query.slog:70        once                 (no relation steps)
+                                                          query.slog:71        once                 (no relation steps)
+                                                          query.slog:72        once                 (no relation steps)
+                                                          query.slog:73        once                 (no relation steps)
+                                                          query.slog:74        once                 (no relation steps)
+                                                          query.slog:75        once                 (no relation steps)
+                                                          query.slog:76        once                 (no relation steps)
+                                                          query.slog:77        once                 (no relation steps)
+                                                          query.slog:78        once                 (no relation steps)
+                                                          query.slog:79        once                 (no relation steps)
+                                                          query.slog:80        once                 (no relation steps)
+                                                          query.slog:81        once                 (no relation steps)
+                                                          query.slog:82        once                 (no relation steps)
+                                                          query.slog:83        once                 (no relation steps)
+                                                          query.slog:84        once                 (no relation steps)
+                                                          query.slog:85        once                 (no relation steps)
+                                                          query.slog:86        once                 (no relation steps)
+                                                          query.slog:87        once                 (no relation steps)
+                                                          query.slog:88        once                 (no relation steps)
+                                                          query.slog:89        once                 (no relation steps)
+                                                          query.slog:90        once                 (no relation steps)
+                                                          query.slog:91        once                 (no relation steps)
+                                                          query.slog:92        once                 (no relation steps)
+                                                          query.slog:93        once                 (no relation steps)
+                                                          query.slog:94        once                 (no relation steps)
+                                                          query.slog:95        once                 (no relation steps)
+                                                          query.slog:96        once                 (no relation steps)
+                                                          query.slog:97        once                 (no relation steps)
+                                                          query.slog:98        once                 (no relation steps)
+                                                          query.slog:99        once                 (no relation steps)
+                                                          query.slog:100       once                 (no relation steps)
+                                                          query.slog:101       once                 (no relation steps)
+                                                          query.slog:102       once                 (no relation steps)
+                                                          query.slog:103       once                 (no relation steps)
+                                                          query.slog:104       once                 (no relation steps)
+                                                          query.slog:105       once                 (no relation steps)
+                                                          query.slog:106       once                 (no relation steps)
+                                                          query.slog:107       once                 (no relation steps)
+                                                          query.slog:108       once                 (no relation steps)
+                                                          query.slog:109       once                 (no relation steps)
+                                                          query.slog:110       once                 (no relation steps)
+                                                          query.slog:111       once                 (no relation steps)
+                                                          query.slog:112       once                 (no relation steps)
+                                                          query.slog:113       once                 (no relation steps)
+                                                          query.slog:114       once                 (no relation steps)
+                                                          query.slog:115       once                 (no relation steps)
+                                                          query.slog:116       once                 (no relation steps)
+                                                          query.slog:117       once                 (no relation steps)
+                                                          query.slog:118       once                 (no relation steps)
+                                                          query.slog:119       once                 (no relation steps)
+                                                          query.slog:120       once                 (no relation steps)
+                                                          query.slog:121       once                 (no relation steps)
+                                                          query.slog:122       once                 (no relation steps)
+                                                          query.slog:123       once                 (no relation steps)
+                                                          query.slog:124       once                 (no relation steps)
+                                                          query.slog:125       once                 (no relation steps)
+                                                          query.slog:126       once                 (no relation steps)
+                                                          query.slog:127       once                 (no relation steps)
+                                                          query.slog:128       once                 (no relation steps)
+                                                          query.slog:129       once                 (no relation steps)
+                                                          query.slog:130       once                 (no relation steps)
+                                                          query.slog:131       once                 (no relation steps)
+                                                          query.slog:132       once                 (no relation steps)
+                                                          query.slog:133       once                 (no relation steps)
+                                                          query.slog:134       once                 (no relation steps)
+                                                          query.slog:135       once                 (no relation steps)
+                                                          query.slog:136       once                 (no relation steps)
+                                                          query.slog:137       once                 (no relation steps)
+                                                      stratum 5  de7dcc43  2 iteration(s), 27513.0 ms  (/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/slog/build/de7dcc43.plan, +0 internal error rules)
+                                                          query.slog:139       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 10#0
+                                                          query.slog:139       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 10#1
+                                                          query.slog:139       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 10#2
+                                                          query.slog:139       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 10#3
+                                                          query.slog:145       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 11#0
+                                                          query.slog:145       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 11#1
+                                                          query.slog:145       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 11#2
+                                                          query.slog:145       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 11#3
+                                                          query.slog:151       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 9#0
+                                                          query.slog:151       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 9#1
+                                                          query.slog:151       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 9#2
+                                                          query.slog:151       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 9#3
+                                                          query.slog:157       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 1#0
+                                                          query.slog:157       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 1#1
+                                                          query.slog:157       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 1#2
+                                                          query.slog:157       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 1#3
+                                                          query.slog:163       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 2#0
+                                                          query.slog:163       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 2#1
+                                                          query.slog:163       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 2#2
+                                                          query.slog:163       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 2#3
+                                                          query.slog:169       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 0#0
+                                                          query.slog:169       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 0#1
+                                                          query.slog:169       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 0#2
+                                                          query.slog:169       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 0#3
+                                                          query.slog:175       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 16#0
+                                                          query.slog:175       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 16#1
+                                                          query.slog:175       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 16#2
+                                                          query.slog:175       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 16#3
+                                                          query.slog:181       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 17#0
+                                                          query.slog:181       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 17#1
+                                                          query.slog:181       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 17#2
+                                                          query.slog:181       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 17#3
+                                                          query.slog:187       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 15#0
+                                                          query.slog:187       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 15#1
+                                                          query.slog:187       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 15#2
+                                                          query.slog:187       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 15#3
+                                                          query.slog:193       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 19#0
+                                                          query.slog:193       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 19#1
+                                                          query.slog:193       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 19#2
+                                                          query.slog:193       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 19#3
+                                                          query.slog:199       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 20#0
+                                                          query.slog:199       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 20#1
+                                                          query.slog:199       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 20#2
+                                                          query.slog:199       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 20#3
+                                                          query.slog:205       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 18#0
+                                                          query.slog:205       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 18#1
+                                                          query.slog:205       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 18#2
+                                                          query.slog:205       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 18#3
+                                                          query.slog:211       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 22#0
+                                                          query.slog:211       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 22#1
+                                                          query.slog:211       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 22#2
+                                                          query.slog:211       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 22#3
+                                                          query.slog:217       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 23#0
+                                                          query.slog:217       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 23#1
+                                                          query.slog:217       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 23#2
+                                                          query.slog:217       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 23#3
+                                                          query.slog:223       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 21#0
+                                                          query.slog:223       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 21#1
+                                                          query.slog:223       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 21#2
+                                                          query.slog:223       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 21#3
+                                                          query.slog:229       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 25#0
+                                                          query.slog:229       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 25#1
+                                                          query.slog:229       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 25#2
+                                                          query.slog:229       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 25#3
+                                                          query.slog:235       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 26#0
+                                                          query.slog:235       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 26#1
+                                                          query.slog:235       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 26#2
+                                                          query.slog:235       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 26#3
+                                                          query.slog:241       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 24#0
+                                                          query.slog:241       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 24#1
+                                                          query.slog:241       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 24#2
+                                                          query.slog:241       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 24#3
+                                                          query.slog:247       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 7#0
+                                                          query.slog:247       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 7#1
+                                                          query.slog:247       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 7#2
+                                                          query.slog:247       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 7#3
+                                                          query.slog:253       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 8#0
+                                                          query.slog:253       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 8#1
+                                                          query.slog:253       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 8#2
+                                                          query.slog:253       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 8#3
+                                                          query.slog:259       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 6#0
+                                                          query.slog:259       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 6#1
+                                                          query.slog:259       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 6#2
+                                                          query.slog:259       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 6#3
+                                                          query.slog:265       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 13#0
+                                                          query.slog:265       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 13#1
+                                                          query.slog:265       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 13#2
+                                                          query.slog:265       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 13#3
+                                                          query.slog:271       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 14#0
+                                                          query.slog:271       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 14#1
+                                                          query.slog:271       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 14#2
+                                                          query.slog:271       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 14#3
+                                                          query.slog:277       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 12#0
+                                                          query.slog:277       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 12#1
+                                                          query.slog:277       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 12#2
+                                                          query.slog:277       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 12#3
+                                                          query.slog:283       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 4#0
+                                                          query.slog:283       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 4#1
+                                                          query.slog:283       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 4#2
+                                                          query.slog:283       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 4#3
+                                                          query.slog:289       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 5#0
+                                                          query.slog:289       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 5#1
+                                                          query.slog:289       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 5#2
+                                                          query.slog:289       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 5#3
+                                                          query.slog:295       all:edge             edge(b=2) -> ?edge(b=1) -> kg2_norm(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 3#0
+                                                          query.slog:295       all:met_set          met_set(scan) -> ?edge(b=2) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> ?node(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2) -> node(b=1)   <- arm 3#1
+                                                          query.slog:295       all:kg2_norm         kg2_norm(scan) -> edge(b=3) -> ?edge(b=1) -> kg2_norm(b=1) -> ?node(b=1) -> edge(b=2) -> met_set(b=1) -> node(b=1)   <- arm 3#2
+                                                          query.slog:295       all:node             node(scan) -> ?edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> ?kg2_norm(b=1) -> edge(b=2) -> met_set(b=1) -> kg2_norm(b=1) -> kg2_norm(b=2)   <- arm 3#3
+                                                        runtime arm selection (daemon report):
+                                                          query.slog:139 group 10 -> arm 1
+                                                          query.slog:145 group 11 -> arm 1
+                                                          query.slog:151 group 9 -> arm 1
+                                                          query.slog:157 group 1 -> arm 1
+                                                          query.slog:163 group 2 -> arm 1
+                                                          query.slog:169 group 0 -> arm 1
+                                                          query.slog:175 group 16 -> arm 1
+                                                          query.slog:181 group 17 -> arm 1
+                                                          query.slog:187 group 15 -> arm 1
+                                                          query.slog:193 group 19 -> arm 1
+                                                          query.slog:199 group 20 -> arm 1
+                                                          query.slog:205 group 18 -> arm 1
+                                                          query.slog:211 group 22 -> arm 1
+                                                          query.slog:217 group 23 -> arm 1
+                                                          query.slog:223 group 21 -> arm 1
+                                                          query.slog:229 group 25 -> arm 1
+                                                          query.slog:235 group 26 -> arm 1
+                                                          query.slog:241 group 24 -> arm 1
+                                                          query.slog:247 group 7 -> arm 1
+                                                          query.slog:253 group 8 -> arm 1
+                                                          query.slog:259 group 6 -> arm 1
+                                                          query.slog:265 group 13 -> arm 1
+                                                          query.slog:271 group 14 -> arm 1
+                                                          query.slog:277 group 12 -> arm 1
+                                                          query.slog:283 group 4 -> arm 1
+                                                          query.slog:289 group 5 -> arm 1
+                                                          query.slog:295 group 3 -> arm 1
+2026-08-28 02:05:36.136 | INFO    | server        |   archived as queries/007_run_slog.plan.txt
+2026-08-28 02:05:36.136 | INFO    | server        |   timing: total=4m 43.3s  compile=59.95s  exec=3m 43.3s  (strata compiled=6, executed=2)
+2026-08-28 02:05:36.136 | INFO    | server        |   daemon: fixpoint=37885.8ms  iterations=4  rule_fires=245
+2026-08-28 02:05:36.136 | INFO    | server        |   cost model predicted ~35s for this shape
+2026-08-28 02:05:36.136 | INFO    | server        |   result: n_rows=125 returned=125 truncated=False
+2026-08-28 02:05:36.137 | INFO    | server        |   CURIEs out of the answer relation, unnamed at this point:
+2026-08-28 02:05:36.137 | INFO    | server        |   result CURIEs (303):
+2026-08-28 02:05:36.137 | INFO    | server        |     biolink:BiologicalEntity  UMLS:C1335875             HGNC:11366                NCBIGene:6776
+2026-08-28 02:05:36.137 | INFO    | server        |     biolink:Gene              NCBIGene:6517             HGNC:11009                NCBIGene:222962
+2026-08-28 02:05:36.137 | INFO    | server        |     HGNC:23097                NCBIGene:7225             HGNC:12338                NCBIGene:5563
+2026-08-28 02:05:36.137 | INFO    | server        |     HGNC:9377                 UMLS:C1421350             HGNC:12558                NCBIGene:8408
+2026-08-28 02:05:36.137 | INFO    | server        |     NCBIGene:213              HGNC:399                  NCBIGene:9376             HGNC:10972
+2026-08-28 02:05:36.137 | INFO    | server        |     UMLS:C1367453             HGNC:7980                 NCBIGene:3164             NCBIGene:6198
+2026-08-28 02:05:36.137 | INFO    | server        |     HGNC:10436                biolink:NamedThing        UMLS:C1448177             HGNC:11892
+2026-08-28 02:05:36.137 | INFO    | server        |     NCBIGene:7124             UMLS:C1332002             HGNC:74                   NCBIGene:9429
+2026-08-28 02:05:36.137 | INFO    | server        |     UMLS:C0086661             HGNC:7553                 NCBIGene:4609             UMLS:C1335214
+2026-08-28 02:05:36.137 | INFO    | server        |     HGNC:8978                 NCBIGene:5294             NCBIGene:5290             HGNC:8975
+2026-08-28 02:05:36.137 | INFO    | server        |     UMLS:C1420137             HGNC:10966                NCBIGene:6582             UMLS:C1414603
+2026-08-28 02:05:36.137 | INFO    | server        |     HGNC:3675                 NCBIGene:9965             NCBIGene:1269             HGNC:2160
+2026-08-28 02:05:36.137 | INFO    | server        |     biolink:Polypeptide       UMLS:C1522376             HGNC:4311                 NCBIGene:2729
+2026-08-28 02:05:36.137 | INFO    | server        |     UMLS:C1333897             HGNC:4910                 NCBIGene:3091             UMLS:C4042483
+2026-08-28 02:05:36.137 | INFO    | server        |     HGNC:990                  NCBIGene:596              NCBIGene:64798            HGNC:22953
+2026-08-28 02:05:36.137 | INFO    | server        |     UMLS:C1332828             HGNC:2621                 NCBIGene:1557             UMLS:C0071189
+2026-08-28 02:05:36.137 | INFO    | server        |     HGNC:5469                 NCBIGene:3484             NCBIGene:2740             HGNC:4324
+2026-08-28 02:05:36.137 | INFO    | server        |     UMLS:C0919425             HGNC:2595                 NCBIGene:1543             UMLS:C1415068
+2026-08-28 02:05:36.137 | INFO    | server        |     HGNC:4274                 NCBIGene:2697             NCBIGene:4780             HGNC:7782
+2026-08-28 02:05:36.137 | INFO    | server        |     UMLS:C1333690             HGNC:4458                 NCBIGene:2821             UMLS:C1427914
+2026-08-28 02:05:36.137 | INFO    | server        |     NCBIGene:57761            HGNC:16228                NCBIGene:1154             HGNC:1984
+2026-08-28 02:05:36.137 | INFO    | server        |     UMLS:C1424250             HGNC:16400                NCBIGene:114548           UMLS:C0812198
+2026-08-28 02:05:36.137 | INFO    | server        |     HGNC:959                  NCBIGene:581              UMLS:C1171892             HGNC:12680
+2026-08-28 02:05:36.137 | INFO    | server        |     NCBIGene:7422             NCBIGene:5460             HGNC:9221                 NCBIGene:5562
+2026-08-28 02:05:36.137 | INFO    | server        |     HGNC:9376                 UMLS:C0669365             HGNC:7876                 NCBIGene:4846
+2026-08-28 02:05:36.137 | INFO    | server        |     UMLS:C1853262             HGNC:25588                NCBIGene:55244            NCBIGene:1420
+2026-08-28 02:05:36.138 | INFO    | server        |     HGNC:2410                 UMLS:C1366489             HGNC:6364                 NCBIGene:354
+2026-08-28 02:05:36.138 | INFO    | server        |     UMLS:C1364818             HGNC:620                  NCBIGene:351              UMLS:C1429614
+2026-08-28 02:05:36.138 | INFO    | server        |     HGNC:1541                 NCBIGene:867              UMLS:C1367731             HGNC:6881
+2026-08-28 02:05:36.138 | INFO    | server        |     NCBIGene:5599             NCBIGene:6580             HGNC:10963                UMLS:C1414892
+2026-08-28 02:05:36.138 | INFO    | server        |     HGNC:4056                 NCBIGene:2538             NCBIGene:1594             HGNC:2606
+2026-08-28 02:05:36.138 | INFO    | server        |     NCBIGene:3551             HGNC:5960                 NCBIGene:252995           HGNC:20240
+2026-08-28 02:05:36.138 | INFO    | server        |     biolink:Protein           UMLS:C1334189             HGNC:5467                 NCBIGene:3482
+2026-08-28 02:05:36.138 | INFO    | server        |     UMLS:C1421244             HGNC:12428                NCBIGene:7291             UMLS:C1335142
+2026-08-28 02:05:36.138 | INFO    | server        |     HGNC:7961                 NCBIGene:8431             NCBIGene:9575             HGNC:2082
+2026-08-28 02:05:36.138 | INFO    | server        |     NCBIGene:79923            HGNC:20857                UMLS:C1334478             HGNC:6872
+2026-08-28 02:05:36.138 | INFO    | server        |     NCBIGene:5602             NCBIGene:268              HGNC:464                  NCBIGene:10599
+2026-08-28 02:05:36.138 | INFO    | server        |     HGNC:10959                UMLS:C1367721             HGNC:3229                 NCBIGene:1950
+2026-08-28 02:05:36.138 | INFO    | server        |     NCBIGene:9360             HGNC:14650                NCBIGene:5291             HGNC:8976
+2026-08-28 02:05:36.138 | INFO    | server        |     UMLS:C1333906             HGNC:5009                 NCBIGene:8091             UMLS:C1366439
+2026-08-28 02:05:36.138 | INFO    | server        |     HGNC:10839                NCBIGene:6462             NCBIGene:6583             HGNC:10968
+2026-08-28 02:05:36.138 | INFO    | server        |     UMLS:C1530270             HGNC:6116                 NCBIGene:3659             UMLS:C1438411
+2026-08-28 02:05:36.138 | INFO    | server        |     HGNC:13633                NCBIGene:9370             NCBIGene:5594             HGNC:6871
+2026-08-28 02:05:36.138 | INFO    | server        |     UMLS:C1414805             HGNC:3942                 NCBIGene:2475             NCBIGene:1576
+2026-08-28 02:05:36.138 | INFO    | server        |     HGNC:2637                 NCBIGene:1244             HGNC:53                   UMLS:C1307407
+2026-08-28 02:05:36.138 | INFO    | server        |     NCBIGene:10413            HGNC:16262                UMLS:C1701790             HGNC:5981
+2026-08-28 02:05:36.138 | INFO    | server        |     NCBIGene:3605             NCBIGene:4137             HGNC:6893                 NCBIGene:207
+2026-08-28 02:05:36.138 | INFO    | server        |     HGNC:391                  UMLS:C0080222             HGNC:11766                NCBIGene:7040
+2026-08-28 02:05:36.138 | INFO    | server        |     UMLS:C1412727             HGNC:933                  NCBIGene:23621            NCBIGene:50943
+2026-08-28 02:05:36.138 | INFO    | server        |     HGNC:6106                 NCBIGene:6523             HGNC:11036                NCBIGene:8660
+2026-08-28 02:05:36.138 | INFO    | server        |     HGNC:6126                 NCBIGene:8842             HGNC:9454                 UMLS:C4082178
+2026-08-28 02:05:36.138 | INFO    | server        |     HGNC:8910                 NCBIGene:5241             UMLS:C1367307             HGNC:11364
+2026-08-28 02:05:36.138 | INFO    | server        |     NCBIGene:6774             UMLS:C0079419             HGNC:11998                NCBIGene:7157
+2026-08-28 02:05:36.138 | INFO    | server        |     UMLS:C0669372             HGNC:7873                 NCBIGene:4843             NCBIGene:1026
+2026-08-28 02:05:36.138 | INFO    | server        |     HGNC:1784                 UMLS:C0879468             HGNC:2433                 NCBIGene:1436
+2026-08-28 02:05:36.138 | INFO    | server        |     UMLS:C1420279             HGNC:11142                NCBIGene:150094           NCBIGene:3784
+2026-08-28 02:05:36.138 | INFO    | server        |     HGNC:6294                 NCBIGene:3172             HGNC:5024                 NCBIGene:51548
+2026-08-28 02:05:36.138 | INFO    | server        |     HGNC:14934                NCBIGene:4582             HGNC:7508                 UMLS:C1334889
+2026-08-28 02:05:36.138 | INFO    | server        |     HGNC:7881                 NCBIGene:4851             NCBIGene:10135            HGNC:30092
+2026-08-28 02:05:36.138 | INFO    | server        |     NCBIGene:820              HGNC:1472                 NCBIGene:23410            HGNC:14931
+2026-08-28 02:05:36.138 | INFO    | server        |     UMLS:C1337112             HGNC:6081                 NCBIGene:3630             NCBIGene:5564
+2026-08-28 02:05:36.138 | INFO    | server        |     HGNC:9378                 UMLS:C1425225             HGNC:17995                NCBIGene:140803
+2026-08-28 02:05:36.138 | INFO    | server        |     UMLS:C0162508             HGNC:6204                 NCBIGene:3725             NCBIGene:5970
+2026-08-28 02:05:36.138 | INFO    | server        |     HGNC:9955                 UMLS:C0919432             HGNC:6769                 NCBIGene:4088
+2026-08-28 02:05:36.138 | INFO    | server        |     NCBIGene:860              HGNC:10472                UMLS:C0812242             UMLS:C1414685
+2026-08-28 02:05:36.138 | INFO    | server        |     HGNC:3818                 NCBIGene:2305             NCBIGene:1268             HGNC:2159
+2026-08-28 02:05:36.139 | INFO    | server        |     NCBIGene:2308             HGNC:3819                 NCBIGene:3290             HGNC:5208
+2026-08-28 02:05:36.139 | INFO    | server        |     UMLS:C3539830             UMLS:C0694888             HGNC:9588                 NCBIGene:5728
+2026-08-28 02:05:36.139 | INFO    | server        |     UMLS:C1413702             HGNC:2345                 NCBIGene:1385             UMLS:C1412401
+2026-08-28 02:05:36.139 | INFO    | server        |     HGNC:491                  NCBIGene:27329            UMLS:C1420519             HGNC:11458
+2026-08-28 02:05:36.139 | INFO    | server        |     NCBIGene:6822             NCBIGene:8856             HGNC:7968                 UMLS:C0812237
+2026-08-28 02:05:36.139 | INFO    | server        |     HGNC:905                  NCBIGene:558              UMLS:C1335858             HGNC:11205
+2026-08-28 02:05:36.139 | INFO    | server        |     NCBIGene:6667             UMLS:C1309483             HGNC:17098                NCBIGene:23405
+2026-08-28 02:05:36.139 | INFO    | server        |     NCBIGene:23411            HGNC:14929                UMLS:C1414313             HGNC:3236
+2026-08-28 02:05:36.139 | INFO    | server        |     NCBIGene:1956             NCBIGene:6581             HGNC:10967                UMLS:C1333664
+2026-08-28 02:05:36.139 | INFO    | server        |     HGNC:4191                 NCBIGene:2641             UMLS:C0304925
+2026-08-28 02:05:36.139 | INFO    | server        | << TOOL run_slog finished in 4m 43.4s
+2026-08-28 02:05:36.139 | WARNING | server        | !! run_slog took 4m 43.4s -- slow call
+2026-08-28 02:05:36.139 | INFO    | server        | ------------------------------------------------------------------------------

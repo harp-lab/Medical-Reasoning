@@ -1,0 +1,149 @@
+2026-09-02 01:03:26.911 | INFO    | mr            | ==============================================================================
+2026-09-02 01:03:26.913 | INFO    | mr            | KG2 MCP session 20260902-010136 starting
+2026-09-02 01:03:26.914 | INFO    | mr            | pid=2467660  python=3.11.15
+2026-09-02 01:03:26.914 | INFO    | mr            | session dir : /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/logs/20260902-010136
+2026-09-02 01:03:26.915 | INFO    | server        | query file: /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog
+2026-09-02 01:03:26.915 | INFO    | server        | slog server: 127.0.0.1:8642 (client timeout 3600s)
+2026-09-02 01:03:26.915 | INFO    | server        | node DB: /tmp/kg2_nodes_aayush.shrestha@ad.wsu.edu.sqlite
+2026-09-02 01:03:26.915 | INFO    | server        | ==============================================================================
+2026-09-02 01:03:26.916 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 01:03:26.916 | INFO    | server        | >> TOOL list_predicates
+2026-09-02 01:03:26.917 | INFO    | kg2_core      |   loaded 61 predicates from /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/data/reference/distinct_core_predicate.tsv in 1ms
+2026-09-02 01:03:26.918 | INFO    | server        |   top predicates: biolink:has_participant, biolink:subclass_of, biolink:occurs_in, biolink:affects, biolink:related_to  ... +56 more
+2026-09-02 01:03:26.918 | INFO    | server        | << TOOL list_predicates finished in 1ms
+2026-09-02 01:03:26.918 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 01:03:26.947 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 01:03:26.947 | INFO    | server        | >> TOOL resolve_entity  term="Parkinson's disease"  limit=10  biolink_type=None
+2026-09-02 01:03:26.947 | INFO    | kg2_core      |   name-resolution lookup: term="Parkinson's disease" limit=10 biolink_type=(any)
+2026-09-02 01:03:27.651 | INFO    | kg2_core      |   .. HTTP name-resolution-sri.renci.org replied in 703ms
+2026-09-02 01:03:27.651 | INFO    | kg2_core      |   name-resolution returned 10 candidate(s)
+2026-09-02 01:03:27.651 | INFO    | server        |   candidates for "Parkinson's disease":
+2026-09-02 01:03:27.652 | INFO    | server        | id             name                                                   category                   score
+2026-09-02 01:03:27.652 | INFO    | server        | -------------  -----------------------------------------------------  -------------------------  -----
+2026-09-02 01:03:27.653 | INFO    | server        | MONDO:0005180  Parkinson disease                                      biolink:Disease            620.9
+2026-09-02 01:03:27.653 | INFO    | server        | UMLS:C0236960  Dementia due to Parkinson's disease                    biolink:Disease            560.2
+2026-09-02 01:03:27.653 | INFO    | server        | UMLS:C3805119  Parkinson's disease psychosis                          biolink:Disease            504.1
+2026-09-02 01:03:27.654 | INFO    | server        | UMLS:C0853008  Parkinson's disease aggravated                         biolink:Disease            504.1
+2026-09-02 01:03:27.654 | INFO    | server        | UMLS:C0947810  Parkinson's disease and parkinsonism                   biolink:Disease            472.1
+2026-09-02 01:03:27.654 | INFO    | server        | UMLS:C4049471  End stage Parkinson's disease                          biolink:Disease            472.1
+2026-09-02 01:03:27.655 | INFO    | server        | UMLS:C1828079  Dementia associated with Parkinson's Disease           biolink:Disease            443.9
+2026-09-02 01:03:27.655 | INFO    | server        | UMLS:C0574092  Family history of Parkinson's disease                  biolink:PhenotypicFeature  443.9
+2026-09-02 01:03:27.655 | INFO    | server        | UMLS:C2585779  Cerebral degeneration due to Parkinson's disease       biolink:Disease            419.1
+2026-09-02 01:03:27.655 | INFO    | server        | UMLS:C4304474  Psychosis co-occurrent and due to Parkinson's disease  biolink:Disease            377.0
+2026-09-02 01:03:27.656 | INFO    | server        | << TOOL resolve_entity finished in 708ms
+2026-09-02 01:03:27.656 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 01:03:35.668 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 01:03:35.668 | INFO    | server        | >> TOOL expand_entity  n_curies=1
+2026-09-02 01:03:35.669 | INFO    | server        |   input CURIEs (1):
+2026-09-02 01:03:35.669 | INFO    | server        |     MONDO:0005180
+2026-09-02 01:03:35.669 | INFO    | server        |   * expand MONDO:0005180 ...
+2026-09-02 01:03:35.669 | INFO    | kg2_core      |   node-normalizer clique for MONDO:0005180
+2026-09-02 01:03:36.491 | INFO    | kg2_core      |   .. HTTP nodenormalization-sri.renci.org replied in 821ms
+2026-09-02 01:03:36.491 | INFO    | kg2_core      |   clique for MONDO:0005180: 16 equivalent id(s) -> MONDO:0005180, DOID:14330, OMIM.PS:168600, UMLS:C0030567, MESH:D010300, MEDDRA:10013113, MEDDRA:10033801, MEDDRA:10034007, MEDDRA:10034008, MEDDRA:10061536  ... +6 more
+2026-09-02 01:03:36.491 | INFO    | kg2_core      |   opening existing node DB /tmp/kg2_nodes_aayush.shrestha@ad.wsu.edu.sqlite (2225 MB)
+2026-09-02 01:03:36.492 | INFO    | kg2_core      |   expand MONDO:0005180: 16 clique id(s) -> 6 present in KG2 (10 not in KG2) in 823ms
+2026-09-02 01:03:36.492 | INFO    | kg2_core      |     kept   : MONDO:0005180, DOID:14330, UMLS:C0030567, MESH:D010300, NCIT:C26845, ICD9:332
+2026-09-02 01:03:36.493 | INFO    | server        |   + expand MONDO:0005180 done in 823ms
+2026-09-02 01:03:36.493 | INFO    | server        |   1 input CURIE(s) -> 6 distinct KG2 id(s)
+2026-09-02 01:03:36.493 | INFO    | server        |   kg2_ids (6):
+2026-09-02 01:03:36.494 | INFO    | server        |     MONDO:0005180  DOID:14330     UMLS:C0030567  MESH:D010300
+2026-09-02 01:03:36.494 | INFO    | server        |     NCIT:C26845    ICD9:332
+2026-09-02 01:03:36.494 | INFO    | server        | << TOOL expand_entity finished in 826ms
+2026-09-02 01:03:36.494 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 01:05:12.188 | INFO    | server        | ------------------------------------------------------------------------------
+2026-09-02 01:05:12.188 | INFO    | server        | >> TOOL run_slog  limit=50
+2026-09-02 01:05:12.192 | INFO    | server        |   query file /home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog (1339 bytes, modified 2026-09-02 01:04:22)
+2026-09-02 01:05:12.192 | INFO    | server        |   archived as queries/004_run_slog.slog
+2026-09-02 01:05:12.192 | INFO    | server        |   shape: 3 table(s) declared, 1 derived relation(s) -- expect ~13s per derived relation
+2026-09-02 01:05:12.192 | INFO    | server        |   program:
+                                                        | ;; Which medically approved drugs treat Parkinson disease?
+                                                        | ;; Anchor: MONDO:0005180 -> its 6-id KG2 set from expand_entity, inlined as literals
+                                                        | ;; (6 rules, one head -> still a single derived relation / one stage).
+                                                        | ;; "Medically approved" = DrugCentral treats edges, i.e. approved drug indications.
+                                                        | ;; kg2_edges cols: 1 core_predicate 2 knowledge_source 3 negated ... 14 subject 15 object
+                                                        | 
+                                                        | table (kg2_edges str str str str str str str str str str str str str str str)
+                                                        | table (node str str str)
+                                                        | table (result str str)
+                                                        | 
+                                                        | rule (result d nm) <--
+                                                        |   (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "MONDO:0005180")
+                                                        |   (node d nm _)
+                                                        | 
+                                                        | rule (result d nm) <--
+                                                        |   (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "DOID:14330")
+                                                        |   (node d nm _)
+                                                        | 
+                                                        | rule (result d nm) <--
+                                                        |   (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "UMLS:C0030567")
+                                                        |   (node d nm _)
+                                                        | 
+                                                        | rule (result d nm) <--
+                                                        |   (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "MESH:D010300")
+                                                        |   (node d nm _)
+                                                        | 
+                                                        | rule (result d nm) <--
+                                                        |   (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "NCIT:C26845")
+                                                        |   (node d nm _)
+                                                        | 
+                                                        | rule (result d nm) <--
+                                                        |   (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "ICD9:332")
+                                                        |   (node d nm _)
+2026-09-02 01:05:12.193 | INFO    | slog          |   -> slog drop: {"op": "drop", "rel": "result"}
+2026-09-02 01:05:12.211 | INFO    | slog          |   <- slog drop ok in 18ms (12 bytes of response)
+2026-09-02 01:05:12.211 | INFO    | server        |   dropped previous `result` relation
+2026-09-02 01:05:12.212 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-09-02 01:05:12.218 | INFO    | slog          |   <- slog dump ok in 6ms (127 bytes of response)
+2026-09-02 01:05:12.218 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-09-02 01:05:12.222 | INFO    | slog          |   <- slog dump ok in 4ms (278 bytes of response)
+2026-09-02 01:05:12.222 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-09-02 01:05:12.228 | INFO    | slog          |   <- slog dump ok in 5ms (64 bytes of response)
+2026-09-02 01:05:12.231 | INFO    | server        |   * slog run ...
+2026-09-02 01:05:12.231 | INFO    | slog          |   -> slog run: {"op": "run", "path": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog"}
+2026-09-02 01:06:44.011 | INFO    | slog          |   <- slog run ok in 1m 31.8s (1289 bytes of response)
+2026-09-02 01:06:44.012 | WARNING | slog          |   !! slog run took 1m 31.8s
+2026-09-02 01:06:44.012 | INFO    | server        |   + slog run done in 1m 31.8s
+2026-09-02 01:06:44.012 | INFO    | server        |   * dump `result` (limit 50) ...
+2026-09-02 01:06:44.012 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "result", "limit": 50}
+2026-09-02 01:06:44.019 | INFO    | slog          |   <- slog dump ok in 7ms (921 bytes of response)
+2026-09-02 01:06:44.019 | INFO    | server        |   + dump `result` (limit 50) done in 8ms
+2026-09-02 01:06:44.023 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-09-02 01:06:44.034 | INFO    | slog          |   <- slog dump ok in 10ms (159 bytes of response)
+2026-09-02 01:06:44.034 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-09-02 01:06:44.042 | INFO    | slog          |   <- slog dump ok in 7ms (317 bytes of response)
+2026-09-02 01:06:44.042 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-09-02 01:06:44.050 | INFO    | slog          |   <- slog dump ok in 8ms (64 bytes of response)
+2026-09-02 01:06:44.053 | INFO    | server        |   join plan:
+                                                      stratum 2  2f10d222  2 iteration(s), 19741.8 ms  (/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/slog/build/2f10d222.plan, +0 internal error rules)
+                                                          query.slog:11        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+                                                          query.slog:15        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+                                                          query.slog:19        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+                                                          query.slog:23        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+                                                          query.slog:27        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+                                                          query.slog:31        all:kg2_edges        kg2_edges(b=4) -> node(b=1)
+                                                        daemon timeline (ms between emitted lines -- setup work lands here, not in the fixpoint ms):
+                                                          +     282 ms  (+     282 ms)  (pipeline (pos 6) (evaluation "eval-1a060e3966a-fd876b8-371bb269-f4bfa9f") (update-epoch 3) (strata 
+                                                          +     288 ms  (+       6 ms)  (update-epoch 3 settled)
+                                                          +     289 ms  (+       1 ms)  (boundary-prepared 3 (boundary "b1:layer-1a060e3966a-2e960f77-39131d72-fd11de9:4") (program "p1:laye
+                                                          +   90442 ms  (+   90153 ms)  (paused (generation 3) (scc 2) (stratum "2f10d222") (iteration 0) (phase read) (settled #f) (progress (tuples 0) (exact #f)) (timing (call-ms 18410.806) (total-ms 18410.806)) (cause (budget time)))
+                                                          +   91766 ms  (+    1324 ms)  (paused (generation 3) (scc 2) (stratum "2f10d222") (iteration 1) (phase iter) (settled #t) (progress (tuples 68307932) (exact #t)) (timing (call-ms 1322.985) (total-ms 19733.791)) (cause (budget memory)))
+                                                          +   91774 ms  (+       8 ms)  (fixpoint 2 "2f10d222" 2 19741.767)
+                                                          +   91779 ms  (+       5 ms)  (boundary-committed 4 (boundary "b1:layer-1a060e3966a-2e960f77-39131d72-fd11de9:4") (position 6) (cr
+                                                          +   91779 ms  (+       0 ms)  (run-complete)
+2026-09-02 01:06:44.054 | INFO    | server        |   archived as queries/004_run_slog.plan.txt
+2026-09-02 01:06:44.054 | WARNING | server        |   !! SLOG_MULTIPLAN is on (index=budget:1) but not one rule-def in these plans carries an arm mark, so runtime plan selection had nothing to choose between and cannot be what moved the timing.  slog's arm-eligibility gate (join-planning.rkt arm-flavor-ok?) needs >= 3 body join clauses in a rule; the orders above show how many each has
+2026-09-02 01:06:44.055 | INFO    | server        |   timing: total=1m 31.8s  compile=12.93s  exec=1m 18.9s  (strata compiled=1, executed=1)
+2026-09-02 01:06:44.055 | INFO    | server        |   daemon: fixpoint=19741.8ms  iterations=2  rule_fires=23
+2026-09-02 01:06:44.055 | INFO    | server        |   cost model predicted ~22s for this shape
+2026-09-02 01:06:44.056 | INFO    | server        |   result: n_rows=23 returned=23 truncated=False
+2026-09-02 01:06:44.056 | INFO    | server        |   CURIEs out of the answer relation, unnamed at this point:
+2026-09-02 01:06:44.056 | INFO    | server        |   result CURIEs (23):
+2026-09-02 01:06:44.057 | INFO    | server        |     DrugCentral:333   DrugCentral:144   DrugCentral:2276  DrugCentral:4921
+2026-09-02 01:06:44.057 | INFO    | server        |     DrugCentral:3521  DrugCentral:2697  DrugCentral:1567  DrugCentral:496
+2026-09-02 01:06:44.057 | INFO    | server        |     DrugCentral:2233  DrugCentral:2745  DrugCentral:971   DrugCentral:374
+2026-09-02 01:06:44.057 | INFO    | server        |     DrugCentral:5143  DrugCentral:2407  DrugCentral:5142  DrugCentral:2402
+2026-09-02 01:06:44.058 | INFO    | server        |     DrugCentral:2429  DrugCentral:4882  DrugCentral:228   DrugCentral:403
+2026-09-02 01:06:44.058 | INFO    | server        |     DrugCentral:763   DrugCentral:2558  DrugCentral:1018
+2026-09-02 01:06:44.058 | INFO    | server        | << TOOL run_slog finished in 1m 31.9s
+2026-09-02 01:06:44.059 | WARNING | server        | !! run_slog took 1m 31.9s -- slow call
+2026-09-02 01:06:44.059 | INFO    | server        | ------------------------------------------------------------------------------

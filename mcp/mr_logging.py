@@ -18,11 +18,21 @@ QUERY_DIR = SESSION_DIR / "queries"
 
 FIELDS = (
     "ts_start", "session_id", "seq", "tool", "status", "wall_s", "notes", "error",
-    "query_file", "program_sha8", "program_bytes",
+    "query_file", "slog_run_n", "program_sha8", "program_bytes",
     "n_tables_declared", "n_derived_rels",
-    "n_strata_compiled", "n_strata_executed", "compile_s", "exec_s",
-    "drop_s", "run_s", "dump_s",
+    # run_wall_s is the whole slog `run` call, and splits in TWO:
+    #   run_wall_s = fixpoint_ms/1000  (the daemon's read loop -- the only part
+    #                                   of the run it reports)
+    #              + setup_s           (everything else: reload + attach)
+    # compile_s runs CONCURRENTLY with both and is not a third slice -- it is
+    # elapsed-until-the-.so-landed, and the daemon is already busy by then.
+    "n_strata_compiled", "n_strata_executed",
+    "run_wall_s", "setup_s", "compile_s",
+    "drop_s", "dump_s",
     "fixpoint_ms", "iterations", "rule_fires",
+    "work_ticks", "work_rows", "work_top",
+    "plan_hashes", "join_plan", "n_arms", "arms_picked", "multiplan", "slog_opt",
+    "phase_ms",
     "predicted_s", "cost_ratio",
     "n_rows", "returned", "truncated", "n_curies",
     "term", "n_in", "n_out", "n_unresolved", "http_s", "http_calls",
@@ -154,16 +164,26 @@ def full_list(log, label, items, per_line=4):
         log.info("    " + "  ".join(x.ljust(width) for x in items[i:i + per_line]).rstrip())
 
 
-def save_query(seq, text, tool="run_slog"):
+def _archive(path, text):
     _configure()
-    path = QUERY_DIR / f"{seq:03d}_{tool}.slog"
     try:
         QUERY_DIR.mkdir(parents=True, exist_ok=True)
         path.write_text(text, encoding="utf-8")
         return path
     except Exception as e:
-        logging.getLogger("mr.query").warning(f"could not archive query: {e!r}")
+        logging.getLogger("mr.query").warning(
+            f"could not archive {path.name}: {e!r}")
         return None
+
+
+def save_query(seq, text, tool="run_slog"):
+    return _archive(QUERY_DIR / f"{seq:03d}_{tool}.slog", text)
+
+
+def save_plan(seq, text, tool="run_slog"):
+    """The full join plan beside the query that produced it -- summary.csv only
+    carries the one-line digest."""
+    return _archive(QUERY_DIR / f"{seq:03d}_{tool}.plan.txt", text)
 
 
 def next_seq():

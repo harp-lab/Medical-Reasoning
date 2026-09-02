@@ -1,0 +1,57 @@
+;; Which drugs treat Parkinson disease, per the CURATED sources only?
+;; Anchor: MONDO:0005180 -> its 6-id KG2 set, inlined (one stage).
+;; treats -> PD comes from 3 sources: drugcentral + repodb (curated) and semmeddb
+;; (literature text-mining -- 1627 noisy subjects incl. procedures/devices). Keep the first two.
+;; kg2_edges cols: 1 core_predicate 2 knowledge_source 3 negated ... 14 subject 15 object
+
+table (kg2_edges str str str str str str str str str str str str str str str)
+table (node str str str)
+table (result str str str str)
+
+rule (result "infores:drugcentral" d nm cat) <--
+  (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "MONDO:0005180")
+  (node d nm cat)
+
+rule (result "infores:drugcentral" d nm cat) <--
+  (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "DOID:14330")
+  (node d nm cat)
+
+rule (result "infores:drugcentral" d nm cat) <--
+  (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "UMLS:C0030567")
+  (node d nm cat)
+
+rule (result "infores:drugcentral" d nm cat) <--
+  (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "MESH:D010300")
+  (node d nm cat)
+
+rule (result "infores:drugcentral" d nm cat) <--
+  (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "NCIT:C26845")
+  (node d nm cat)
+
+rule (result "infores:drugcentral" d nm cat) <--
+  (kg2_edges "biolink:treats" "infores:drugcentral" "False" _ _ _ _ _ _ _ _ _ _ d "ICD9:332")
+  (node d nm cat)
+
+rule (result "infores:repodb" d nm cat) <--
+  (kg2_edges "biolink:treats" "infores:repodb" "False" _ _ _ _ _ _ _ _ _ _ d "MONDO:0005180")
+  (node d nm cat)
+
+rule (result "infores:repodb" d nm cat) <--
+  (kg2_edges "biolink:treats" "infores:repodb" "False" _ _ _ _ _ _ _ _ _ _ d "DOID:14330")
+  (node d nm cat)
+
+rule (result "infores:repodb" d nm cat) <--
+  (kg2_edges "biolink:treats" "infores:repodb" "False" _ _ _ _ _ _ _ _ _ _ d "UMLS:C0030567")
+  (node d nm cat)
+
+rule (result "infores:repodb" d nm cat) <--
+  (kg2_edges "biolink:treats" "infores:repodb" "False" _ _ _ _ _ _ _ _ _ _ d "MESH:D010300")
+  (node d nm cat)
+
+rule (result "infores:repodb" d nm cat) <--
+  (kg2_edges "biolink:treats" "infores:repodb" "False" _ _ _ _ _ _ _ _ _ _ d "NCIT:C26845")
+  (node d nm cat)
+
+rule (result "infores:repodb" d nm cat) <--
+  (kg2_edges "biolink:treats" "infores:repodb" "False" _ _ _ _ _ _ _ _ _ _ d "ICD9:332")
+  (node d nm cat)

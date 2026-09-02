@@ -1,0 +1,15 @@
+stratum 1  3dbc688b  2 iteration(s), 10235.7 ms  (/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/slog/build/3dbc688b.plan, +0 internal error rules)
+    query.slog:9         all:edge             edge(b=2) -> node(b=2)
+    query.slog:13        all:edge             edge(b=2) -> node(b=2)
+    query.slog:17        all:edge             edge(b=2) -> node(b=2)
+    query.slog:21        all:edge             edge(b=2) -> node(b=2)
+    query.slog:25        all:edge             edge(b=2) -> node(b=2)
+    query.slog:29        all:edge             edge(b=2) -> node(b=2)
+  daemon timeline (ms between emitted lines -- setup work lands here, not in the fixpoint ms):
+    +     239 ms  (+     239 ms)  (pipeline (pos 3) (evaluation "eval-1a060e3966a-fd876b8-371bb269-f4bfa9f") (update-epoch 1) (strata 
+    +     246 ms  (+       7 ms)  (update-epoch 1 settled)
+    +     248 ms  (+       2 ms)  (boundary-prepared 1 (boundary "b1:layer-1a060e3966a-2e960f77-39131d72-fd11de9:2") (program "p1:laye
+    +   77396 ms  (+   77148 ms)  (paused (generation 1) (scc 1) (stratum "3dbc688b") (iteration 0) (phase read) (settled #f) (progres
+    +   78898 ms  (+    1502 ms)  (fixpoint 1 "3dbc688b" 2 10235.652)
+    +   78903 ms  (+       5 ms)  (boundary-committed 2 (boundary "b1:layer-1a060e3966a-2e960f77-39131d72-fd11de9:2") (position 3) (cr
+    +   78903 ms  (+       0 ms)  (run-complete)
