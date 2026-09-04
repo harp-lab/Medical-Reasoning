@@ -1,0 +1,761 @@
+#!/usr/bin/env python3
+"""orion -- talk to the resident KG2 Slog session directly, with no MCP in the way.
+
+    ./orion execute slog/query.slog -v
+
+The MCP `run_slog` tool is a thin wrapper over a plain TCP/JSON-lines protocol
+(slog/slog_server.rkt, port 8642): drop the answer relation, run the file, dump
+the answer, then compute a summary row.  Nothing about the datalog path needs a
+model in it.  This is that same client, driven from a terminal, with one thing
+added that the MCP path cannot give you: every number is TAGGED with where it
+came from.
+
+That tagging is the point.  A summary.csv row prints `fixpoint_ms` (the daemon's
+own accounting) beside `predicted_s` (a hardcoded constant times a regex count)
+in the same flat CSV with no hint that one is an observation and the other is an
+assumption.  `-v` separates them: WHAT SLOG REPORTED first, verbatim, then WHAT
+WE DERIVED FROM IT with the formula spelled out.  `orion columns` prints the same
+mapping for every summary.csv column without touching the server.
+
+Subcommands
+    execute [FILE]   run a Slog program           (minutes, tens of GB -- see below)
+    dump REL         dump a relation from the live session
+    drop REL         drop a relation
+    status           is the session server up, and what is slogd holding
+    columns          where each summary.csv column comes from  (no server needed)
+
+`execute` costs minutes of wall clock and tens of GB on a shared machine, and
+unlike the MCP tool there is no permission prompt in front of it -- typing the
+command is the confirmation.  The session server serializes on a semaphore, so a
+run started here blocks one started from Claude, and vice versa.
+"""
+
+import argparse
+import hashlib
+import logging
+import os
+import re
+import shutil
+import socket
+import sys
+import textwrap
+import time
+from datetime import datetime
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE / "mcp"))
+
+# CLI runs get their own log tree.  logs/<ts>/ is "one MCP session"; mixing
+# hand-run queries into that numbering makes the two impossible to tell apart
+# afterwards, which is the confusion this tool exists to remove.
+os.environ.setdefault("KG2_LOG_DIR", str(HERE / "logs" / "orion"))
+# The file handler wants everything; the terminal gets orion's own report
+# instead, so its handler is turned down in main().
+os.environ.setdefault("KG2_LOG_LEVEL", "INFO")
+
+DEFAULT_QUERY = HERE / "slog" / "query.slog"
+OUTPUT_REL = "result"
+# A daemon line is wide.  Use the terminal when it is wider than the 78 the
+# rules and tables are drawn at, but not past 140 -- a timeline you have to
+# track across 200 columns is not readable either.
+WIDTH = max(78, min(shutil.get_terminal_size((100, 24)).columns, 140))
+
+
+def _imports():
+    global slog, stats, plan, prov, sexpr, mrlog
+    import mr_logging as mrlog          # noqa: F401
+    import mr_plan as plan              # noqa: F401
+    import mr_provenance as prov        # noqa: F401
+    import mr_sexpr as sexpr            # noqa: F401
+    import mr_stats as stats            # noqa: F401
+    import slog_client as slog          # noqa: F401
+
+
+# ---------------------------------------------------------------------------
+# printing
+
+def _out(s=""):
+    print(s, flush=True)
+
+
+def _rule(ch="="):
+    _out(ch * WIDTH)
+
+
+def _section(title):
+    _out()
+    _out(title)
+    _out("-" * WIDTH)
+
+
+def _table(headers, rows, indent="    ", cap=60):
+    rows = [[("" if c is None else str(c)) for c in r] for r in rows]
+    widths = [len(h) for h in headers]
+    for r in rows:
+        for i, c in enumerate(r):
+            if i < len(widths):
+                widths[i] = max(widths[i], min(len(c), cap))
+
+    def line(cells):
+        return "  ".join(
+            (c[:cap - 3] + "...") if len(c) > cap else c.ljust(widths[i])
+            for i, c in enumerate(cells) if i < len(widths)).rstrip()
+
+    _out(indent + line(headers))
+    _out(indent + "  ".join("-" * w for w in widths))
+    for r in rows:
+        _out(indent + line(r))
+
+
+def _metric(name, value, source, how=None, unit=""):
+    """One number with its provenance.  `source` is a mr_provenance.SOURCES key."""
+    if value is None:
+        shown = "-"
+    elif isinstance(value, float):
+        shown = f"{value:,.2f}"
+    elif isinstance(value, bool):
+        shown = "yes" if value else "no"
+    elif isinstance(value, int):
+        shown = f"{value:,}"
+    else:
+        shown = str(value)
+    if unit:
+        shown += f" {unit}"
+    _out(f"    {name:<20} {shown:>14}  [{source}]" + (f"  {how}" if how else ""))
+
+
+# ---------------------------------------------------------------------------
+# execute
+
+def _curie_columns(rows):
+    seen = []
+    for row in rows:
+        for cell in (row if isinstance(row, (list, tuple)) else [row]):
+            s = str(cell)
+            if ":" in s and not s.startswith("(") and s not in seen:
+                seen.append(s)
+    return seen
+
+
+def _resolve_query(arg):
+    """`orion execute query.slog` should mean the obvious file.
+
+    Tried in order: exactly what was typed (so a relative path from anywhere
+    works), then slog/<name>, so the bare name of the canonical query file
+    resolves no matter which directory you are standing in.  The path handed to
+    the server must be ABSOLUTE either way -- slog_server.rkt chdirs into the
+    slog checkout at startup, so a relative path there resolves against the
+    wrong tree and comes back as `no such file`."""
+    if arg is None:
+        return DEFAULT_QUERY
+    p = Path(arg)
+    if p.exists():
+        return p.resolve()
+    alt = HERE / "slog" / p.name
+    if alt.exists():
+        return alt.resolve()
+    return p.resolve()
+
+
+_STAMP_RE = re.compile(r"^\+(\d+)[ \t]")
+
+
+def read_stream(path, events):
+    """This run's lines, newest source first.
+
+    The stream file is what slog_server.rkt teed: every echoed line, whole and
+    uncapped.  `events` is the same stream after the reply's stub and 5000-line
+    cap, and is the fallback when no tee landed -- against an older server, or
+    when the file could not be opened.
+
+    Returns (steps, source) with steps as {at_ms, gap_ms, line}.
+    """
+    lines, source = None, "reply"
+    if path:
+        try:
+            lines = Path(path).read_text(errors="replace").splitlines()
+            source = "stream"
+        except OSError:
+            lines = None
+    if lines is None:
+        lines = list(events or [])
+
+    steps, prev = [], 0
+    for raw in lines:
+        m = _STAMP_RE.match(raw)
+        if not m:
+            continue
+        at = int(m.group(1))
+        steps.append({"at_ms": at, "gap_ms": at - prev, "line": raw[m.end():]})
+        prev = at
+    return steps, source
+
+
+def _report_timeline(steps, source, stream_path, n_events, max_lines):
+    """The run, line by line, with the wall clock between lines.
+
+    The gaps are the point: the daemon accounts for its read loop in
+    `(fixpoint ...)` ms and for a paused call in `(timing ...)`, and on this KG
+    neither covers most of the elapsed time.  What is left shows up here as a
+    stretch during which nothing was emitted at all.
+    """
+    _out()
+    _rule()
+    _out("WHAT SLOG REPORTED")
+    _rule()
+
+    if source == "stream":
+        head = f"run timeline -- {len(steps)} line(s), whole, from {stream_path}"
+    else:
+        head = (f"run timeline -- {len(steps)} line(s) from the socket reply "
+                f"(no tee; long lines already stubbed at 160)")
+    _section(head)
+
+    if not steps:
+        _out("    (no lines)")
+        return
+
+    prefix_w = len(f"    +{0:>9} ms  (+{0:>9} ms)  ")
+    pad = " " * prefix_w
+    for s in steps:
+        body = sexpr.render(s["line"], width=max(WIDTH - prefix_w, 48),
+                            max_lines=max_lines)
+        _out(f"    +{s['at_ms']:>9,} ms  (+{s['gap_ms']:>9,} ms)  {body[0]}")
+        for cont in body[1:]:
+            _out(pad + cont)
+
+    if source == "stream" and n_events and len(steps) != n_events:
+        _out(f"    ({n_events} line(s) came back on the reply; the stream file "
+             f"holds {len(steps)})")
+
+
+def _report_slog_tables(resp, raw_stats, work_rows, pinfo, before_max_pos):
+    """-vv only: the $stat_* relations and the join plans.
+
+    Both are a step further from "what slog said than the timeline is: the
+    $stat_ rows below are filtered to this run, and the plans are read off disk
+    and re-rendered in this tool's notation.
+    """
+    if raw_stats:
+        _section(f"$stat_fixpoint (pos, scc, iterations, microseconds) -- "
+                 f"rows past pos {before_max_pos}")
+        _table(["pos", "scc", "iterations", "microseconds"], raw_stats["strata"])
+        _section("$stat_fires (loc, tag) -- increase over this run")
+        _table(["loc", "tag", "fires"],
+               sorted(raw_stats["fires"], key=lambda r: -r[2]))
+
+    if work_rows is not None:
+        _section("$stat_work (loc, tag, ticks, driver_rows) -- rows new this run")
+        _table(["loc", "tag", "ticks", "driver_rows"],
+               sorted(work_rows, key=lambda r: -int(r[2]))[:20] or [])
+
+    tiers = resp.get("tiers") or []
+    if tiers:
+        _section("resident strata (session-tiers)")
+        _table(["scc", "hash", "rung", "cached rungs"],
+               [(t.get("scc"), t.get("hash"), t.get("rung"),
+                 ",".join(t.get("cached") or [])) for t in tiers])
+
+    env = resp.get("env") or {}
+    if env:
+        _section("planner knobs in the server process")
+        for k in ("multiplan", "multiplan_index", "opt"):
+            _out(f"    SLOG_{k.upper():<16} {env.get(k) or '(unset)'}")
+
+    if pinfo:
+        _section("join plans, from build/<hash>.plan")
+        for line in plan.render(pinfo).splitlines():
+            _out(f"  {line}")
+
+
+def _report_answer(dump, limit):
+    _section(f"answer relation `{OUTPUT_REL}`")
+    _metric("n_rows", dump["n_rows"], "daemon", "(tupledone N) -- the true count")
+    _metric("returned", dump["returned"], "session", f"wrapper kept min(n_rows, {limit})")
+    _metric("truncated", dump["truncated"], "session", "n_rows > returned")
+
+
+_FIXPOINT_MS_RE = re.compile(r'^\(fixpoint \d+ "[^"]*" \d+ ([0-9.]+)\)')
+_TIMING_RE = re.compile(r"\(call-ms ([0-9.]+)\) \(total-ms ([0-9.]+)\)")
+_PAUSED_FLAT_RE = re.compile(
+    r'^\(paused \d+ "[^"]*" \d+ \w+ \d+ ([0-9.]+) ([0-9.]+) ')
+
+
+def _line_head(line):
+    """The head symbol, for a table cell -- `(fixpoint 4 ...)` -> `fixpoint`."""
+    m = re.match(r"\(([^\s()]+)", line)
+    return m.group(1) if m else line[:20]
+
+
+def _self_timing(line):
+    """The timing the LINE ITSELF carries, if any.
+
+    `(fixpoint ...)` ends in the fixpoint's ms; a paused record carries
+    `(call-ms ...)`/`(total-ms ...)` in the structured form and the same two as
+    positional fields in the flat one.  Everything else says nothing about how
+    long it took, which is exactly why the gaps beside them matter."""
+    m = _FIXPOINT_MS_RE.match(line)
+    if m:
+        return f"fixpoint {float(m.group(1)):,.0f}"
+    m = _TIMING_RE.search(line) or _PAUSED_FLAT_RE.match(line)
+    if m:
+        return f"call {float(m.group(1)):,.0f} / total {float(m.group(2)):,.0f}"
+    return None
+
+
+def _report_derived(row, steps):
+    """WHAT WE DERIVED -- every number with the arithmetic that produced it."""
+    _out()
+    _rule()
+    _out("WHAT WE DERIVED FROM IT")
+    _rule()
+
+    _section("time budget for the run")
+    _metric("run_wall_s", row.get("run_wall_s"), "client",
+            "perf_counter around the `run` request", unit="s")
+    _metric("- fixpoint_ms/1000",
+            None if row.get("fixpoint_ms") is None else row["fixpoint_ms"] / 1000.0,
+            "daemon", "the only part the daemon accounts for", unit="s")
+    _metric("= setup_s", row.get("setup_s"), "client",
+            "RESIDUAL: attach + the whole-DB reload", unit="s")
+    _out()
+    _metric("compile_s", row.get("compile_s"), "build",
+            "newest fresh .so mtime - run start; CONCURRENT, not a third slice",
+            unit="s")
+    _out()
+    _metric("drop_s", row.get("drop_s"), "client", unit="s")
+    _metric("dump_s", row.get("dump_s"), "client", unit="s")
+    _metric("wall_s", row.get("wall_s"), "client", "the whole command", unit="s")
+
+    if steps:
+        # The timeline above shows every gap; this is the ledger of the big
+        # ones, which on this KG is where nearly all of setup_s lives.  The
+        # daemon's own numbers are quoted where the bounding line carries one,
+        # and left blank where it does not -- they are not summed, because
+        # fixpoint ms and a paused call-ms can cover the same stretch.
+        big = sorted((s for s in steps if s["gap_ms"] >= 1000),
+                     key=lambda s: -s["gap_ms"])[:10]
+        if big:
+            total = sum(s["gap_ms"] for s in big)
+            wall = (row.get("run_wall_s") or 0) * 1000
+            # The stamps are taken inside the run, so their span cannot exceed
+            # run_wall_s.  If it does, the two clocks disagree and a percentage
+            # would be fiction -- say nothing rather than something wrong.
+            pct = 100 * total / wall if wall else 0
+            share = f", {pct:.0f}% of run_wall_s" if 0 < pct <= 105 else ""
+            _section(f"gaps of 1s or more -- {total / 1000:,.1f}s{share}")
+            _table(["gap s", "at s", "line the gap ended at",
+                    "that line's own ms"],
+                   [(f"{s['gap_ms'] / 1000:,.1f}", f"{s['at_ms'] / 1000:,.1f}",
+                     _line_head(s["line"]), _self_timing(s["line"]) or "-")
+                    for s in big], cap=48)
+
+    # The counts (rule_fires, n_arms, n_curies, ...), the cost model
+    # (predicted_s, cost_ratio) and the machine gauges (slogd_rss_gb,
+    # mem_avail_gb) are NOT printed.  They are still computed and still written
+    # to summary.csv -- the row keeps its full schema, and `orion columns` still
+    # says where each one comes from.  They just are not what you open -v for:
+    # this report is about where the run's time went, and a screen of counters
+    # between the gap ledger and the answer only makes that harder to find.
+
+
+def cmd_execute(args):
+    query = _resolve_query(args.file)
+    limit = args.limit
+    verbose = args.verbose
+
+    if not query.exists():
+        _out(f"orion: no such query file: {query}")
+        return 1
+
+    program = query.read_text()
+    n_tables, n_derived = stats.parse_program(program)
+    row = {"tool": "run_slog", "seq": mrlog.next_seq(),
+           "ts_start": datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3],
+           "query_file": str(query), "slog_run_n": 1,
+           "program_bytes": len(program),
+           "program_sha8": hashlib.sha256(program.encode()).hexdigest()[:8],
+           "n_tables_declared": n_tables, "n_derived_rels": n_derived}
+
+    _rule()
+    _out(f"orion execute  {query}")
+    _rule()
+    _out(f"  {len(program):,} bytes  sha8 {row['program_sha8']}  "
+         f"modified {datetime.fromtimestamp(query.stat().st_mtime):%Y-%m-%d %H:%M:%S}")
+    _out(f"  {n_tables} table(s) declared, {n_derived} derived relation(s)")
+    _out(f"  server 127.0.0.1:{slog.PORT}   answer relation `{OUTPUT_REL}`   "
+         f"dump limit {limit}")
+    _out(f"  log dir {mrlog.SESSION_DIR}")
+    # Absolute: the server chdirs into the slog checkout, so a relative tee
+    # path would be written over there, exactly as a relative query path would
+    # be looked for there.
+    stream_path = (mrlog.SESSION_DIR / f"{row['seq']:03d}_run_slog.stream").resolve()
+    mrlog.save_query(row["seq"], program)
+    if verbose >= 2:
+        _out()
+        for ln in program.splitlines():
+            _out(f"    | {ln}")
+    _out()
+
+    t_total = time.perf_counter()
+    before_stats = before_build = t_start = None
+    raw_stats = work_rows = pinfo = None
+    status = "ok"
+    try:
+        if args.drop:
+            t0 = time.perf_counter()
+            try:
+                slog.drop(OUTPUT_REL)
+                _out(f"  * dropped `{OUTPUT_REL}`")
+            except slog.SlogError as e:
+                _out(f"  * no previous `{OUTPUT_REL}` to drop ({e})")
+            row["drop_s"] = time.perf_counter() - t0
+        else:
+            _out(f"  * NOT dropping `{OUTPUT_REL}` (--no-drop): rows from earlier "
+                 f"runs stay in the answer")
+
+        before_stats = stats.stat_snapshot()
+        before_build = stats.build_snapshot()
+        t_start = time.time()
+        if before_stats is None:
+            _out("  ! could not read the $stat_* relations before the run -- every "
+                 "daemon-sourced number below will be blank")
+
+        _out(f"  * running ... (started {datetime.now():%H:%M:%S}; this is minutes)")
+        _out(f"    daemon lines land in {stream_path.name} as they arrive -- "
+             f"`tail -f` it to watch")
+        t0 = time.perf_counter()
+        # mrlog only creates the session dir lazily; the server cannot.
+        stream_path.parent.mkdir(parents=True, exist_ok=True)
+        resp = slog.run_file(query, tee=stream_path)
+        row["run_wall_s"] = time.perf_counter() - t0
+        _out(f"  * run returned in {mrlog.fmt_dur(row['run_wall_s'])}")
+
+        t0 = time.perf_counter()
+        d = slog.dump(OUTPUT_REL, limit=limit)
+        row["dump_s"] = time.perf_counter() - t0
+        _out(f"  * dumped `{OUTPUT_REL}` in {mrlog.fmt_dur(row['dump_s'])}")
+    except slog.SlogUnavailable as e:
+        _out()
+        _out(f"orion: {e}")
+        _out("  `orion status` tells loading-and-not-listening apart from "
+             "not-running.")
+        row["status"] = "error"
+        row["error"] = f"slog unavailable: {e}"[:300]
+        row["wall_s"] = time.perf_counter() - t_total
+        row["notes"] = "via-orion"
+        mrlog.csv_row(**row)
+        return 2
+    except slog.SlogError as e:
+        _out()
+        _out(f"orion: query failed: {e}")
+        row["status"] = "error"
+        row["error"] = f"slog error: {e}"[:300]
+        row["wall_s"] = time.perf_counter() - t_total
+        row["notes"] = "via-orion"
+        mrlog.csv_row(**row)
+        _out(f"  summary row -> {mrlog.CSV_FILE}")
+        return 1
+    except KeyboardInterrupt:
+        _out()
+        _out("orion: interrupted -- the DAEMON DID NOT STOP.  It holds the session")
+        _out("  semaphore until the run finishes, so the next command will block")
+        _out("  until then.  `slog/kg2-stop.sh` is the way to actually stop it.")
+        return 130
+
+    # Read the daemon's own counters once, and derive from those same rows -- a
+    # second dump would cost another action-plugin build, seconds each.
+    raw_stats = stats.stat_raw(before_stats)
+    work_rows = stats.work_raw(before_stats)
+    row.update(stats.stat_delta(before_stats, raw=raw_stats))
+    row.update(stats.work_delta(before_stats, fresh=work_rows))
+
+    n_compiled, compile_s = stats.build_delta(before_build, t_start)
+    row["n_strata_compiled"] = n_compiled
+    row["compile_s"] = compile_s
+    if row.get("fixpoint_ms") is not None:
+        row["setup_s"] = max(0.0, row.get("run_wall_s", 0.0)
+                             - row["fixpoint_ms"] / 1000.0)
+    row["predicted_s"] = stats.predict(n_derived, bool(n_compiled))
+
+    try:
+        pinfo = plan.collect(resp)
+    except Exception as e:
+        _out(f"  ! could not recover the join plan: {e!r}")
+    if pinfo:
+        row.update(pinfo["csv"])
+        mrlog.save_plan(row["seq"], plan.render(pinfo))
+
+    row["n_rows"] = d["n_rows"]
+    row["returned"] = d["returned"]
+    row["truncated"] = d["truncated"]
+    row["n_curies"] = len(_curie_columns(d["rows"]))
+    row["slogd_rss_gb"], row["mem_avail_gb"] = stats.env_snapshot()
+    row["wall_s"] = time.perf_counter() - t_total
+    if row.get("predicted_s"):
+        row["cost_ratio"] = round(row["wall_s"] / row["predicted_s"], 2)
+
+    notes = []
+    if n_compiled == 0:
+        notes.append("compile-cached")
+    if pinfo and not pinfo["plans"]:
+        notes.append("no-plan")
+    if d["n_rows"] == 0:
+        notes.append("zero-rows")
+    if d["truncated"]:
+        notes.append("truncated")
+    if row.get("run_wall_s", 0) > 120:
+        notes.append("slow-run")
+    steps, source = read_stream(resp.get("tee"), resp.get("events"))
+    if not resp.get("tee"):
+        notes.append("no-tee")
+    notes.append("via-orion")
+    row["notes"] = " ".join(notes)
+    row["status"] = status
+
+    if args.raw:
+        _section("raw server reply (JSON), before anything here touched it")
+        import json
+        _out(json.dumps(resp, indent=2))
+
+    if verbose:
+        _report_timeline(steps, source, resp.get("tee"),
+                         len(resp.get("events") or []), args.max_lines)
+        if verbose >= 2:
+            _report_slog_tables(resp, raw_stats, work_rows, pinfo,
+                                (before_stats or {}).get("max_pos"))
+        _report_answer(d, limit)
+
+    _out()
+    _rule()
+    _out(f"{OUTPUT_REL}: {d['n_rows']:,} row(s)"
+         + (f", showing {d['returned']:,}" if d["truncated"] else ""))
+    _rule()
+    if d["rows"]:
+        ncols = max(len(r) for r in d["rows"])
+        _table([f"c{i}" for i in range(ncols)], d["rows"], indent="  ")
+    else:
+        _out("  (no rows)")
+
+    if args.tsv:
+        Path(args.tsv).write_text(
+            "\n".join("\t".join(str(c) for c in r) for r in d["rows"]) + "\n")
+        _out(f"\n  {d['returned']:,} row(s) written to {args.tsv}")
+
+    if verbose:
+        _report_derived(row, steps)
+
+    _out()
+    _rule()
+    _out(f"  {mrlog.fmt_dur(row['wall_s'])} total   "
+         f"run {mrlog.fmt_dur(row.get('run_wall_s', 0))}   "
+         f"fixpoint {row.get('fixpoint_ms', '?')}ms [daemon]   "
+         f"setup {mrlog.fmt_dur(row['setup_s']) if row.get('setup_s') is not None else '?'}"
+         f"   compile "
+         f"{mrlog.fmt_dur(compile_s) if compile_s is not None else '?'} [build]")
+    if notes:
+        _out(f"  notes: {' '.join(notes)}")
+    mrlog.csv_row(**row)
+    _out(f"  summary row -> {mrlog.CSV_FILE}")
+    if resp.get("tee"):
+        _out(f"  daemon stream -> {resp['tee']}  ({len(steps)} line(s), whole)")
+    else:
+        _out("  no daemon stream: the server did not open the tee, so the "
+             "timeline comes from the reply (long lines stubbed at 160)")
+    if not verbose:
+        _out("  -v for the run timeline and how each number was derived; "
+             "-vv adds $stat_* and the join plans")
+    return 0
+
+
+# ---------------------------------------------------------------------------
+# the other server ops
+
+def cmd_dump(args):
+    try:
+        d = slog.dump(args.rel, limit=args.limit)
+    except slog.SlogUnavailable as e:
+        _out(f"orion: {e}")
+        return 2
+    except slog.SlogError as e:
+        _out(f"orion: dump failed: {e}")
+        return 1
+    _out(f"{args.rel}: {d['n_rows']:,} row(s)"
+         + (f", showing {d['returned']:,}" if d["truncated"] else "")
+         + "   [n_rows is the daemon's own (tupledone N)]")
+    if d["rows"]:
+        ncols = max(len(r) for r in d["rows"])
+        _table([f"c{i}" for i in range(ncols)], d["rows"], indent="  ")
+    if args.tsv:
+        Path(args.tsv).write_text(
+            "\n".join("\t".join(str(c) for c in r) for r in d["rows"]) + "\n")
+        _out(f"\n  {d['returned']:,} row(s) written to {args.tsv}")
+    return 0
+
+
+def cmd_drop(args):
+    try:
+        slog.drop(args.rel)
+    except slog.SlogUnavailable as e:
+        _out(f"orion: {e}")
+        return 2
+    except slog.SlogError as e:
+        _out(f"orion: drop failed: {e}")
+        return 1
+    _out(f"dropped `{args.rel}`")
+    return 0
+
+
+def _has_live_parent(pid):
+    """Is this slogd still attached to a session server, or orphaned?
+
+    Field 4 of /proc/<pid>/stat is ppid; a reparented orphan shows 1.  The
+    comm field can contain spaces and parens, so slice past the last ')'
+    rather than splitting the whole line."""
+    try:
+        with open(f"/proc/{pid}/stat") as fh:
+            after = fh.read().rpartition(")")[2]
+        return int(after.split()[1]) > 1
+    except (OSError, ValueError, IndexError):
+        return False
+
+
+def cmd_status(args):
+    """Deliberately does not dump anything: every dump builds an action plugin,
+    so a status check that touched a relation would cost seconds and a compile."""
+    _out(f"session server  127.0.0.1:{slog.PORT}")
+    try:
+        conn = socket.create_connection((slog.HOST, slog.PORT), timeout=3)
+        conn.close()
+        _out("  reachable       yes")
+        reachable = True
+    except OSError as e:
+        _out(f"  reachable       NO -- {e}")
+        _out("  start it with   slog/kg2-server.sh")
+        reachable = False
+    pid = stats._slogd_pid()
+    rss, avail = stats.env_snapshot()
+    if not reachable and pid:
+        # slog_server.rkt calls ensure-session! BEFORE tcp-listen, so the port is
+        # shut for the whole ~minutes-long load.  "refused" with a live slogd is
+        # therefore "still loading", not "dead" -- and the distinction matters,
+        # because the answer to the first is to wait and to the second is to
+        # start it.  A slogd with no parent is the third case: an orphan holding
+        # tens of GB, which kg2-stop.sh exists to clear.
+        _out(f"  ... but a slogd IS running (pid {pid}, {rss or '?'} GB)")
+        _out("      -> still loading the KG; the port opens when it is ready"
+             if _has_live_parent(pid) else
+             "      -> ORPHANED (no parent): it holds that memory for nothing. "
+             "slog/kg2-stop.sh")
+    _out(f"  slogd pid       {pid or '(not running)'}")
+    _out(f"  slogd rss       {rss if rss is not None else '?'} GB   [os: /proc/statm]")
+    _out(f"  mem available   {avail if avail is not None else '?'} GB   [os: /proc/meminfo]")
+    _out(f"  build dir       {stats.BUILD_DIR}")
+    _out(f"  query file      {DEFAULT_QUERY}"
+         + ("" if DEFAULT_QUERY.exists() else "   (missing)"))
+    return 0 if reachable else 2
+
+
+def cmd_columns(args):
+    _out("Every column of summary.csv, and where its value actually comes from.")
+    _out()
+    for key, desc in prov.SOURCES.items():
+        _out(f"  {key:<9} {desc}")
+    _out()
+    _rule()
+    for col, src, how in prov.COLUMNS:
+        if args.source and src != args.source:
+            continue
+        _out(f"{col:<20} [{src}]")
+        for ln in textwrap.wrap(how, WIDTH - 23) or [""]:
+            _out(f"{'':<20}   {ln}")
+    # Cheap guard against this table and the CSV header drifting apart.
+    known = {c for c, _, _ in prov.COLUMNS}
+    missing = [c for c in mrlog.FIELDS if c not in known]
+    extra = [c for c in known if c not in mrlog.FIELDS]
+    if missing or extra:
+        _out()
+        _out("!! mr_provenance.COLUMNS and mr_logging.FIELDS have drifted:")
+        if missing:
+            _out(f"   in the CSV, unexplained here : {', '.join(missing)}")
+        if extra:
+            _out(f"   explained here, not in the CSV: {', '.join(extra)}")
+        return 1
+    return 0
+
+
+# ---------------------------------------------------------------------------
+
+def main(argv=None):
+    p = argparse.ArgumentParser(
+        prog="orion", description=__doc__.split("\n\n")[0],
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="`orion execute` costs minutes and tens of GB, and has no "
+               "permission prompt in front of it.")
+    p.add_argument("--debug", action="store_true",
+                   help="also stream the internal log to stderr")
+    sub = p.add_subparsers(dest="cmd", required=True)
+
+    e = sub.add_parser("execute", help="run a Slog program against the session")
+    e.add_argument("file", nargs="?", default=None,
+                   help=f"path to a .slog file (default: {DEFAULT_QUERY})")
+    e.add_argument("-v", "--verbose", action="count", default=0,
+                   help="-v the run timeline, line by line with the wall clock "
+                        "between lines, plus how each number was derived; "
+                        "-vv also the $stat_* tables, the join plans and the program")
+    e.add_argument("--limit", type=int, default=100,
+                   help="rows to fetch from the answer relation (default 100). "
+                        "n_rows always reports the true count")
+    e.add_argument("--max-lines", type=int, default=6, metavar="N",
+                   help="cap the rows one daemon line may occupy in the "
+                        "timeline (default 6; 0 lifts it). The whole line is "
+                        "in the .stream file either way")
+    e.add_argument("--raw", action="store_true",
+                   help="print the server's JSON reply verbatim")
+    e.add_argument("--tsv", metavar="PATH", help="write the fetched rows to a TSV")
+    e.add_argument("--no-drop", dest="drop", action="store_false",
+                   help=f"do not drop `{OUTPUT_REL}` first (default is to drop, "
+                        f"so each run starts empty)")
+    e.set_defaults(fn=cmd_execute)
+
+    d = sub.add_parser("dump", help="dump a relation from the live session")
+    d.add_argument("rel", help="relation name, e.g. result or $stat_fixpoint")
+    d.add_argument("--limit", type=int, default=500)
+    d.add_argument("--tsv", metavar="PATH")
+    d.set_defaults(fn=cmd_dump)
+
+    r = sub.add_parser("drop", help="drop a relation")
+    r.add_argument("rel")
+    r.set_defaults(fn=cmd_drop)
+
+    s = sub.add_parser("status", help="is the session server up")
+    s.set_defaults(fn=cmd_status)
+
+    c = sub.add_parser("columns", help="where each summary.csv column comes from")
+    c.add_argument("--source", choices=list(_SOURCE_KEYS),
+                   help="only columns from this source")
+    c.set_defaults(fn=cmd_columns)
+
+    args = p.parse_args(argv)
+
+    _imports()
+    # The file handler keeps INFO; the terminal gets orion's report instead of a
+    # second, differently-formatted copy of it.
+    for h in logging.getLogger("mr").handlers:
+        if isinstance(h, logging.StreamHandler) and not isinstance(h, logging.FileHandler):
+            h.setLevel(logging.DEBUG if args.debug else logging.WARNING)
+
+    try:
+        return args.fn(args)
+    except KeyboardInterrupt:
+        _out("\norion: interrupted")
+        return 130
+
+
+# argparse needs the choices before _imports() has run, and this list is short
+# enough that duplicating it beats importing mr_provenance twice.
+_SOURCE_KEYS = ("daemon", "session", "build", "client", "program", "model", "os")
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,20 @@
+2026-09-04 02:17:06.046 | INFO    | slog          |   -> slog drop: {"op": "drop", "rel": "result"}
+2026-09-04 02:18:12.665 | INFO    | slog          |   <- slog drop ok in 1m 06.6s (12 bytes of response)
+2026-09-04 02:18:12.666 | WARNING | slog          |   !! slog drop took 1m 06.6s
+2026-09-04 02:18:12.666 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-09-04 02:18:12.676 | INFO    | slog          |   <- slog dump ok in 10ms (191 bytes of response)
+2026-09-04 02:18:12.676 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-09-04 02:18:12.681 | INFO    | slog          |   <- slog dump ok in 5ms (278 bytes of response)
+2026-09-04 02:18:12.681 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-09-04 02:18:12.691 | INFO    | slog          |   <- slog dump ok in 10ms (339 bytes of response)
+2026-09-04 02:18:12.699 | INFO    | slog          |   -> slog run: {"op": "run", "path": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog", "tee": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/logs/orion/20260904-021706/001_run_slog.stream"}
+2026-09-04 02:19:20.562 | INFO    | slog          |   <- slog run ok in 1m 07.9s (1204 bytes of response)
+2026-09-04 02:19:20.562 | WARNING | slog          |   !! slog run took 1m 07.9s
+2026-09-04 02:19:20.562 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "result", "limit": 100}
+2026-09-04 02:19:20.571 | INFO    | slog          |   <- slog dump ok in 9ms (4333 bytes of response)
+2026-09-04 02:19:20.572 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-09-04 02:19:20.578 | INFO    | slog          |   <- slog dump ok in 7ms (222 bytes of response)
+2026-09-04 02:19:20.579 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-09-04 02:19:20.587 | INFO    | slog          |   <- slog dump ok in 9ms (278 bytes of response)
+2026-09-04 02:19:20.587 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-09-04 02:19:20.593 | INFO    | slog          |   <- slog dump ok in 6ms (339 bytes of response)

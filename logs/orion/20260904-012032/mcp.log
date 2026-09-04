@@ -1,0 +1,18 @@
+2026-09-04 01:20:32.367 | INFO    | slog          |   -> slog drop: {"op": "drop", "rel": "result"}
+2026-09-04 01:20:32.379 | ERROR   | slog          |   x slog drop failed after 10ms: transform path is unbound: result
+2026-09-04 01:20:32.379 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-09-04 01:20:32.385 | INFO    | slog          |   <- slog dump ok in 6ms (95 bytes of response)
+2026-09-04 01:20:32.385 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-09-04 01:20:32.514 | INFO    | slog          |   <- slog dump ok in 128ms (243 bytes of response)
+2026-09-04 01:20:32.514 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-09-04 01:20:32.527 | INFO    | slog          |   <- slog dump ok in 13ms (259 bytes of response)
+2026-09-04 01:20:32.530 | INFO    | slog          |   -> slog run: {"op": "run", "path": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog"}
+2026-09-04 01:21:32.102 | INFO    | slog          |   <- slog run ok in 59.57s (1011 bytes of response)
+2026-09-04 01:21:32.102 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "result", "limit": 100}
+2026-09-04 01:21:32.113 | INFO    | slog          |   <- slog dump ok in 11ms (4333 bytes of response)
+2026-09-04 01:21:32.113 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-09-04 01:21:32.120 | INFO    | slog          |   <- slog dump ok in 6ms (127 bytes of response)
+2026-09-04 01:21:32.120 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-09-04 01:21:32.128 | INFO    | slog          |   <- slog dump ok in 7ms (278 bytes of response)
+2026-09-04 01:21:32.128 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-09-04 01:21:32.133 | INFO    | slog          |   <- slog dump ok in 5ms (339 bytes of response)

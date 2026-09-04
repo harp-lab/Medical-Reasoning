@@ -1,0 +1,9 @@
+2026-09-04 02:16:51.487 | INFO    | slog          |   -> slog drop: {"op": "drop", "rel": "result"}
+2026-09-04 02:16:51.509 | INFO    | slog          |   <- slog drop ok in 21ms (12 bytes of response)
+2026-09-04 02:16:51.510 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fixpoint", "limit": 100000}
+2026-09-04 02:16:51.516 | INFO    | slog          |   <- slog dump ok in 7ms (159 bytes of response)
+2026-09-04 02:16:51.516 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_fires", "limit": 100000}
+2026-09-04 02:16:51.521 | INFO    | slog          |   <- slog dump ok in 4ms (278 bytes of response)
+2026-09-04 02:16:51.521 | INFO    | slog          |   -> slog dump: {"op": "dump", "rel": "$stat_work", "limit": 100000}
+2026-09-04 02:16:51.526 | INFO    | slog          |   <- slog dump ok in 5ms (339 bytes of response)
+2026-09-04 02:16:51.529 | INFO    | slog          |   -> slog run: {"op": "run", "path": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/slog/query.slog", "tee": "/home.na1/ad.wsu.edu/aayush.shrestha/pvt/projects/MR/MedicalReasoning/logs/orion/20260904-021651/001_run_slog.stream"}

@@ -69,8 +69,15 @@ def request(op):
     return resp
 
 
-def run_file(path):
-    return request({"op": "run", "path": str(path)})
+def run_file(path, tee=None):
+    """Run a program.  `tee`, if given, is an ABSOLUTE path the server writes
+    every echoed line to, whole and uncapped -- the socket reply stays stubbed.
+    The server chdirs into the slog checkout, so a relative path would land
+    there; the reply's `tee` field says whether it was actually opened."""
+    op = {"op": "run", "path": str(path)}
+    if tee:
+        op["tee"] = str(tee)
+    return request(op)
 
 
 def dump(rel, limit=500):

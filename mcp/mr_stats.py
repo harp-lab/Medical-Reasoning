@@ -69,7 +69,24 @@ def stat_snapshot():
 WORK_TOP_N = 6
 
 
-def work_delta(before):
+def work_raw(before):
+    """The $stat_work rows this run published, unaggregated -- exactly the set
+    work_delta() sums.  Split out so a caller that wants to SHOW the daemon's own
+    rows (orion -v) does not have to dump the relation a second time: every dump
+    builds an action plugin, so a second read is seconds, not free."""
+    if not before:
+        return None
+    rows = _dump_rows("$stat_work")
+    if rows is None:
+        return None
+    try:
+        return [r for r in rows if tuple(r) not in before["work"]]
+    except Exception as e:
+        log.warning(f"could not read work rows: {e!r}")
+        return None
+
+
+def work_delta(before, fresh=None):
     """Where this run's join work went: $stat_work(loc, tag, ticks, driver_rows).
 
     This -- not $stat_fires -- is the blowup observable: a probe that scans
@@ -86,11 +103,10 @@ def work_delta(before):
     empty = {"work_ticks": None, "work_rows": None, "work_top": None}
     if not before:
         return empty
-    rows = _dump_rows("$stat_work")
-    if rows is None:
+    fresh = work_raw(before) if fresh is None else fresh
+    if fresh is None:
         return empty
     try:
-        fresh = [r for r in rows if tuple(r) not in before["work"]]
         top = sorted(fresh, key=lambda r: -int(r[2]))[:WORK_TOP_N]
         return {"work_ticks": sum(int(r[2]) for r in fresh),
                 "work_rows": sum(int(r[3]) for r in fresh),
@@ -101,27 +117,47 @@ def work_delta(before):
         return empty
 
 
-def stat_delta(before):
-    empty = {"n_strata_executed": None, "fixpoint_ms": None,
-             "iterations": None, "rule_fires": None}
+def stat_raw(before):
+    """This run's own $stat_fixpoint rows and per-rule $stat_fires increases,
+    unaggregated.  Same reason as work_raw: one dump feeds both the summary
+    numbers and any caller that wants to print what the daemon actually said.
+
+    $stat_fixpoint(pos, scc, iterations, micros) is append-only and `pos` only
+    grows, so "this run" is the rows past the pre-run high-water mark.
+    $stat_fires(loc, tag, n) is a running total instead, so it deltas."""
     if not before:
-        return empty
+        return None
     try:
         fx = slog.dump("$stat_fixpoint", limit=100000)
         fr = slog.dump("$stat_fires", limit=100000)
     except Exception:
+        return None
+    try:
+        return {
+            "strata": [r for r in fx["rows"] if int(r[0]) > before["max_pos"]],
+            "fires": [(r[0], r[1], int(r[2]) - before["fires"].get((r[0], r[1]), 0))
+                      for r in fr["rows"]
+                      if int(r[2]) != before["fires"].get((r[0], r[1]), 0)],
+        }
+    except Exception as e:
+        log.warning(f"could not read stat rows: {e!r}")
+        return None
+
+
+def stat_delta(before, raw=None):
+    empty = {"n_strata_executed": None, "fixpoint_ms": None,
+             "iterations": None, "rule_fires": None}
+    if not before:
+        return empty
+    raw = stat_raw(before) if raw is None else raw
+    if raw is None:
         return empty
     try:
-        strata = [r for r in fx["rows"] if int(r[0]) > before["max_pos"]]
-        micros = sum(int(r[3]) for r in strata)
-        iters = sum(int(r[2]) for r in strata)
-        fires = 0
-        for r in fr["rows"]:
-            fires += int(r[2]) - before["fires"].get((r[0], r[1]), 0)
+        strata = raw["strata"]
         return {"n_strata_executed": len(strata),
-                "fixpoint_ms": round(micros / 1000.0, 1),
-                "iterations": iters,
-                "rule_fires": max(fires, 0)}
+                "fixpoint_ms": round(sum(int(r[3]) for r in strata) / 1000.0, 1),
+                "iterations": sum(int(r[2]) for r in strata),
+                "rule_fires": max(sum(n for _, _, n in raw["fires"]), 0)}
     except Exception as e:
         log.warning(f"could not read stat delta: {e!r}")
         return empty

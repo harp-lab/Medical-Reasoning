@@ -69,14 +69,37 @@
 (define (elapsed-ms)
   (inexact->exact
    (round (- (current-inexact-monotonic-milliseconds) (unbox run-t0)))))
+;; The reply is capped and stubbed because it crosses a socket and lands in a
+;; model's context.  A `tee` path on the run request asks for the OTHER copy:
+;; every echoed line, whole, uncapped, written as it arrives.  The stamp stays
+;; -- it is the only record of WHEN a line appeared, and the gaps between lines
+;; are where this KG's wall time actually goes -- but it is split off by a tab,
+;; so everything past the first tab is the line exactly as it was echoed.
+;;
+;; Written incrementally rather than at the end: a run is minutes long and gets
+;; interrupted, and a partial stream of a run that died is worth more than
+;; nothing at all.
+(define tee-port (box #f))
+(define (tee! at line)
+  (define p (unbox tee-port))
+  (when p
+    (with-handlers ([exn:fail?
+                     (lambda (e)
+                       (note "tee write failed, dropping it: ~a" (exn-message e))
+                       (set-box! tee-port #f))])
+      (fprintf p "+~a\t~a\n" at line)
+      (flush-output p))))
+
 (define (note-event! line)
+  (define at (elapsed-ms))
+  (tee! at line)
   (when (< (unbox event-count) EVENT-CAP)
     (define kept
       (cond
         [(regexp-match? KEEP-WHOLE line) line]
         [(<= (string-length line) STUB-AT) line]
         [else (string-append (substring line 0 STUB-AT) " ...)")]))
-    (set-box! events (cons (format "+~a ~a" (elapsed-ms) kept) (unbox events))))
+    (set-box! events (cons (format "+~a ~a" at kept) (unbox events))))
   (set-box! event-count (add1 (unbox event-count))))
 (define (take-events!)
   (define out (reverse (unbox events)))
@@ -140,12 +163,33 @@
      ;; describes THIS run only, and zero the clock the stamps count from.
      (void (take-events!))
      (set-box! run-t0 (current-inexact-monotonic-milliseconds))
-     (session-run! s path)
-     (note-event! "(run-complete)")
+     ;; A tee that cannot be opened is reported and skipped, never fatal: the
+     ;; run is the expensive thing and it should not die over a log file.
+     (define tee-path (hash-ref req 'tee #f))
+     (define tee-out
+       (and tee-path
+            (with-handlers ([exn:fail?
+                             (lambda (e)
+                               (note "cannot open tee ~a: ~a" tee-path (exn-message e))
+                               #f)])
+              (open-output-file tee-path #:exists 'truncate))))
+     (set-box! tee-port tee-out)
+     (dynamic-wind
+       void
+       (lambda ()
+         (session-run! s path)
+         (note-event! "(run-complete)"))
+       (lambda ()
+         (set-box! tee-port #f)
+         (when tee-out (close-output-port tee-out))))
      ;; `tiers` is (scc hash rung cached-rungs policy) per resident stratum --
      ;; the authoritative stratum-hash -> build/HASH.plan mapping, including
      ;; strata that were cached and so emitted no fixpoint line this run.
      (hasheq 'ok #t
+             ;; Whether the untruncated copy actually landed.  A client that
+             ;; asked for one and got #f back knows to fall back to `events`
+             ;; rather than reading a file that is not there.
+             'tee (and tee-out tee-path)
              'events (take-events!)
              'tiers (for/list ([t (in-list (session-tiers s))])
                       (hasheq 'scc (first t)

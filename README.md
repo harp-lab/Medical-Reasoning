@@ -44,6 +44,81 @@ Stop it with `slog/kg2-stop.sh`.
 The MCP server starts and stops with Claude Code, per `.mcp.json`. Restarting it is free;
 it does not reload the graph.
 
+## `orion` — the same session, from a terminal
+
+The MCP `run_slog` tool is a thin client over a plain TCP/JSON-lines protocol, so a model
+is not required to reach the engine. `orion` is that client with a CLI on it:
+
+```bash
+./orion status                       # up, still loading, or orphaned
+./orion execute slog/query.slog      # write the .slog yourself, run it yourself
+./orion execute slog/query.slog -v   # + the run timeline and how each number was derived
+./orion execute slog/query.slog -vv  # + the $stat_* tables, join plans and the program
+./orion dump '$stat_fixpoint'        # any relation in the live session
+./orion columns                      # where each summary.csv column comes from
+```
+
+### Where the time goes
+
+`-v` is a profiler. Its centre is the **run timeline**: every line the session emitted,
+with the wall clock between lines.
+
+```
++    1,033 ms  (+    1,033 ms)  (pipeline (pos 12) (evaluation "eval-1a0639…")
+                                          (strata (s 0 10 …) … +5 more (s …))
+                                          (rel kg2_edges (v 0 3 56965146))
+                                          (rel result (v 0 12 1627)))
++   82,965 ms  (+   81,925 ms)  (arms (g 0 1 0 "query.slog:12") … +23 more (g …))
++   82,965 ms  (+        0 ms)  (fixpoint 4 "6ba66f12" 2 6506.819)
++  157,179 ms  (+   74,214 ms)  (paused … (timing (call-ms 8051) (total-ms 8051))
+                                          (cause (budget time)))
+```
+
+The gaps are the finding. On this KG the two fixpoints above account for 22s of a 165s
+run; the rest sits in stretches where nothing is emitted at all, bounded by `(arms …)` and
+`(paused …)`. `reloadInsertBatches` — the whole-DB re-stage armed after every fixpoint —
+emits nothing and is not timed, and `SLOG_MULTIPLAN` arm metering runs before each stratum.
+`-v` ends with a ledger of every gap ≥ 1s and, beside each, the timing that line carries
+about itself, which for `(arms …)` is nothing.
+
+Long lines are shortened by **structure**, not by character count: a run of repeated
+siblings keeps the first few and says how many more there were, so `(pipeline …)` still
+shows its per-relation tuple counts instead of being cut at 160 characters. Nothing is
+computed or inferred — every character printed came from the line. `--max-lines` caps how
+many rows one line may occupy (default 6, `0` lifts it).
+
+Every run also writes `NNN_run_slog.stream`: each echoed line whole, uncapped, written as
+it arrives — so `tail -f` works during a run, and an interrupted run still leaves what it
+got. The stamp is separated by a tab; everything after it is the line as echoed. This needs
+the tee in `slog/slog_server.rkt`, so a server started before that change reports `no-tee`
+and the timeline falls back to the socket reply, where long lines are stubbed at 160.
+
+The stream is teed at slog's `#:echo`, not at slogd's stdout, so it is not quite the
+daemon's own bytes: `compiler/session.rkt` synthesizes some lines that look like daemon
+lines (`(tier …)`, `(activated …)`, `(recount …)`) and turns `(error …)` into an exception
+rather than echoing it.
+
+### Reading summary.csv
+
+`-v` then shows **what we derived**, every number tagged with its source and the arithmetic
+that produced it — `daemon`, `session`, `build`, `client`, `program`, `model`, `os`, defined
+in `mcp/mr_provenance.py`.
+
+That tagging is the other reason the tool exists. A `summary.csv` row prints `fixpoint_ms`
+— the daemon's own accounting — in the same flat CSV as `predicted_s`, which is
+`9.0 + 13.0 × n_derived_rels` with both constants hardcoded in `mr_stats.py` and nothing
+about the run feeding them. They look equally measured and are not. (The measured per-stratum
+overhead in `logs/` is nearer 60–70s than the 13s that constant assumes.) `orion columns`
+prints the mapping for every column without needing the server.
+
+### Practicalities
+
+Runs land in `logs/orion/<ts>/` in the same format as the MCP sessions, and their summary
+rows carry a `via-orion` note. Both clients share one session and serialize on its
+semaphore, so a run started here blocks one started from Claude. Unlike the MCP tool there
+is no permission prompt: typing the command is the confirmation, and a run is still minutes
+and tens of GB.
+
 ## The database
 
 `data/db/rtx_kg2_281` — 56,965,146 edges and 11,342,763 nodes, plus synonyms, publications,
@@ -109,11 +184,16 @@ changing it recompiles every stratum once.
 
 ## Logs
 
-One folder per MCP session:
+One folder per MCP session, and one per `orion` invocation under `logs/orion/`:
 
 ```
 logs/<YYYYMMDD-HHMMSS>/
     mcp.log                     step-by-step narrative
     summary.csv                 one row per tool call
     queries/NNN_run_slog.slog   the exact program each run executed
+    NNN_run_slog.stream         every line the session echoed, whole (orion runs)
 ```
+
+`orion columns` explains where every `summary.csv` column's value actually comes from —
+worth reading once before quoting a number out of that file, since the daemon's own
+measurements and a hardcoded cost model sit side by side in it.
