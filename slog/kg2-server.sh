@@ -36,7 +36,7 @@ export KG2_SLOG_DB="${KG2_SLOG_DB:-rtx_kg2_281}"
 # (12.6s vs 12.4s fixpoint on the same query) because runtime is dominated by
 # fixed per-stratum overhead rather than generated-code quality.  The background
 # builds only cost disk.
-export SLOG_OPT=interp #"${SLOG_OPT:-0}"
+
 
 # Multi-plan join selection (slog docs/join-planning-assessment.md).  Off by
 # default in slog, so without this the planner emits only its static argmax
@@ -62,6 +62,8 @@ export SLOG_OPT=interp #"${SLOG_OPT:-0}"
 # Residual risk: one extra ordering on kg2_edges is still large in absolute
 # terms.  SLOG_MEM_MAX above is the backstop -- an overrun stops cleanly.  If it
 # does overrun, `free` is the retreat (feature effectively off) rather than a fix.
+export SLOG_OPT=interp #"${SLOG_OPT:-0}"
+
 export SLOG_MULTIPLAN="${SLOG_MULTIPLAN-1}"
 export SLOG_MULTIPLAN_INDEX="${SLOG_MULTIPLAN_INDEX:-budget:1}"
 

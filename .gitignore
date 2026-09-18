@@ -9,3 +9,8 @@ data/
 tmp/
 eval/
 preprocess/
+logs/
+result.txt
+slog/generated/
+slog/setup.head.slog
+docs/NOTES.md

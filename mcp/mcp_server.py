@@ -90,6 +90,63 @@ def list_predicates() -> list[str]:
 
 
 @mcp.tool()
+def list_signed_edges(subject_kind: str = "", object_kind: str = "", mode: str = "",
+                      source_family: str = "", min_edges: int = 1,
+                      limit: int = 60) -> list[dict]:
+    """Edge types that carry a DIRECTION, for sign-locked reasoning. Largest first.
+
+    Call this BEFORE writing any direction-sensitive rule. If it returns no rows for a
+    hop, the graph cannot answer that hop with a locked direction -- say so instead of
+    running a query that is guaranteed to come back empty.
+
+    `sign` is +1 if increasing the subject increases the object, -1 if it decreases it.
+    Rows are already in CANONICAL orientation -- inverse-named source predicates
+    (`*_by`, `*_of`) are pre-flipped or dropped -- so you never write an orientation
+    rule yourself. Join `signed_edge(subj, sign, obj, predicate_type, mode)` in Slog;
+    lock a path with `(= prod (* s1 (* s2 s3))) (= prod -1)`.
+
+    `subject_kind` / `object_kind` are the buckets of the `node_kind` relation:
+    gene, chemical, disease, phenotype, process, anatomy. Use these, NOT a single
+    biolink category -- categories are flat and single-valued, so "biolink:Gene" alone
+    misses the Protein and Polypeptide nodes carrying most drug-target edges, and
+    "biolink:Drug" misses the ChemicalEntity nodes carrying most of the rest.
+
+    `mode` is regulation | causation | membership. Regulation and causation are
+    evidence. A `membership` edge ("this phenotype is a feature of this disease") is
+    assigned +1 by CONVENTION, not by evidence -- carry the mode into your result so a
+    symptomatic claim stays distinguishable from a disease-modifying one.
+
+    Unsigned predicates are deliberately absent: gene_associated_with_condition,
+    related_to, correlated_with and biomarker_for carry no direction. Do not put them
+    in a sign-locked chain. If you use them (via `edge` / `edge_rel`), say in the answer
+    that the direction of that hop is unknown.
+    """
+    with _record("list_signed_edges", subject_kind=subject_kind or None,
+                 object_kind=object_kind or None, mode=mode or None,
+                 source_family=source_family or None, min_edges=min_edges) as row:
+        rows = core.load_signed_edges()
+
+        def keep(r):
+            return ((not subject_kind or r["subject_kind"] == subject_kind)
+                    and (not object_kind or r["object_kind"] == object_kind)
+                    and (not mode or r["mode"] == mode)
+                    and (not source_family or r["source_family"] == source_family)
+                    and r["n_edges"] >= min_edges)
+
+        hits = sorted(filter(keep, rows), key=lambda r: -r["n_edges"])[:limit]
+        table(log, ["subject_category", "predicate_type", "object_category",
+                    "sign", "mode", "n_edges"],
+              [(h["subject_category"], h["predicate_type"], h["object_category"],
+                h["sign"], h["mode"], h["n_edges"]) for h in hits], limit=limit)
+        row["n_out"] = len(hits)
+        if not hits:
+            # The honest "this hop cannot be sign-locked" signal, for milliseconds
+            # instead of a minutes-long Slog run.
+            row["notes"] = "no-signed-edges-for-this-shape"
+        return hits
+
+
+@mcp.tool()
 def resolve_entity(term: str, limit: int = 10, biolink_type: str = "") -> list[dict]:
     """Resolve an entity mention to candidate concepts; ask the user if the senses are ambiguous."""
     with _record("resolve_entity", term=term, limit=limit,

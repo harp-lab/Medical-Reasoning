@@ -14,3 +14,26 @@ Which drugs upregulate GABRB2 and also downregulate a sodium channel gene? What 
 Topiramate downregulates CA2, SCN5A and SCN1A. Are there other drugs that downregulate all three, and do they treat the same diseases?
 
 Which genes does Topiramate affect that are also associated with epilepsy?
+
+--
+2 hop
+find drug that reg a gene, and gene that influence disease
+
+3 hop
+phenotypes
+find drug reg gene, gene related to phenotype (of a disease), phenotype assoc. with disease
+
+k hop
+Which approved small-molecule drugs inhibit human EGFR 
+and could be repurposed for glioblastoma?
+
+1> A:= drug has pred 'approved' AND 'small molecule'
+   and A inhibits EGFR
+
+2> A can be repurposed for glioblastoma
+
+---
+<< >> 
+
+Look up how EGFR is connected to glioblastoma; and identify small-molecule drugs that inhibit EGFR;
+EGFR should refer specifically to the human gene.

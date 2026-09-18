@@ -1,14 +1,78 @@
-;; Medically approved drugs that treat Parkinson disease
-;; anchor: MONDO:0005180 expansion, inlined as literals (one stage)
-;; "medically approved" -> node category "biolink:Drug"
+;; Q: Which drugs reach Parkinson disease by a sign-consistent mechanism -- the drug
+;;    regulates a gene, the gene drives a phenotype, the phenotype drives the disease --
+;;    such that the composed effect LOWERS the disease?
+;;
+;; SIGN ALGEBRA.  signed_edge carries sigma in {+1,-1}: "an increase in the subject
+;; produces an increase (+1) or a decrease (-1) in the object".  A path is therapeutic
+;; exactly when the product of its hop signs is -1.  That is two clauses, not an
+;; enumeration of sign combinations:
+;;     (= prod (* s1 (* s2 s3)))  (= prod -1)
+;; Picking +1 on hop 1 therefore FORCES an odd number of -1 downstream, which is the
+;; direction lock.  Both hop-3 modes are admitted: mode="causation" is evidence, while
+;; mode="membership" is the convention that a phenotype OF a disease tracks it (+1) --
+;; so a membership row is a SYMPTOMATIC claim, not a disease-modifying one.  m3 is
+;; returned so that distinction survives into the answer.
+;;
+;; UNSIGNED EDGES ARE ABSENT BY CONSTRUCTION.  gene_associated_with_condition (1.03M
+;; edges), related_to, correlated_with and biomarker_for carry no direction and are not
+;; in signed_edge.  Nothing here silently assumes they are positive.
+;;
+;; CATEGORIES.  node_kind, not node.  KG2 categories are flat and single-valued, and
+;; most drug-target edges land on biolink:Polypeptide / biolink:Protein rather than
+;; biolink:Gene, while most chemical subjects are biolink:ChemicalEntity rather than
+;; biolink:Drug.  Filtering on "biolink:Gene" alone would drop ~90% of hop 1.
+;;
+;; BRIDGES.  kg2_norm between every independently-derived hop.  The gene reached from the
+;; drug is a UniProtKB/PR node; the gene reaching the phenotype is an NCBIGene/HGNC node.
+;; Joining those on the raw id returns 0 rows (measured: naive 0, bridged 125).  The
+;; disease anchor is bridged too, which covers all its KG2 ids in one clause instead of
+;; one literal rule per id.
+;;
+;; STAGES.  Two rules, one head, so ONE derived relation.  signed_edge, node_kind, node
+;; and kg2_norm are all base views built at session open and add nothing.  Predicted
+;; 9s compile + 13s = ~22s; docs/NOTES.md's real per-stratum figure puts it nearer 60-90s.
+;;
+;; ROW SHAPE.  The head is projected to (depth, drug, name) rather than to full paths:
+;; Slog deduplicates, so a narrower head IS the aggregation and costs nothing, and it
+;; turns tens of thousands of path rows into one row per drug.  The 2-hop rows are tagged
+;; rather than ranked -- which 50 rows come back is the daemon's storage order, not ours.
 
-table (edge str str str)
+table (kg2_norm str str)
 table (node str str str)
-table (result str str)
+table (node_kind str str)
+table (signed_edge str int str str str)
 
-rule (result d name) <-- (edge d "biolink:treats" "MONDO:0005180") (node d name "biolink:Drug")
-rule (result d name) <-- (edge d "biolink:treats" "DOID:14330")    (node d name "biolink:Drug")
-rule (result d name) <-- (edge d "biolink:treats" "UMLS:C0030567") (node d name "biolink:Drug")
-rule (result d name) <-- (edge d "biolink:treats" "MESH:D010300")  (node d name "biolink:Drug")
-rule (result d name) <-- (edge d "biolink:treats" "NCIT:C26845")   (node d name "biolink:Drug")
-rule (result d name) <-- (edge d "biolink:treats" "ICD9:332")      (node d name "biolink:Drug")
+;; depth  drug  drug_name  hop3_mode
+table (result str str str str)
+
+;; ---- 3 hops: drug -> gene -> phenotype -> Parkinson disease -----------------
+rule (result "3hop" drug dname m3) <--
+  (node_kind drug "chemical")
+  (signed_edge drug s1 x1 _ "regulation")
+  (node_kind x1 "gene")
+  (kg2_norm x1 gkey)
+  (kg2_norm x2 gkey)
+  (node_kind x2 "gene")
+  (signed_edge x2 s2 p1 _ "causation")
+  (node_kind p1 "phenotype")
+  (kg2_norm p1 pkey)
+  (kg2_norm p2 pkey)
+  (signed_edge p2 s3 d1 _ m3)
+  (kg2_norm d1 "MONDO:0005180")
+  (node drug dname _)
+  (= prod (* s1 (* s2 s3)))
+  (= prod -1)
+
+;; ---- 2 hops: drug -> gene -> Parkinson disease, same head, depth-tagged -----
+rule (result "2hop" drug dname "direct") <--
+  (node_kind drug "chemical")
+  (signed_edge drug s1 x1 _ "regulation")
+  (node_kind x1 "gene")
+  (kg2_norm x1 gkey)
+  (kg2_norm x2 gkey)
+  (node_kind x2 "gene")
+  (signed_edge x2 s2 d1 _ "causation")
+  (kg2_norm d1 "MONDO:0005180")
+  (node drug dname _)
+  (= prod (* s1 s2))
+  (= prod -1)

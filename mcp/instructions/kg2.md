@@ -14,11 +14,15 @@ edge_dir(subj, pred, obj, aspect, direction) same, plus the qualifier columns
 edge_rel(subj, ptype, obj)                   source-specific predicate, e.g. GO:...
 node(id, name, category)                     id -> readable name
 kg2_norm(kg2_id, preferred_id)               kg2 id -> its canonical CURIE
+signed_edge(subj, sign, obj, ptype, mode)    direction-carrying edges, canonically oriented
+node_kind(id, kind)                          gene | chemical | disease | phenotype | process | anatomy
 ```
 
 - `subj`, `obj` — CURIEs, e.g. `MONDO:0005180`
 - `pred` — a biolink predicate, e.g. `biolink:treats`, from `list_predicates()`
-- `direction` — for up/down-regulation questions, e.g. `"upregulated"`
+- `direction` — populated on only 26,321 of 56.9M edges, all of them
+  `biolink:regulates`. `biolink:affects` has an aspect but **never** a direction. Do
+  not use `edge_dir` for up/down-regulation questions — use `signed_edge`.
 - Negated edges are already excluded; there is no `neg` column to filter.
 
 `kg2_edges` (15 columns) and `kg2_nodes` (13 columns) are also live if you need a column
@@ -27,6 +31,9 @@ the views omit.
 ## Workflow
 
 1. **`list_predicates()`** — the valid predicates; pick the relevant one(s).
+   **`list_signed_edges(subject_kind=…, object_kind=…)`** — if the question is about
+   direction, call this *before* writing the rule. Zero rows means the graph cannot
+   lock that hop's direction; say so rather than running a guaranteed-empty query.
 2. **`resolve_entity(term)`** for each named entity (drug, disease, gene, …).
    If several plausible senses come back, **stop and ask the user which they mean** —
    only auto-proceed on a single clear match.
@@ -175,16 +182,6 @@ rule (result disease) <--
   (edge d "biolink:treats" disease)
 ```
 
-A direction-sensitive query uses `edge_dir`:
-
-```slog
-table (edge_dir str str str str str)
-table (result str str)
-
-rule (result g o) <--
-  (edge_dir g "biolink:affects" o _ "upregulated")
-```
-
 Recursion is allowed and is where Slog earns its keep:
 
 ```slog
@@ -196,6 +193,83 @@ rule (reach "MONDO:0005180")
 rule (reach y) <-- (reach x) (edge x "biolink:related_to" y)
 rule (result x) <-- (reach x)
 ```
+
+## Direction and the sign algebra -- read this for any up/down question
+
+**σ(e) ∈ {+1, −1, 0}** — *an increase in the subject's activity, abundance or presence
+produces an increase (+1), a decrease (−1), or an unknown change (0) in the object's.*
+One definition, the same on every hop, which is what makes the product law below valid.
+
+`signed_edge(subj, sign, obj, ptype, mode)` carries it. Rows are already in **canonical
+orientation** — inverse-named source predicates (`*_by`, `*_of`) are pre-flipped or
+dropped — so **never write an orientation rule yourself**. `mode` is:
+
+- `regulation` — drug/gene acting on a gene product (inhibitor, agonist, …). Evidence.
+- `causation` — causes / predisposes / augments (+1), treats / prevents (−1). Evidence.
+- `membership` — "this phenotype is a feature of this disease". **+1 by convention, not
+  by evidence.** Return the mode so a symptomatic claim stays distinguishable from a
+  disease-modifying one.
+
+**Lock a path with arithmetic, not by enumerating cases.** For hops with signs
+`s1 … sk`, the product is −1 exactly when the chain *lowers* the disease:
+
+```slog
+  (= prod (* s1 (* s2 s3)))
+  (= prod -1)
+```
+
+Choosing `+1` on hop 1 therefore *forces* an odd number of `−1` downstream. That is the
+lock. Two clauses, and it generalises to any number of hops.
+
+**Undirected edges are in `signed_edge` with sign 0, and you must not fake a sign for
+them.** `gene_associated_with_condition`, `related_to` and `physically_interacts_with`
+are sign-*symmetric*: a risk allele and a protective allele produce the same edge. A 0
+therefore means "no direction exists here", not "direction not recorded".
+
+Because 0 absorbs under multiplication, a fully locked chain can never include one —
+`(= prod -1)` rejects it automatically, so you do not need to filter them out by hand.
+They are there so a **partially** locked question stays in one relation:
+
+```slog
+;; hops 1-2 directed, hop 3 deliberately left open
+rule (result drug pt3) <--
+  (signed_edge drug s1 g _ "regulation")
+  (signed_edge g s2 d pt3 _)
+  (= prod (* s1 s2))
+  (= prod -1)
+```
+
+**If any hop you used has sign 0, the direction of that hop is unknown and your answer
+must say so.** Return the hop's `mode` or `predicate_type` so the reader can see which
+step is unsupported — never present a partially locked chain as a direction-locked one.
+
+A 3-hop, direction-locked, in **two rules and one derived relation**:
+
+```slog
+table (kg2_norm str str)
+table (node str str str)
+table (node_kind str str)
+table (signed_edge str int str str str)
+table (result str str str str int int int)
+
+rule (result "3hop" drug dname pkey s1 s2 s3) <--
+  (node_kind drug "chemical")
+  (signed_edge drug s1 g1 _ "regulation")
+  (node_kind g1 "gene")
+  (kg2_norm g1 gkey) (kg2_norm g2 gkey) (node_kind g2 "gene")
+  (signed_edge g2 s2 p1 _ "causation")
+  (node_kind p1 "phenotype")
+  (kg2_norm p1 pkey) (kg2_norm p2 pkey)
+  (signed_edge p2 s3 d1 _ _)
+  (kg2_norm d1 "MONDO:0005180")
+  (node drug dname _)
+  (= prod (* s1 (* s2 s3)))
+  (= prod -1)
+```
+
+Note the gene is bridged through `kg2_norm` **twice**: the drug side lands on
+UniProtKB/PR ids and the phenotype side on NCBIGene/HGNC ids. A 3-hop needs one bridge
+per join between independently-derived hops — miss one and you get 0 rows, not an error.
 
 ## Joining derived entity sets -- read this
 
@@ -276,7 +350,16 @@ If the user asks for an explanation, give one then. Unasked, the table is the wh
   `limit` can only ask for fewer; asking for more still returns 50. `n_rows` tells you
   the true count, so a big answer reports as `1627 rows, showing 50`. Display the rows
   you were given and no more — never re-run to page through the rest, and never rewrite
-  the query to make the answer fit under the cap.
+  the query to make the answer fit under the cap. **Which 50 come back is the daemon's
+  storage order, not yours** — you cannot rank by putting a tag in the first column. If
+  the answer could be large, project fewer columns into the head: Slog deduplicates, so
+  a narrower head *is* the aggregation and costs nothing.
+- **Categories are flat and single-valued.** `biolink:Gene` misses 303k `Protein` and
+  100k `Polypeptide` nodes, which carry most drug-target edges; `biolink:Drug` misses
+  the `biolink:ChemicalEntity` nodes that carry most of the rest. Filter with
+  `node_kind`, never with a single `biolink:` category.
+- `biolink:has_phenotype` is OMIM allelic-variant → gene entry, **not** disease →
+  phenotype. The usable disease/phenotype link at scale is `SEMMEDDB:manifestation_of`.
 - Prefer `edge` over `kg2_edges` for readability, not for speed — scan size does not
   affect runtime here.
 - The session is loaded before it accepts connections, so no query pays the load. If

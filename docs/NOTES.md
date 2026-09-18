@@ -203,3 +203,76 @@ kg2_nodes, in order:
 So `edge` keeps columns 14, 1, 15 and filters on column 3 being `"False"`, which is why
 negated edges never reach a query. `edge_dir` adds 6 and 7. `edge_rel` takes 13, the
 source-specific predicate, instead of 1, the normalized biolink one. `node` takes 7, 10, 13.
+
+## Direction: where the sign actually lives
+
+Measured by scanning all 56,965,146 edges, twice, with two independent classifiers.
+
+**The qualifier columns are a dead end.** Only **26,321** edges in the whole graph carry
+`qualified_object_direction`, and every one of them is `biolink:regulates`:
+
+```
+10132  biolink:regulates  "decreased"       3127  biolink:regulates  "downregulated"
+ 7825  biolink:regulates  "increased"       3107  biolink:regulates  "upregulated"
+ 2130  biolink:regulates  "decreased"  (no qualified_predicate)
+```
+
+`biolink:affects` (4,706,053 edges) carries an *aspect* — `activity`, `activity or
+abundance`, `localization`, `degradation`, `stability`, `expression`,
+`molecular_modification` — but its direction column is **empty on every single row**. The
+vocabulary is four values, not two: up = `{increased, upregulated}`, down = `{decreased,
+downregulated}`. `upregulated`/`downregulated` come exclusively from GO-Plus axioms
+RO:0002213 / RO:0002212; every drug→gene regulation edge uses `increased`/`decreased`.
+
+`mcp/instructions/kg2.md` used to teach `(edge_dir g "biolink:affects" o _ "upregulated")`.
+That matches nothing and always will. A model copied it in
+`eval/runs/20260803-034124/q04`, got 0 rows, and recorded the conclusion that the direction
+column is empty throughout the KG — which is wrong in an instructive way: it is empty
+throughout `biolink:affects`, not throughout the graph. Both the example and that
+conclusion are superseded.
+
+**The real signal is `predicate:TYPE` (column 13, the `edge_rel` view)**, and unlike the
+qualifiers it covers every hop of a drug→gene→phenotype→disease chain. Two families:
+
+- *regulation*, ~1.86M edges — `SEMMEDDB:{inhibits,stimulates}`, `DRUGBANK:*`,
+  `CHEMBL.MECHANISM:*`, `DGIdb:*`, `DrugCentral:*`, `GO:{positively,negatively}_regulates`,
+  `RO:0002212/0002213`, `REACT:*`.
+- *causation*, ~3.3M edges — `SEMMEDDB:causes` 904,219, `SEMMEDDB:treats` 1,286,812,
+  `SEMMEDDB:augments` 573,548, `SEMMEDDB:predisposes` 314,657, `SEMMEDDB:prevents` 217,492.
+
+A first pass at this analysis classified only the *regulation* family and concluded that
+gene→phenotype had 279 signed edges and phenotype→disease had 8 — i.e. that 3-hop
+sign-locking was impossible. That was an artifact of the classifier, not the graph.
+Counting causation too:
+
+| hop | − | + |
+|---|---|---|
+| chemical → gene | 165,528 | 129,819 |
+| gene → phenotype | 9,007 | 57,027 |
+| phenotype → disease | 728 | 96,332 |
+| gene → disease | 7,721 | 108,862 |
+
+`preprocess/build_signed_edges.py` turns the curated map in
+`data/reference/predicate_sign.tsv` into **5,371,012 canonical signed edges**, exposed as
+the `signed_edge` base view and as `data/reference/signed_edge_profile.tsv` behind the
+`list_signed_edges()` tool. Base views are built once at session open, so a sign-locked
+3-hop costs **one** derived relation — two rules into one head — rather than the ~54 rules
+an in-query encoding of sign × orientation × anchor needs.
+
+Three gotchas worth keeping:
+
+- **`biolink:has_phenotype` is not disease → phenotype.** `OMIM:has_phenotype` (31,193) is
+  allelic-variant → OMIM gene entry, and `OMIM:has_manifestation`/`manifestation_of`
+  (121,749 each) carry core predicate `biolink:subclass_of` with a `biolink:NamedThing`
+  subject, so a `biolink:Disease` filter silently kills them. The usable disease/phenotype
+  link at scale is `SEMMEDDB:manifestation_of` (43,014).
+- **Categories are flat**, so most drug-target edges land on `biolink:ChemicalEntity` →
+  `biolink:Polypeptide`, not `Drug` → `Gene`. Filtering on `biolink:Gene` alone drops ~90%
+  of hop 1. Hence the `node_kind` view.
+- **`*_by` predicate types are stored inverses, not new evidence.** `GO:positively_regulates`
+  3,116 = `GO:positively_regulated_by` 3,116; likewise the negative and bare forms, and
+  `OMIM:has_manifestation` 121,749 = `OMIM:manifestation_of` 121,749. The build drops one
+  side, and `--check` fails if a future release breaks the count equality that justifies it.
+
+`slog/setup.slog` is now **generated** (`setup.head.slog` + `generated/*.slog`, 22 → 174
+lines). Edit the head file, never `setup.slog`.
