@@ -1,0 +1,83 @@
+;; ---------------------------------------------------------------------------
+;; Net-effect layer -- appended to query.slog by run_slog(net=True) and by
+;; `orion execute --net`.  Do not run this file on its own: @GOAL@ and
+;; @OPPOSITE@ are filled in by mcp/mr_net.py (goal -1 = the drug should LOWER
+;; the target, +1 = RAISE it).
+;;
+;; The query fills ONE relation and states no direction:
+;;
+;;   evidence(drug, effect, route, strength)
+;;     effect    the path's sign product, +1 or -1 (never 0)
+;;     route     a distinct route id, e.g. gene_key + "|" + phenotype_key
+;;     strength  the route's weakest hop: 2 curated, 1 literature-mined
+;;
+;; Every route the shape matches lands here, in both directions.  This layer
+;; then reasons over them in three steps, each a lattice Slog joins for us:
+;;
+;;   net_dir    flat lattice: every route proposes its direction.  A drug whose
+;;              routes all agree settles on that direction; one with routes
+;;              both ways settles on (top) -- contested.
+;;   net_best   max lattice, per side: the strongest argument for and against.
+;;   net_paths  set lattice, per side: the distinct routes, so csize counts them.
+;;
+;; A drug is a candidate only if at least one route goes the goal direction --
+;; exactly the drugs the direction-locked query would have returned.  Each gets
+;; a verdict:
+;;
+;;   unopposed          every route goes the goal direction        good
+;;   stronger evidence  best route for beats best route against    good
+;;   weaker evidence    best route against beats best route for    bad
+;;   more routes        equal strength, more distinct routes for   good
+;;   fewer routes       equal strength, more distinct routes against bad
+;;   even               equal strength, equal route count          bad
+;;
+;; result(drug, verdict, basis, routes_for, routes_against, best_for, best_against)
+;; ---------------------------------------------------------------------------
+
+lattice (net_sign (flat int))
+lattice (net_routes (set str))
+lattice (net_strength (max int))
+
+table (evidence str int str int)
+table (net_dir str net_sign)
+table (net_paths str int net_routes)
+table (net_best str int net_strength)
+table (result str str str int int int int)
+
+rule (net_dir d e)   <-- (evidence d e r w)
+rule (net_paths d e s) <-- (evidence d e r w) (= s (cins (cmap) r))
+rule (net_best d e w)  <-- (evidence d e r w)
+
+rule (result d "good" "unopposed" nf 0 bf 0) <--
+  (net_dir d v) (= v @GOAL@)
+  (net_paths d @GOAL@ rf) (net_best d @GOAL@ bf) (= nf (csize rf))
+
+rule (result d "good" "stronger evidence" nf na bf ba) <--
+  (net_dir d v) (= v (top))
+  (net_paths d @GOAL@ rf)     (net_best d @GOAL@ bf)     (= nf (csize rf))
+  (net_paths d @OPPOSITE@ ra) (net_best d @OPPOSITE@ ba) (= na (csize ra))
+  (> bf ba)
+
+rule (result d "bad" "weaker evidence" nf na bf ba) <--
+  (net_dir d v) (= v (top))
+  (net_paths d @GOAL@ rf)     (net_best d @GOAL@ bf)     (= nf (csize rf))
+  (net_paths d @OPPOSITE@ ra) (net_best d @OPPOSITE@ ba) (= na (csize ra))
+  (< bf ba)
+
+rule (result d "good" "more routes" nf na bf ba) <--
+  (net_dir d v) (= v (top))
+  (net_paths d @GOAL@ rf)     (net_best d @GOAL@ bf)     (= nf (csize rf))
+  (net_paths d @OPPOSITE@ ra) (net_best d @OPPOSITE@ ba) (= na (csize ra))
+  (= bf ba) (> nf na)
+
+rule (result d "bad" "fewer routes" nf na bf ba) <--
+  (net_dir d v) (= v (top))
+  (net_paths d @GOAL@ rf)     (net_best d @GOAL@ bf)     (= nf (csize rf))
+  (net_paths d @OPPOSITE@ ra) (net_best d @OPPOSITE@ ba) (= na (csize ra))
+  (= bf ba) (< nf na)
+
+rule (result d "bad" "even" nf na bf ba) <--
+  (net_dir d v) (= v (top))
+  (net_paths d @GOAL@ rf)     (net_best d @GOAL@ bf)     (= nf (csize rf))
+  (net_paths d @OPPOSITE@ ra) (net_best d @OPPOSITE@ ba) (= na (csize ra))
+  (= bf ba) (= nf na)

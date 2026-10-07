@@ -8,6 +8,7 @@ from pathlib import Path
 from mcp.server.fastmcp import FastMCP
 
 import kg2_core as core
+import mr_net as net_mode
 import mr_plan as plan
 import mr_stats as stats
 import slog_client as slog
@@ -183,7 +184,7 @@ def expand_entity(curies: list[str]) -> dict:
 
 
 @mcp.tool()
-def run_slog(limit: int = MAX_ROWS) -> dict:
+def run_slog(limit: int = MAX_ROWS, net: bool = False, goal: int = -1) -> dict:
     """Run the Slog program you have written to slog/query.slog. ONE RUN PER QUESTION.
 
     Write your program to that file first (with Write or Edit), then call this in the same
@@ -205,11 +206,18 @@ def run_slog(limit: int = MAX_ROWS) -> dict:
     FEWER. `n_rows` is the true count, so report `n_rows rows, showing 50` and display
     the 50. Never display more rows than you were given, and never re-run to see the rest.
 
-    Returns {n_rows, returned, truncated, rows, query_file}.
+    `net=True` is net-effect mode (mcp/instructions/kg2.md, "Net-effect mode"): the
+    query writes `evidence(drug, effect, route, strength)` in BOTH directions instead
+    of `result`, slog/net.slog is appended, and `result` becomes one verdict per
+    candidate drug. `goal` is the direction wanted: -1 lower the target, 1 raise it.
+    Only set it when the user asks for net-effect mode.
+
+    Returns {n_rows, returned, truncated, rows, query_file}; net mode adds
+    {columns, verdicts, goal}, with rows ranked good-first.
     """
     global _last_slog_curies, _slog_runs
     _slog_runs += 1
-    with _record("run_slog", limit=limit) as row:
+    with _record("run_slog", limit=limit, net=net, goal=goal) as row:
         row["query_file"] = str(QUERY_FILE)
         row["slog_run_n"] = _slog_runs
         if _slog_runs > 1:
@@ -226,6 +234,20 @@ def run_slog(limit: int = MAX_ROWS) -> dict:
 
         program = QUERY_FILE.read_text()
         mtime = datetime.fromtimestamp(QUERY_FILE.stat().st_mtime)
+        run_path = QUERY_FILE
+        if net:
+            # What runs is query.slog + slog/net.slog, so that is what gets counted,
+            # archived and logged below -- the archive stays the record of what ran.
+            try:
+                program = net_mode.assemble(program, goal)
+            except net_mode.NetQueryError as e:
+                log.error(f"  x net mode: {e}")
+                row["status"] = "error"
+                row["error"] = f"net mode: {e}"[:300]
+                return {"error": str(e), "rows": [], "query_file": str(QUERY_FILE)}
+            run_path = net_mode.write_assembled(program)
+            log.info(f"  net mode, goal {goal}: query.slog + {net_mode.LAYER_FILE.name} "
+                     f"-> {run_path}")
         n_tables, n_derived = stats.parse_program(program)
         row["program_bytes"] = len(program)
         row["program_sha8"] = hashlib.sha256(program.encode()).hexdigest()[:8]
@@ -246,11 +268,12 @@ def run_slog(limit: int = MAX_ROWS) -> dict:
         t_total = time.perf_counter()
         try:
             t0 = time.perf_counter()
-            try:
-                slog.drop(OUTPUT_REL)
-                log.info(f"  dropped previous `{OUTPUT_REL}` relation")
-            except slog.SlogError as e:
-                log.info(f"  no previous `{OUTPUT_REL}` to drop ({e})")
+            for rel in (net_mode.NET_RELS if net else (OUTPUT_REL,)):
+                try:
+                    slog.drop(rel)
+                    log.info(f"  dropped previous `{rel}` relation")
+                except slog.SlogError as e:
+                    log.info(f"  no previous `{rel}` to drop ({e})")
             row["drop_s"] = time.perf_counter() - t0
 
             before_stats = stats.stat_snapshot()
@@ -259,12 +282,15 @@ def run_slog(limit: int = MAX_ROWS) -> dict:
 
             t0 = time.perf_counter()
             with step(log, "slog run"):
-                resp = slog.run_file(QUERY_FILE)
+                resp = slog.run_file(run_path)
             row["run_wall_s"] = time.perf_counter() - t0
 
+            # Net mode fetches every candidate so the ranking sees all of them before
+            # the cap; `result` there is one row per drug, not per route.
+            fetch = net_mode.DUMP_MAX if net else min(limit, MAX_ROWS)
             t0 = time.perf_counter()
-            with step(log, f"dump `{OUTPUT_REL}` (limit {min(limit, MAX_ROWS)})"):
-                d = slog.dump(OUTPUT_REL, limit=min(limit, MAX_ROWS))
+            with step(log, f"dump `{OUTPUT_REL}` (limit {fetch})"):
+                d = slog.dump(OUTPUT_REL, limit=fetch)
             row["dump_s"] = time.perf_counter() - t0
         except slog.SlogUnavailable as e:
             log.error(f"  x slog server unavailable: {e}")
@@ -302,6 +328,8 @@ def run_slog(limit: int = MAX_ROWS) -> dict:
         row["predicted_s"] = stats.predict(n_derived, bool(n_compiled))
 
         notes = []
+        if net:
+            notes.append(f"net-goal={goal}")
         if n_compiled == 0:
             notes.append("compile-cached")
 
@@ -345,6 +373,20 @@ def run_slog(limit: int = MAX_ROWS) -> dict:
         if row.get("predicted_s"):
             log.info(f"  cost model predicted ~{row['predicted_s']:.0f}s for this shape")
 
+        extra = {}
+        if net:
+            if d["n_rows"] > len(d["rows"]):
+                notes.append("net-partial-rank")
+                log.warning(f"  !! {d['n_rows']} candidates, more than the {len(d['rows'])} "
+                            f"fetched -- the ranking and tallies cover those only")
+            ranked = net_mode.rank(d["rows"])
+            extra = {"columns": list(net_mode.COLUMNS), "goal": goal,
+                     **net_mode.tally(ranked)}
+            log.info(f"  net verdicts: {extra['verdicts']}  bases: {extra['bases']}")
+            cap = min(limit, MAX_ROWS)
+            d = {**d, "rows": ranked[:cap], "returned": min(len(ranked), cap),
+                 "truncated": d["n_rows"] > cap}
+
         log.info(f"  result: n_rows={d['n_rows']} returned={d['returned']} "
                  f"truncated={d['truncated']}")
         row["n_rows"] = d["n_rows"]
@@ -371,7 +413,7 @@ def run_slog(limit: int = MAX_ROWS) -> dict:
 
         return {"n_rows": d["n_rows"], "returned": d["returned"],
                 "truncated": d["truncated"], "rows": d["rows"],
-                "query_file": str(QUERY_FILE)}
+                "query_file": str(QUERY_FILE), **extra}
 
 
 @mcp.tool()

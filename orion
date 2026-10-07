@@ -63,8 +63,9 @@ WIDTH = max(78, min(shutil.get_terminal_size((100, 24)).columns, 140))
 
 
 def _imports():
-    global slog, stats, plan, prov, sexpr, mrlog
+    global slog, stats, plan, prov, sexpr, mrlog, net_mode
     import mr_logging as mrlog          # noqa: F401
+    import mr_net as net_mode           # noqa: F401
     import mr_plan as plan              # noqa: F401
     import mr_provenance as prov        # noqa: F401
     import mr_sexpr as sexpr            # noqa: F401
@@ -370,6 +371,14 @@ def cmd_execute(args):
         return 1
 
     program = query.read_text()
+    run_path = query
+    if args.net:
+        try:
+            program = net_mode.assemble(program, args.goal)
+        except net_mode.NetQueryError as e:
+            _out(f"orion: net mode: {e}")
+            return 1
+        run_path = net_mode.write_assembled(program)
     n_tables, n_derived = stats.parse_program(program)
     row = {"tool": "run_slog", "seq": mrlog.next_seq(),
            "ts_start": datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3],
@@ -383,6 +392,8 @@ def cmd_execute(args):
     _rule()
     _out(f"  {len(program):,} bytes  sha8 {row['program_sha8']}  "
          f"modified {datetime.fromtimestamp(query.stat().st_mtime):%Y-%m-%d %H:%M:%S}")
+    if args.net:
+        _out(f"  net mode, goal {args.goal}: + {net_mode.LAYER_FILE.name} -> {run_path}")
     _out(f"  {n_tables} table(s) declared, {n_derived} derived relation(s)")
     _out(f"  server 127.0.0.1:{slog.PORT}   answer relation `{OUTPUT_REL}`   "
          f"dump limit {limit}")
@@ -405,11 +416,12 @@ def cmd_execute(args):
     try:
         if args.drop:
             t0 = time.perf_counter()
-            try:
-                slog.drop(OUTPUT_REL)
-                _out(f"  * dropped `{OUTPUT_REL}`")
-            except slog.SlogError as e:
-                _out(f"  * no previous `{OUTPUT_REL}` to drop ({e})")
+            for rel in (net_mode.NET_RELS if args.net else (OUTPUT_REL,)):
+                try:
+                    slog.drop(rel)
+                    _out(f"  * dropped `{rel}`")
+                except slog.SlogError as e:
+                    _out(f"  * no previous `{rel}` to drop ({e})")
             row["drop_s"] = time.perf_counter() - t0
         else:
             _out(f"  * NOT dropping `{OUTPUT_REL}` (--no-drop): rows from earlier "
@@ -428,13 +440,19 @@ def cmd_execute(args):
         t0 = time.perf_counter()
         # mrlog only creates the session dir lazily; the server cannot.
         stream_path.parent.mkdir(parents=True, exist_ok=True)
-        resp = slog.run_file(query, tee=stream_path)
+        resp = slog.run_file(run_path, tee=stream_path)
         row["run_wall_s"] = time.perf_counter() - t0
         _out(f"  * run returned in {mrlog.fmt_dur(row['run_wall_s'])}")
 
         t0 = time.perf_counter()
-        d = slog.dump(OUTPUT_REL, limit=limit)
+        d = slog.dump(OUTPUT_REL, limit=net_mode.DUMP_MAX if args.net else limit)
         row["dump_s"] = time.perf_counter() - t0
+        tallies = None
+        if args.net:
+            ranked = net_mode.rank(d["rows"])
+            tallies = net_mode.tally(ranked)
+            d = {**d, "rows": ranked[:limit], "returned": min(len(ranked), limit),
+                 "truncated": d["n_rows"] > limit}
         _out(f"  * dumped `{OUTPUT_REL}` in {mrlog.fmt_dur(row['dump_s'])}")
     except slog.SlogUnavailable as e:
         _out()
@@ -497,6 +515,8 @@ def cmd_execute(args):
         row["cost_ratio"] = round(row["wall_s"] / row["predicted_s"], 2)
 
     notes = []
+    if args.net:
+        notes.append(f"net-goal={args.goal}")
     if n_compiled == 0:
         notes.append("compile-cached")
     if pinfo and not pinfo["plans"]:
@@ -532,9 +552,17 @@ def cmd_execute(args):
     _out(f"{OUTPUT_REL}: {d['n_rows']:,} row(s)"
          + (f", showing {d['returned']:,}" if d["truncated"] else ""))
     _rule()
+    if tallies:
+        _out("  verdicts  " + "   ".join(f"{k} {v:,}" for k, v in
+                                        sorted(tallies["verdicts"].items())))
+        _out("  basis     " + "   ".join(f"{k} {v:,}" for k, v in
+                                        sorted(tallies["bases"].items())))
+        _out()
     if d["rows"]:
         ncols = max(len(r) for r in d["rows"])
-        _table([f"c{i}" for i in range(ncols)], d["rows"], indent="  ")
+        headers = (list(net_mode.COLUMNS) if args.net and ncols == len(net_mode.COLUMNS)
+                   else [f"c{i}" for i in range(ncols)])
+        _table(headers, d["rows"], indent="  ")
     else:
         _out("  (no rows)")
 
@@ -717,6 +745,12 @@ def main(argv=None):
     e.add_argument("--no-drop", dest="drop", action="store_false",
                    help=f"do not drop `{OUTPUT_REL}` first (default is to drop, "
                         f"so each run starts empty)")
+    e.add_argument("--net", action="store_true",
+                   help="net-effect mode: the query writes `evidence` in both "
+                        "directions and slog/net.slog decides a verdict per drug")
+    e.add_argument("--goal", type=int, choices=(-1, 1), default=-1,
+                   help="with --net: -1 the drug should lower the target "
+                        "(default), 1 raise it")
     e.set_defaults(fn=cmd_execute)
 
     d = sub.add_parser("dump", help="dump a relation from the live session")

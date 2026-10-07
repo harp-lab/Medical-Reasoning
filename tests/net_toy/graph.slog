@@ -1,0 +1,66 @@
+;; Toy graph for the net-effect layer (slog/net.slog), run by tests/net_toy/run.sh.
+;; Same shape as the real 3-hop query:
+;; drug -regulation-> gene -causation-> phenotype -membership-> disease "PD".
+;;
+;; Expected with goal -1 (lower PD) -- expected_goal-1.tsv:
+;;   A good unopposed      B good stronger      C bad weaker      D bad weaker
+;;   F bad even            G good more routes   H bad fewer routes
+;;   E absent (only opposing paths)   Z absent (direction-less path)
+;; With goal 1 every verdict mirrors -- expected_goal1.tsv.
+
+table (signed_edge str int str str str)
+
+;; phenotypes -> PD (curated, +1 membership)
+rule (signed_edge "tremor"   1 "PD" "MONDO:disease_causes_feature" "membership")
+rule (signed_edge "rigidity" 1 "PD" "MONDO:disease_causes_feature" "membership")
+rule (signed_edge "anosmia"  1 "PD" "SEMMEDDB:manifestation_of"    "membership")
+
+;; genes -> phenotypes
+rule (signed_edge "G1" 1 "tremor"   "GO:contributes_to" "causation")
+rule (signed_edge "G2" 1 "rigidity" "GO:contributes_to" "causation")
+rule (signed_edge "G3" 1 "tremor"   "SEMMEDDB:causes"   "causation")
+rule (signed_edge "G4" 1 "anosmia"  "SEMMEDDB:causes"   "causation")
+rule (signed_edge "G5" 1 "rigidity" "SEMMEDDB:causes"   "causation")
+rule (signed_edge "G6" 0 "tremor"   "biolink:related_to" "association")
+
+;; A: two curated good routes, the G1 route recorded twice (DrugBank and SemMedDB)
+;;    -> 2 distinct routes, best strength 2, unopposed
+rule (signed_edge "A" -1 "G1" "DRUGBANK:inhibitor" "regulation")
+rule (signed_edge "A" -1 "G1" "SEMMEDDB:inhibits"  "regulation")
+rule (signed_edge "A" -1 "G2" "DRUGBANK:inhibitor" "regulation")
+
+;; B: good curated (2) vs bad through literature (1) -> good, stronger
+rule (signed_edge "B" -1 "G1" "DRUGBANK:inhibitor" "regulation")
+rule (signed_edge "B"  1 "G3" "DRUGBANK:agonist"   "regulation")
+
+;; C: good literature (1) vs bad curated (2) -> bad, weaker
+rule (signed_edge "C" -1 "G3" "SEMMEDDB:inhibits"  "regulation")
+rule (signed_edge "C"  1 "G2" "DRUGBANK:agonist"   "regulation")
+
+;; D: three good literature routes vs one curated bad -> bad, weaker
+;;    (a raw count would have said good: 3 vs 1)
+rule (signed_edge "D" -1 "G3" "SEMMEDDB:inhibits"  "regulation")
+rule (signed_edge "D" -1 "G4" "SEMMEDDB:inhibits"  "regulation")
+rule (signed_edge "D" -1 "G5" "SEMMEDDB:inhibits"  "regulation")
+rule (signed_edge "D"  1 "G1" "DRUGBANK:agonist"   "regulation")
+
+;; E: only opposing -> never a candidate, absent from result
+rule (signed_edge "E"  1 "G1" "DRUGBANK:agonist"   "regulation")
+
+;; F: one literature route each way -> bad, even
+rule (signed_edge "F" -1 "G3" "SEMMEDDB:inhibits"  "regulation")
+rule (signed_edge "F"  1 "G4" "SEMMEDDB:stimulates" "regulation")
+
+;; G: equal strength (1), 2 good vs 1 bad -> good, more routes
+rule (signed_edge "G" -1 "G3" "SEMMEDDB:inhibits"  "regulation")
+rule (signed_edge "G" -1 "G4" "SEMMEDDB:inhibits"  "regulation")
+rule (signed_edge "G"  1 "G5" "SEMMEDDB:stimulates" "regulation")
+
+;; H: equal strength (1), 1 good vs 2 bad -> bad, fewer routes
+rule (signed_edge "H" -1 "G3" "SEMMEDDB:inhibits"  "regulation")
+rule (signed_edge "H"  1 "G4" "SEMMEDDB:stimulates" "regulation")
+rule (signed_edge "H"  1 "G5" "SEMMEDDB:stimulates" "regulation")
+
+;; Z: only a direction-less route (G6 has sign 0) -> absent
+rule (signed_edge "Z" -1 "G6" "DRUGBANK:inhibitor" "regulation")
+

@@ -1,0 +1,12 @@
+table (signed_edge str int str str str)
+table (evidence str int str int)
+
+rule (evidence d prod route w) <--
+  (signed_edge d s1 g pt1 "regulation")
+  (signed_edge g s2 p pt2 "causation")
+  (signed_edge p s3 "PD" pt3 _)
+  (= prod (* s1 (* s2 s3)))
+  (/= prod 0)
+  (= route (+ g (+ "|" p)))
+  (= w (min (- 2 (shas pt1 "SEMMEDDB"))
+            (min (- 2 (shas pt2 "SEMMEDDB")) (- 2 (shas pt3 "SEMMEDDB")))))

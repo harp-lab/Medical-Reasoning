@@ -144,12 +144,36 @@ KG2 does not merge equivalent entities, so joining two independently derived set
 raw id returns zero rows. Join on the canonical key from `kg2_norm`. Column maps for the
 raw 15- and 13-column relations are in `docs/NOTES.md`.
 
+## Net-effect mode
+
+Off by default. A normal query locks its direction (`(= prod -1)`) and returns whatever
+matched. With the flag on -- `run_slog(net=True, goal=-1)`, or
+`./orion execute --net [--goal 1]` -- the query instead writes every route it matches,
+in **both** directions, into `evidence(drug, effect, route, strength)`, and
+`slog/net.slog` is appended to decide, in Slog, whether each candidate drug's net
+evidence favours the goal:
+
+- `net_dir` -- a flat lattice: a drug whose routes all agree settles on that direction,
+  one with routes both ways settles on `(top)`.
+- `net_best` -- a max lattice per side: the strongest route for and against, where a
+  route is as strong as its weakest hop (2 curated, 1 literature).
+- `net_paths` -- a set lattice per side: distinct routes, counted with `csize`.
+
+Unopposed drugs are good; contested ones are decided by the stronger best route, then
+by route count. `result` becomes one row per candidate: `drug, verdict, basis,
+routes_for, routes_against, best_for, best_against`. The query never states a
+direction; `goal` is substituted into the layer as a literal. `mcp/mr_net.py` does the
+assembly and checks, and drops every layer relation before a run, because a session
+segment adds to a relation an earlier one wrote. The query contract and an example are
+in `mcp/instructions/kg2.md`, "Net-effect mode".
+
 ## Layout
 
 ```
 mcp/
   mcp_server.py       the 5 MCP tools (FastMCP)
   kg2_core.py         entity grounding, predicate list, result naming
+  mr_net.py           net-effect mode: appends slog/net.slog, ranks the verdicts
   slog_client.py      TCP client for the resident session
   mr_logging.py       per-session log + summary CSV + query archive
   mr_stats.py         per-run timing, from the daemon's own statistics
@@ -161,7 +185,9 @@ slog/
   kg2-stop.sh         stops the server and its slogd
   setup.slog          views over the raw relations
   query.slog          the program run_slog executes; overwritten per query
+  net.slog            the net-effect layer, appended to query.slog in net mode
 preprocess/           NodeNorm mapping -> the kg2_norm table
+tests/net_toy/        toy-graph regression for slog/net.slog (run.sh; no KG needed)
 logs/                 one folder per MCP session
 docs/NOTES.md         measurements, the cost model, and open questions
 ```

@@ -271,6 +271,77 @@ Note the gene is bridged through `kg2_norm` **twice**: the drug side lands on
 UniProtKB/PR ids and the phenotype side on NCBIGene/HGNC ids. A 3-hop needs one bridge
 per join between independently-derived hops — miss one and you get 0 rows, not an error.
 
+## Net-effect mode -- only when the user asks for it
+
+A locked query returns every drug with *some* route in the wanted direction, even when
+the graph also holds routes the other way. Net-effect mode weighs both. Use it only
+when the user asks for it (net effect, both directions, opposing evidence, "net
+mode"); otherwise lock the direction as above.
+
+It is one flag, `run_slog(net=True, goal=-1)`, and one change to the program: **do not
+lock the direction — record it.** The query fills `evidence` instead of `result`:
+
+```
+evidence(drug, effect, route, strength)
+  drug      canonical drug key (kg2_norm), so one drug under two vocabularies is one row
+  effect    the sign product, +1 or -1: (/= prod 0) instead of (= prod -1)
+  route     a distinct route id: the intermediates' canonical keys joined with "|"
+  strength  the route's weakest hop: 2 curated, 1 literature-mined (SEMMEDDB)
+```
+
+`goal` is the direction wanted: `-1` the drug should lower the target (treating a
+disease), `1` raise it. It is the only place a direction is stated — never write it
+into the program. `slog/net.slog` is appended at run time and decides a verdict per
+drug; you do not write or declare `result`, `net_dir`, `net_paths` or `net_best`.
+
+The flagship 3-hop above, in net mode:
+
+```slog
+table (kg2_norm str str)
+table (node_kind str str)
+table (signed_edge str int str str str)
+table (evidence str int str int)
+
+rule (evidence dk prod route w) <--
+  (signed_edge d1 s1 x1 pt1 "regulation")
+  (= lit (shas pt1 "SEMMEDDB")) (= lit 0)
+  (node_kind d1 "chemical")
+  (node_kind x1 "gene")
+  (kg2_norm x1 g) (kg2_norm x2 g) (node_kind x2 "gene")
+  (signed_edge x2 s2 p1 pt2 "causation")
+  (node_kind p1 "phenotype")
+  (kg2_norm p1 pk) (kg2_norm p2 pk) (node_kind p2 "phenotype")
+  (signed_edge p2 s3 y1 pt3 _)
+  (kg2_norm y1 "MONDO:0005180")
+  (node_kind y1 "disease")
+  (kg2_norm d1 dk)
+  (= prod (* s1 (* s2 s3)))
+  (/= prod 0)
+  (= route (+ g (+ "|" pk)))
+  (= w (min (- 2 lit) (min (- 2 (shas pt2 "SEMMEDDB")) (- 2 (shas pt3 "SEMMEDDB")))))
+```
+
+Every filter in the body applies to both directions at once, so both sides are held to
+the same evidence standard by construction — here, curated pharmacology at hop 1.
+More than one shape may write `evidence` (for example a 1-hop rule over
+`signed_edge drug s y _ "causation"`, where `treats` is a −1 route and `causes` a +1
+one); rules writing one relation are still one stage. Bind every hop's `predicate_type`
+so the strength can be computed.
+
+What the layer decides, per drug with at least one route in the goal direction — the
+same drugs the locked query would have returned:
+
+| verdict | basis | meaning |
+|---|---|---|
+| good | unopposed | every route goes the goal direction |
+| good | stronger evidence | best route for is stronger than best route against |
+| bad | weaker evidence | best route against is stronger |
+| good | more routes | equal strength, more distinct routes for |
+| bad | fewer routes | equal strength, more distinct routes against |
+| bad | even | equal strength, equal route count |
+
+Cost: two stages more than the same shape locked (~26s).
+
 ## Joining derived entity sets -- read this
 
 KG2 does not merge equivalent entities. The same gene is a separate node per source
@@ -324,6 +395,19 @@ the name out of the query with `(node x name _)` and return `(result x name)`, o
 ids and call `name_curies`. Never return names alone; the CURIE is the identifier and must
 be shown.
 
+**Net-effect mode** returns one row per candidate drug, already ranked good-first, plus
+`verdicts` and `bases` tallies over every candidate. Keep the rows in that order, add
+the name, and put the tally on one line above the table:
+
+```
+verdicts: good 41, bad 23
+
+| CURIE      | name       | verdict | basis             | routes for | routes against | best for | best against |
+|------------|------------|---------|-------------------|------------|----------------|----------|--------------|
+| CHEBI:6801 | metformin  | good    | unopposed         | 4          | 0              | 2        | 0            |
+| CHEBI:4911 | etoposide  | bad     | weaker evidence   | 3          | 1              | 1        | 2            |
+```
+
 Do **not** write:
 
 - any explanation of what the query did, or which relations or predicates were used
@@ -351,7 +435,8 @@ If the user asks for an explanation, give one then. Unasked, the table is the wh
   the true count, so a big answer reports as `1627 rows, showing 50`. Display the rows
   you were given and no more — never re-run to page through the rest, and never rewrite
   the query to make the answer fit under the cap. **Which 50 come back is the daemon's
-  storage order, not yours** — you cannot rank by putting a tag in the first column. If
+  storage order, not yours** — you cannot rank by putting a tag in the first column
+  (net-effect mode is the exception: its rows come back ranked). If
   the answer could be large, project fewer columns into the head: Slog deduplicates, so
   a narrower head *is* the aggregation and costs nothing.
 - **Categories are flat and single-valued.** `biolink:Gene` misses 303k `Protein` and
